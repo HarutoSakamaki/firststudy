@@ -1,0 +1,12 @@
+@import url("../header.css");
+@import url('../common.css');
+
+.box{
+    float : left;
+  }
+  .formsize{
+    height: 300px;
+    width: 680px;
+    font-size: 20px;
+	  margin: 1px 10px;
+  }
