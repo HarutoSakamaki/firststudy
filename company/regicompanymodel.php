@@ -8,11 +8,13 @@
         protected $emptyfield;
         protected $regisuccess;
         protected $addoutsoucer;
+        protected $sccessaddoutsoucer;
         protected $settextcompanyname;
         protected $settextnumberofemployees;
         protected $settextyear;
         protected $settextmonth;
         protected $settextday;
+    
         public function value($postarray){
             $this->database= database('staff');
             $database = $this ->database;
@@ -32,6 +34,7 @@
                     $info = '\''.$postarray['companyname'].'\',\''.$regidate.'\',\''.$postarray['numberofemployees'].'\'';
                     if($numberofemployeesflag == true){
                         try{
+                            
                             $numberringquery = "UPDATE numberring SET id = LAST_INSERT_ID(id + 1) WHERE tablename = 'company'";
                             $database -> query($numberringquery);
                             $numberringquery = 'SELECT id FROM numberring where tablename = \'company\' ';
@@ -65,6 +68,7 @@
                 $settextday = '1';
             }
             $this->addoutsoucer=$addoutsoucer;
+            
             $this->emptyfield = $emptyfield;
             $this->regisuccess = $regisuccess;
             $this->settextcompanyname = $settextcompanyname;
@@ -73,8 +77,12 @@
             $this->settextmonth=$settextmonth;
             $this->settextday=$settextday;
         }
+
         public function getaddoutsoucer(){
             return $this->addoutsoucer;
+        }
+        public function getsuccessaddoutsoucer(){
+            return $this->successaddoutsoucer;
         }
         public function getemptyfield(){
             return $this->emptyfield;
@@ -86,7 +94,7 @@
             return $this->settextcompanyname;
         }
         public function getsettextnumberofemployees(){
-            return $this->settextcompanyname;
+            return $this->settextnumberofemployees;
         }
         public function getsettextyear(){
             return $this->settextyear;

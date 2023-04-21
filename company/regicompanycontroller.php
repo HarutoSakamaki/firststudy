@@ -4,6 +4,6 @@
     $model = new Model();
     $model->value($_POST);
 
-    require_once('regicompanyview.php');
+    require_once('html/regicompanyview.php');
 
 ?>

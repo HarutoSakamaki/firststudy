@@ -3,7 +3,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="regicompany.css">
+<link rel="stylesheet" href="html/regicompany.css">
 <title>会社の登録フォーム</title>
 </head>
 <!-- header -->
@@ -19,7 +19,13 @@
 <h2>登録フォーム<h2>
 
 
-
+<?php
+	if($model->getregisuccess() and $model->getaddoutsoucer()){
+		echo '登録に成功しました';
+	}else if($model->getaddoutsoucer()){
+		echo '登録に失敗しました';
+	}
+?>
 <div id = "regicompany" class = 'formsize box'>
 	<form action="regicompanycontroller.php" method="post">
 		<p> 会社名: <input type="text" name="companyname" value="<?php echo $model->getsettextcompanyname();?>"></p>
