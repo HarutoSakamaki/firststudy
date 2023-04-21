@@ -21,7 +21,7 @@
 
 
 <div id = "regicompany" class = 'formsize box'>
-	<form action="regicompany.php" method="post">
+	<form action="regicompanycontroller.php" method="post">
 		<p> 会社名: <input type="text" name="companyname" value="<?php echo $model->getsettextcompanyname();?>"></p>
 		<p> 従業員数: <input type="text" name="numberofemployees" value="<?php echo $model->getsettextnumberofemployees();?>"></p>
 		

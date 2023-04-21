@@ -18,6 +18,7 @@
             $database = $this ->database;
             if(isset($postarray['addcompany'])){
                 $addoutsoucer = true;
+                $regisuccess =  false;
                 /* 入力規則チェック */
                 $numberofemployeesflag = false;
                 if($postarray['numberofemployees'] == '' or preg_match("/^[0-9]+$/", $postarray['numberofemployees'])){
@@ -44,6 +45,7 @@
                             echo "エラー発生:" . $e->getMessage().'<br>';
                         }
                     }else{
+
                         /* echo '有効な値を入力して下さい'; */
                     }
                 }

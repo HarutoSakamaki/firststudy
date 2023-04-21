@@ -11,19 +11,22 @@
 		} 
 		return $link;
 	}
-    function datein($indate , $firstdatename , $postname){
+    
+    function datein($indate , $firstdatename , $postname , $initialvalue = [0,1,1,123456,12,31]){
         $postnameflag = false;
         foreach($postname as $value){
             if(isset($_POST[$value])){
                 $postnameflag = true;
             }
         }
-        $minyearset = 0;
-        $minmonthset = 1;
-        $mindayset = 1;
-        $maxyearset = date('Y');
-        $maxmonthset = 12;
-        $maxdayset = 31;
+        $minyearset = $initialvalue[0];
+        $minmonthset = $initialvalue[1];
+        $mindayset = $initialvalue[2];
+        if($initialvalue[3]){
+            $maxyearset = date('Y');
+        }
+        $maxmonthset = $initialvalue[4];
+        $maxdayset = $initialvalue[5];
         if($postnameflag==true){
             $minyearset = $_POST[$firstdatename.'minyear'];
             $minmonthset = $_POST[$firstdatename.'minmonth'];
