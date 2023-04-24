@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	function choicecompany(id,company){
 		console.log('チョイス')
 		parentelement = document.getElementById('subwindowbutton');
@@ -13,7 +13,7 @@
 		idelement.setAttribute('value',id);
 		parentelement.after(idelement);
 	}
-</script>
+</script> -->
 
 
 <!DOCTYPE html>
@@ -70,7 +70,9 @@
 					echo "登録できませんでした";
 				}
 			}
-		}else{echo '外勤先を入力してください';}
+		}else{
+			echo '外勤先を入力してください';
+		}
 	?>
 <body>
 <p class = 'formclear'></p>
@@ -162,6 +164,21 @@
 
 <script>
 
+function choicecompany(id,company){
+	console.log('チョイス')
+	parentelement = document.getElementById('subwindowbutton');
+	var companydisp = document.createElement('p');
+	companydisp.textContent = company;
+	companydisp.setAttribute('class','choicecompany');
+	parentelement.after(companydisp);
+	var idelement = document.createElement('input');
+	idelement.setAttribute('class','choicecompany');''
+	idelement.setAttribute('type','hidden');
+	idelement.setAttribute('name','companyid');
+	idelement.setAttribute('value',id);
+	parentelement.after(idelement);
+}
+
 function disp(url){
 	console.log("クリック");
 	var subw = 800;   // サブウインドウの横幅
@@ -190,6 +207,7 @@ function choicecompany(id,company){
 		}
 	}
 	/* 次からは追加コード */
+
 	parentelement = document.getElementById('subwindowbutton');
 	var companydisp = document.createElement('p');
 	companydisp.textContent = company;
@@ -209,6 +227,3 @@ function choicecompany(id,company){
 	parentelement.after(companyelement);
 }
 </script>
-<?php
-    
-?>

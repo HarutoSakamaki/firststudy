@@ -3,7 +3,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="../css/regicompany.css">
+<link rel="stylesheet" href="regicompany.css">
 <title>会社の登録フォーム</title>
 </head>
 <!-- header -->

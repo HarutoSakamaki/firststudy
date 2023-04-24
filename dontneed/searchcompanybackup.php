@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
-<link rel="stylesheet" href="../css/searchcompany.css">
+<link rel="stylesheet" href="searchcompany.css">
 <head>
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,7 +12,38 @@
 ?>
   <br><br><br><br><br>
 <h2>登録会社の検索</h2>
+<?php
+    require_once '../link.php';
+    $database = database('staff');
 
+   
+    
+    if(isset($_POST['delete'])){
+        $companyid = $_POST['companyid'];
+        echo $companyid;
+        try{
+            $query = 'UPDATE company SET del = true WHERE company.id = \''.$companyid.'\'';
+            $database -> query($query);
+            echo "削除しました";
+        }catch(Exception $e){
+            echo "エラー発生:" . $e->getMessage().'<br>';
+            echo "削除できませんでした";
+        }
+    }
+
+    try{
+        $query = "SELECT * FROM company WHERE del = false ORDER BY numberofemployees DESC";
+        $result = $database -> query($query);
+    }catch (Exception $e){
+        echo "エラー発生:" . $e->getMessage().'<br>';
+        echo "取得できませんでした";
+    }
+    $postflag = false;
+    if(isset($_POST['search']) or isset($_POST['delete'])){
+        $postflag = true;
+    }
+        
+?>
 <body>
     
     <br>
@@ -28,6 +59,48 @@
         </form>
     </div>
         <?php
+            if(isset($_POST['delete'])){
+                $searchquery = $_POST['searchquery'];
+                $searchquery = formbackquery($searchquery);
+                try{
+                    $searchresult = $database -> query($searchquery);
+                }catch(Exception $e){
+                    echo "エラー発生:" . $e->getMessage().'<br>';
+                    echo "検索できませんでした";
+                }
+            }
+
+            if(isset($_POST['search'])){
+                $company = $_POST['searchcompany'];
+                $minemployees = $_POST['minemployees'];
+                $maxemployees = $_POST['maxemployees'];
+                $minestablish = $_POST['minyear'].'-'.$_POST['minmonth'].'-'.$_POST['minday'];
+                $maxestablish = $_POST['maxyear'].'-'.$_POST['maxmonth'].'-'.$_POST['maxday'];
+                if($company != ""){
+                    $companyterms = ' company LIKE \'%'.$company.'%\' ';
+                }else{
+                    $companyterms = ' company LIKE \'%\' ';
+                }
+                if($maxemployees == ''){
+                    $employeesterms = ' AND numberofemployees >= '.$minemployees.' ';
+                }else{
+                    $employeesterms = ' AND numberofemployees BETWEEN '.$minemployees.' and '.$maxemployees;
+                }
+                $establishterms = ' AND establishdate BETWEEN DATE(\''.$minestablish.'\') and DATE(\''.$maxestablish.'\') ';
+                
+                
+                try{
+                    
+                    $query = 'SELECT * FROM company WHERE '.$companyterms.$employeesterms.$establishterms.' AND del = false ORDER BY numberofemployees DESC';
+                    /* echo $query; */
+                    $searchresult = $database -> query($query);
+                    $searchquery = $query;
+                    
+                }catch(Exception $e){
+                    echo "エラー発生:" . $e->getMessage().'<br>';
+                    echo "検索できませんでした";
+                }
+            }
             if (isset($_POST['search']) or isset($_POST['delete'])){
             
         ?>
@@ -66,6 +139,9 @@
     </table>
     <br><br><br>
 </body>
+
+
+
 </html>
 
 <script type="text/javascript">

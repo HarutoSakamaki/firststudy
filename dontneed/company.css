@@ -1,11 +1,9 @@
-@import url("../../header.css");
-@import url('../../common.css');
+@import url("header.css");
+@import url('common.css');
 
 .box{
     float : left;
   }
-
-
   .formsize{
     height: 300px;
     width: 680px;
