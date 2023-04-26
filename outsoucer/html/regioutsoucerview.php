@@ -67,24 +67,37 @@
 				
 				
 			?>
-			<input type = 'button' id = 'subwindowbutton' onClick = 'disp("../subwindow/selectcompany.php")' value = '外勤先の選択'>
-			<?php
+			<!-- <input type = 'button' id = 'subwindowbutton' onClick = 'disp("../subwindow/selectcompany.php")' value = '外勤先の選択'> -->
+			<!-- <?php
 				if($regiflag){
-						$postid = "".$_POST['companyid']."";
-						$postcompany = "".$_POST['company']."";
-						echo <<<EOM
-							<p class = 'choicecompany'>$postcompany</p>
-							<input type = 'hidden' name = 'companyid' class = 'choicecompany' value = ' $postid '>
-							<input type = 'hidden' name = 'company' class = 'choicecompany' value = ' $postcompany '>
-							EOM;
+					echo <<<EOM
+					<form action = 'changeoutsoucer.php' method = 'post'>
+						<input type = 'submit' name = 'changeform' value = '詳細を設定する'>
+						<input type = 'hidden' name = 'id' value = '{$newid}'>
+					</form>
+					EOM;
 				}
-			?>
+			?> -->
 			<p><button type="subit" name="addoutsoucer" class = "btn">従業員の登録</button></p>
 			
 			
 		</form>
 	</div>
 </div>
+<div>
+	<?php
+		if($regiflag){
+			echo <<<EOM
+			<p>登録できました</p>
+			<form action = 'changeoutsoucer.php' method = 'post'>
+				<input type = 'submit' name = 'changeform' value = '詳細を設定する'>
+				<input type = 'hidden' name = 'id' value = '{$newid}'>
+			</form>
+
+			EOM;
+		}
+	?>
+</div> 
 
 <p class = 'floatclear'></p>
 	

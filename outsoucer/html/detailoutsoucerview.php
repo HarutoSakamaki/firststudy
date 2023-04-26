@@ -42,11 +42,20 @@
             <div class = 'smalltext'><?php echo $row['motivation']; ?></div>
         </p>
         <p>入社日:<?php echo $joinyear.'年'.$joinmonth.'月'.$joinday.'日'; ?></p>
-        <p>外勤先:<?php echo $row['company']; ?></p>
+        <!-- <p>外勤先:<?php echo $row['company']; ?></p> -->
         <form action = 'changeoutsoucer.php' method = 'post'>
             <p><button type = 'submit' class = 'btn' name = 'changeform' >変更フォームへ</button></p>
             <input type = 'hidden' name = 'id' value = '<?php echo $id; ?>'>
         </form>
+    </div>
+
+    <div>
+
+        <form action = 'changeworkplace.php' method = 'post'>
+            <p><button type = 'submit' class = 'btn' name = 'changeworkplace' >外勤先の変更</button></p>
+            <input type = 'hidden' name = 'id' value = '<?php echo $id; ?>'>
+        </form>
+
     </div>
 
 

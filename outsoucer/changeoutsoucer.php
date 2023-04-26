@@ -11,8 +11,6 @@
         $changeaddress = ' address = \'' .$_POST['address'].'\'';
         $changemailaddress = ' mailaddress = \'' .$_POST['mailaddress'].'\'';
         $changephonenumber = ' phonenumber = \'' .$_POST['phonenumber'].'\'';
-       
-        
         $licensestack = array();
         $count = 0;
         while(isset($_POST['license'.$count])){
@@ -30,22 +28,17 @@
             }
             $count++;
         }
-
-
         $workhistoryjson = json_encode($workhistorystack, JSON_UNESCAPED_UNICODE);
-        
         $changelicense = ' license = \'' .$licensejson.'\'';
         $changeworkhistory = ' workhistory = \'' .$workhistoryjson.'\'';
         $changemotivation = ' motivation = \'' .$_POST['motivation'].'\'';
         $changejoincompanyday = ' joincompanyday = \'' .$_POST['joinyear'].'-'.$_POST['joinmonth'].'-'.$_POST['joinday'].'\'';
-        $changecompany = 'company=\''.$_POST['companyid'].'\'';
-        
-        $changechangedate = ' changedate = \''.date('Y-m-d').'\'';
+        /* $changecompany = 'company=\''.$_POST['companyid'].'\''; */
+        $changechangedate = ' update_at = \''.date('Y-m-d').'\'';
         $changequery = "UPDATE staffname SET ".$changefurigana. ','.$changebirthday. ','.$changeaddress. ','.$changeprefectures.','
             .$changemailaddress. ','.$changephonenumber. ',' .$changeworkhistory. ','.$changelicense. ','.$changemotivation. ','.$changejoincompanyday. ','
-            .$changecompany. ','.$changechangedate.' WHERE del = false AND id = '.$id;
-        
-
+            .$changechangedate.' WHERE id = '.$id;
+        /* echo $changequery; */
         /* ここから入力規則を見ていく */
         $furiganaflag = false;
         if($_POST['furigana'] == '' or preg_match('/^[ァ-ヾ]+$/u', $_POST['furigana']) ){
@@ -127,7 +120,7 @@
         $settextjoinyear = $_POST['joinyear'];
         $settextjoinmonth = $_POST['joinmonth'];
         $settextjoinday = $_POST['joinday'];
-        $settextcompany = $_POST['company'];
+        /* $settextcompany = $_POST['company']; */
     }else{
         $settextname = $row['name'];
         $settextfurigana = $row['furigana'];
@@ -144,10 +137,10 @@
         $settextjoinyear = $joinarray[0];
         $settextjoinmonth = $joinarray[1];
         $settextjoinday = $joinarray[2];
-        $settextcompany = $row['company'];
+        /* $settextcompany = $row['company']; */
     }
    
-    if(isset($_POST['changeform'])){
+    /* if(isset($_POST['changeform'])){
         $query = "SELECT * FROM company WHERE del = false AND id = ".$settextcompany;
         $result = $database -> query($query);
         $rowcompany = mysqli_fetch_assoc($result);
@@ -162,7 +155,7 @@
     }else{
         $postcompany = $_POST['company'];
         $postid = $_POST['companyid'];
-    }
+    } */
     require_once('html/changeoutsoucerview.php');
     
 

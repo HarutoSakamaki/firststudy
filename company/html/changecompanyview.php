@@ -41,8 +41,14 @@
                     let businessdetailsfunc = inputfield('businessdetails',<?php echo $businessdetailscount_json; ?>);
                 </script>
             </p>
-            <p>本社所在地: <br>都道府県<input type = 'text' name = 'prefectures' value = <?php echo $settextprefectures; ?>>
-                <br>市区町村以下<input type = 'text' name = 'location' value = <?php echo $settextlocation; ?>></p>
+            <p>本社所在地: <br>
+            都道府県
+            <select name = 'prefectures'>
+                <?php if($settextprefectures != ''){echo '<option value = '.$settextprefectures.'>'.getpref($settextprefectures).'</option>';}?>
+                <?php selectpref();?>
+            </select>
+                
+            <br>市区町村以下<input type = 'text' name = 'location' value = <?php echo $settextlocation; ?>></p>
             <p>従業員数: <input type = 'text' name = 'numberofemployees' value = <?php echo $settextnumberofemployees; ?>></p>
             <p>設立日:
                 <?php

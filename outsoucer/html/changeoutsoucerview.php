@@ -45,8 +45,13 @@
                 
             </p>
             </p>
-            <p>現住所: <br>都道府県<input type = 'text' name = 'prefectures' value  = <?php echo $settextprefectures; ?>><br>
-            市区町村以下<input type = 'text' name = 'address' value = <?php echo $settextaddress; ?>></p>
+            <p>現住所: <br>
+            都道府県<select name = 'prefectures'>
+                    <?php if($settextprefectures != ''){echo '<option value = '.$settextprefectures.'>'.getpref($settextprefectures).'</option>';}?>
+                    <?php selectpref();?>
+                </select>
+            
+            <br>市区町村以下<input type = 'text' name = 'address' value = <?php echo $settextaddress; ?>></p>
             <p>メールアドレス: <input type = 'text' name = 'mailaddress' value = <?php echo $settextmailaddress; ?>></p>
             <p>電話番号(ハイフンなし): <input type = 'text' name = 'phonenumber' value = <?php echo $settextphonenumber; ?>></p>
             <p>職歴: <input type = "button" class = 'commonbutton' value ='入力欄を増やす' id = 'workhistoryincreasetext'><input type = "button" class = 'commonbutton'value ='入力欄を減らす' id = 'workhistorydecreasetext'>
@@ -113,25 +118,15 @@
                     echo '</select>日' . "\n";
                 ?>
             </p>
-            <p>外勤先(待機中なら無しとお答えください):
+            <!-- <p>外勤先(待機中なら無しとお答えください):
                 <input type = 'button' id = 'subwindowbutton' onClick = 'disp("../subwindow/selectcompany.php")' value = '外勤先の変更'>
                     <?php
-                        /* if(isset($_POST['changeform'])){
-                            $query = "SELECT * FROM company WHERE del = false AND id = ".$settextcompany;
-                            $result = $database -> query($query);
-                            $rowcompany = mysqli_fetch_assoc($result);
-                            $postcompany = $rowcompany['company'];
-                            $postid = $rowcompany['id'];
-                        }else{
-                            $postcompany = $_POST['company'];
-                            $postid = $_POST['companyid'];
-                        } */
                             echo <<<EOM
                                 <p class = 'choicecompany'>$postcompany</p>
                                 <input type = 'hidden' name = 'companyid' class = 'choicecompany' value = ' $postid '>
                                 <input type = 'hidden' name = 'company' class = 'choicecompany' value = ' $postcompany '>
                                 EOM;
-                    ?>
+                    ?> -->
 
                     
                 <!-- <?php

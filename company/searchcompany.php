@@ -3,7 +3,7 @@
     require_once '../link.php';
     $database = database('staff');
     if(isset($_POST['delete'])){
-        $companyid = $_POST['companyid'];
+        $companyid = $_POST['id'];
         echo $companyid;
         try{
             $query = 'UPDATE company SET del = true WHERE company.id = \''.$companyid.'\'';

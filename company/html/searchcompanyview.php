@@ -92,8 +92,6 @@
         let minemployeeselement = createhidden('minemployees', minemployees.value,parentelement);
         let maxemployees = document.getElementById('inputmaxemployees');
         let maxemployeeselement = createhidden('maxemployees', maxemployees.value,parentelement);
-        let searchcompany = document.getElementById('inputsearchcompany');
-        let searchcompanyelement = createhidden('searchcompany', searchcompany.value,parentelement);
         var submitelement = document. createElement('input');
         submitelement.setAttribute('type','submit');
         submitelement.setAttribute('name','delete');

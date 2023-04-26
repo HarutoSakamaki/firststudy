@@ -24,7 +24,7 @@
         $businessdetailsjson = json_encode($businessdetailsstack, JSON_UNESCAPED_UNICODE);
         
         $changebusinessdetails = ' businessdetails = \'' .$businessdetailsjson.'\'';
-        $changechangedate = ' changedate = \''.date('Y-m-d').'\'';
+        $changechangedate = ' update_at = \''.date('Y-m-d').'\'';
         $changequery = "UPDATE company SET ".$changecompany. ','.$changepresident. ','.$changeprefectures.','.$changelocation. ','
             .$changenumberofemployees. ','.$changeestablishdate. ',' .$changehomepage. ','.$changebusinessdetails. ','.$changechangedate.
             ' WHERE del = false AND id = \''.$id.'\'';

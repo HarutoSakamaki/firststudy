@@ -31,7 +31,7 @@
                     datein('生年月日','birth',['delete','search']);
                     datein('入社日','join',['delete','search']);
                 ?>
-                外勤先企業(一部でも):<input type = 'text' name = 'company' id = 'companyname' value = '<?php if($postflag){echo $_POST['company'];}?>'><br><br>
+                <!-- 外勤先企業(一部でも):<input type = 'text' name = 'company' id = 'companyname' value = '<?php if($postflag){echo $_POST['company'];}?>'><br><br> -->
                 <button type = 'submit' class = 'btn' name = 'search' value='検索'>検索</button>
             
             </form>
@@ -45,17 +45,15 @@
                 <th>名前</th>
                 <th>生年月日</th>
                 <th>入社日</th>
-                <th>外勤先</th>
+                <!-- <th>外勤先</th> -->
                 <th id = "deltd">削除</th>
                 <th id = "deltd">詳細と変更</th>
                 </tr>
                 <?php
-                    
                     $searchquery = formquery($searchquery);
                     while($row = mysqli_fetch_assoc($searchresult)){
-                        
                         echo '<tr>';
-                        echo '<td>'.$row['name'].'</td><td>'.$row['birthday'].'</td><td>'.$row['joincompanyday'].'</td><td>'.$row['company'].'</td>';
+                        echo '<td>'.$row['name'].'</td><td>'.$row['birthday'].'</td><td>'.$row['joincompanyday'].'</td>';
                         echo '<td id = "deltd"><form action = \'searchoutsoucer.php\' method=post><input type = \'button\'class = \'commonbutton\'name=\'delete\'value=\'削除\' onClick = \'deleteform()\'>
                             <input type=\'hidden\' name=  \'id\' value =  \''.$row['id'].'\'>
                             <input id = \'inputsearchquery\' type=\'hidden\' name=  \'searchquery\' value =  \''.$searchquery.'\'>
@@ -103,9 +101,8 @@
         let joinmaxmonthelement = createhidden('joinmaxmonth', joinmaxmonth.value,parentelement);
         let joinmaxday = document.getElementById('inputjoinmaxday');
         let joinmaxdayelement = createhidden('joinmaxday', joinmaxday.value,parentelement);
-        let companyname = document.getElementById('companyname');
-        let companyelement = createhidden('company', companyname.value,parentelement);
-        
+        /* let companyname = document.getElementById('companyname');
+        let companyelement = createhidden('company', companyname.value,parentelement); */
         var submitelement = document. createElement('input');
         submitelement.setAttribute('type','submit');
         submitelement.setAttribute('name','delete');
