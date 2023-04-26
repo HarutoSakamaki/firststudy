@@ -12,30 +12,32 @@
     include("../header.php");
 ?>
 <br><br><br><br><br>
-<h2>登録会社の詳細<h2>
-    <div class = "middletextsize">
-        <p>会社名:<?php echo $row['company']; ?></p>
-        <p>社長名:<?php echo $row['president']; ?></p>
-        
-        <p>事業内容:<br>
-            <?php 
-                $count = 0;
-                while(isset($businessdetailsarray[$count])){
-                    echo $count.'.'.$businessdetailsarray[$count].'<br>';
-                    $count++;
-                }
-            ?>
-        </p>
-        <p>本社住所:<?php echo $row['location']; ?></p>
-        <p>従業員数:<?php echo $row['numberofemployees']; ?></p>
-        <p>設立日:<?php echo $eastablishyear.'年'.$establishmonth.'月'.$establishday.'日'; ?></p>
-        <p>ホームページ:<?php echo '<a href = '.$row['homepage'].'>'.$row['location'].'</a>';?></p>
+<h2>登録会社の詳細</h2>
+    <div class = "middletextsize detailbox">
+        <h3>会社名:<?php echo $row['company']; ?></h3>
+        <div class = "detailboxcontent">
+            <p>社長名:<?php echo $row['president']; ?></p>
+            
+            <p>事業内容:<br>
+                <?php 
+                    $count = 0;
+                    while(isset($businessdetailsarray[$count])){
+                        echo $count.'.'.$businessdetailsarray[$count].'<br>';
+                        $count++;
+                    }
+                ?>
+            </p>
+            <p>本社住所:<?php echo $row['location']; ?></p>
+            <p>従業員数:<?php echo $row['numberofemployees']; ?></p>
+            <p>設立日:<?php echo $eastablishyear.'年'.$establishmonth.'月'.$establishday.'日'; ?></p>
+            <p>ホームページ:<?php echo '<a href = '.$row['homepage'].'>'.$row['location'].'</a>';?></p>
 
-        <form action = 'changecompany.php' method = 'post'>
-            <p><button type = 'submit' class = 'btn' name = 'changeform' >変更フォームへ</button></p>
-            <input type = 'hidden' name = 'company' value = '<?php echo $company; ?>'>
-            <input type = 'hidden' name = 'id' value = '<?php echo $id; ?>'>
-        </form>
+            <form action = 'changecompany.php' method = 'post'>
+                <p><button type = 'submit' class = 'btn' name = 'changeform' >変更フォームへ</button></p>
+                <input type = 'hidden' name = 'company' value = '<?php echo $company; ?>'>
+                <input type = 'hidden' name = 'id' value = '<?php echo $id; ?>'>
+            </form>
+        </div>
     </div>
 
 

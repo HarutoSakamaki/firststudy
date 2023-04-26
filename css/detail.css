@@ -1,0 +1,33 @@
+.detailbox{
+    margin:  0 auto;
+    /* width : 80%; */
+    width:fit-content; 
+    /* display: inline-block;
+    text-align: center; */
+    
+    background-color : whitesmoke;
+    
+}
+.detailbox h3{
+    margin:0px;
+    font-size:35px;
+    position: relative;
+    display: inline-block;
+    padding: 1rem 2rem 1rem 4rem;
+    color: #fff;
+    border-radius: 100vh 0 0 100vh;
+    background: #fa4141;
+  }
+  .detailbox h3:before{
+    position: absolute;
+    top: calc(50% - 7px);
+    left: 10px;
+    width: 14px;
+    height: 14px;
+    content: '';
+    border-radius: 50%;
+    background: #fff;
+  }
+  .detailbox .detailboxcontent{
+    margin:20px;
+  }

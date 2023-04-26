@@ -12,9 +12,9 @@
     require_once('../header.php');
 ?>
 <br><br><br><br><br>
-<h2>アウトソーサーの詳細<h2>
-    <div class = "middletextsize">
-        <p>名前:<?php echo $row['name']; ?></p>
+<h2>アウトソーサーの詳細</h2>
+    <div class = "middletextsize detailbox">
+        <h3>名前:<?php echo $row['name']; ?></h3>
         <p>フリガナ:<?php echo $row['furigana']; ?></p>
         <p>生年月日:<?php echo $birthyear.'年'.$birthmonth.'月'.$birthday.'日'; ?></p>
         <p>現住所:<?php echo $row['address']; ?></p>

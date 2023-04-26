@@ -24,8 +24,7 @@
         $id = $_POST['id'];
         try{
             $query = "UPDATE staffname SET del = true where id = '{$id}'";
-            $database -> query($query);
-            
+            $database -> query($query); 
             echo '削除しました';
         }catch(Exception $e){
             echo "エラー発生:" . $e->getMessage().'<br>';
@@ -72,7 +71,7 @@
                 echo '<td id = "deltd"><form action = \'outsoucer.php\' method=post><input type = \'submit\'name=\'delete\'value=\'削除\'>
                     <input type=\'hidden\' name=  \'id\' value =  \''.$row['id'].'\'>
                     </form></td>';
-                    echo '<td id = "deltd"><form action = \'detailoutsoucer.php\' method=post><input type = \'submit\'name=\'detail\'value=\'詳細と変更\'>
+                    echo '<td id = "deltd"><form action = \'detailoutsoucer.php\' method=post><input class=\'commonbutton\' type = \'submit\'name=\'detail\'value=\'詳細と変更\'>
                     <input type=\'hidden\' name=  \'id\' value =  \''.$row['id'].'\'>
                     </form></td>';
                 echo '</tr>';

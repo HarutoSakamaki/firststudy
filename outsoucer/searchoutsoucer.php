@@ -64,7 +64,7 @@
             WHERE '.$searchnameterms.$birthterms.$jointerms.$companyterms.' AND staffname.del = false ORDER BY ID ASC';
             $searchresult = $database -> query($query);
             $searchquery = $query;
-            echo $query;
+            /* echo $query; */
         }catch(Exception $e){
             echo "エラー発生:" . $e->getMessage().'<br>';
             echo "検索できませんでした";

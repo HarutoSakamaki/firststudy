@@ -20,19 +20,22 @@
 <body>
    
     <br>
-    <div class = 'box'>
-        <form action = 'searchoutsoucer.php' method = post class = 'formsize'>
-            <p>一つ以上入力してください</p>
-            名前(一部でも):<input type = 'text' id = 'inputsearchname' name = 'searchname' value = "<?php if($postflag){echo $_POST['searchname'];}?>"><br>
+    <div class = 'box formsize'>
+        <div class = "boxtitle">アウトソーサーの検索</div>
+        <div class = "boxcontent">
+            <form action = 'searchoutsoucer.php' method = post class = 'formsize'>
+                <!-- <p>一つ以上入力してください</p> -->
+                名前(一部でも):<input type = 'text' id = 'inputsearchname' name = 'searchname' value = "<?php if($postflag){echo $_POST['searchname'];}?>"><br>
+                
+                <?php
+                    datein('生年月日','birth',['delete','search']);
+                    datein('入社日','join',['delete','search']);
+                ?>
+                外勤先企業(一部でも):<input type = 'text' name = 'company' id = 'companyname' value = '<?php if($postflag){echo $_POST['company'];}?>'><br><br>
+                <button type = 'submit' class = 'btn' name = 'search' value='検索'>検索</button>
             
-            <?php
-                datein('生年月日','birth',['delete','search']);
-                datein('入社日','join',['delete','search']);
-            ?>
-            外勤先企業(一部でも):<input type = 'text' name = 'company' id = 'companyname' value = '<?php if($postflag){echo $_POST['company'];}?>'><br><br>
-            <button type = 'submit' class = 'btn' name = 'search' value='検索'>検索</button>
-        
-        </form>
+            </form>
+        </div>
     </div >
         <?php
             if(isset($_POST['delete']) or isset($_POST['search'])){
@@ -53,11 +56,11 @@
                         
                         echo '<tr>';
                         echo '<td>'.$row['name'].'</td><td>'.$row['birthday'].'</td><td>'.$row['joincompanyday'].'</td><td>'.$row['company'].'</td>';
-                        echo '<td id = "deltd"><form action = \'searchoutsoucer.php\' method=post><input type = \'button\'name=\'delete\'value=\'削除\' onClick = \'deleteform()\'>
+                        echo '<td id = "deltd"><form action = \'searchoutsoucer.php\' method=post><input type = \'button\'class = \'commonbutton\'name=\'delete\'value=\'削除\' onClick = \'deleteform()\'>
                             <input type=\'hidden\' name=  \'id\' value =  \''.$row['id'].'\'>
                             <input id = \'inputsearchquery\' type=\'hidden\' name=  \'searchquery\' value =  \''.$searchquery.'\'>
                             </form></td>';
-                        echo '<td id = "deltd"><form action = \'detailoutsoucer.php\' method=post><input type = \'submit\'name=\'detail\'value=\'詳細と変更\'>
+                        echo '<td id = "deltd"><form action = \'detailoutsoucer.php\' method=post><input class=\'commonbutton\' type = \'submit\'name=\'detail\'value=\'詳細と変更\'>
                             <input type=\'hidden\' name=  \'id\' value =  \''.$row['id'].'\'>
                             </form></td>';
                         echo '</tr>';
