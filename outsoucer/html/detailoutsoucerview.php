@@ -53,7 +53,7 @@
 
         <form action = 'changeworkplace.php' method = 'post'>
             <p><button type = 'submit' class = 'btn' name = 'changeworkplace' >外勤先の変更</button></p>
-            <input type = 'hidden' name = 'id' value = '<?php echo $id; ?>'>
+            <input type = 'hidden' name = 'staffid' value = '<?php echo $id; ?>'>
         </form>
 
     </div>

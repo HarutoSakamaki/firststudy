@@ -15,19 +15,20 @@
         }
     }
 
-    try{
+    /* try{
         $query = "SELECT * FROM company WHERE del = false ORDER BY numberofemployees DESC";
         $result = $database -> query($query);
     }catch (Exception $e){
         echo "エラー発生:" . $e->getMessage().'<br>';
         echo "取得できませんでした";
-    }
+    } */
     $postflag = false;
     if(isset($_POST['search']) or isset($_POST['delete'])){
         $postflag = true;
     }
         
 ?>
+
 <?php
     if(isset($_POST['delete'])){
         $searchquery = $_POST['searchquery'];
@@ -61,7 +62,7 @@
         
         try{
             
-            $query = 'SELECT * FROM company WHERE '.$companyterms.$employeesterms.$establishterms.' AND del = false ORDER BY numberofemployees DESC';
+            $query = 'SELECT * FROM company WHERE '.$companyterms.$employeesterms.$establishterms.' AND del = false AND id != 1 ORDER BY numberofemployees DESC';
             /* echo $query; */
             $searchresult = $database -> query($query);
             $searchquery = $query;
