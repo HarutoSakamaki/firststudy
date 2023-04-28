@@ -15,7 +15,7 @@
                 echo "エラー発生:" . $e->getMessage().'<br>';
                 echo "  詳細を取得できませんでした。";
             }
-        } 
+        }
         $establishdatearray = explode('-', $row['establishdate']);
         $eastablishyear = $establishdatearray[0];
         $establishmonth = $establishdatearray[1];
@@ -23,6 +23,15 @@
         
 
         $businessdetailsarray = json_decode($row['businessdetails'],true);
+        
+
+        $businessdetailtext = '';
+        $count = 0;
+        while(isset($businessdetailsarray[$count])){
+            $businessdetailtext.=$count.'.'.$businessdetailsarray[$count].'<br>';
+            $count++;
+        }
+
         require_once('html/detailcompanyview.php');
 
     ?>

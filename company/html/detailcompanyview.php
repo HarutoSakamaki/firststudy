@@ -20,11 +20,12 @@
             
             <p>事業内容:<br>
                 <?php 
-                    $count = 0;
+                    echo $businessdetailtext;
+                    /* $count = 0;
                     while(isset($businessdetailsarray[$count])){
                         echo $count.'.'.$businessdetailsarray[$count].'<br>';
                         $count++;
-                    }
+                    } */
                 ?>
             </p>
             <p>本社住所:<?php echo $row['location']; ?></p>

@@ -11,7 +11,7 @@
   include("../header.php");
 ?>
   <br><br><br><br><br>
-<h2>登録会社の検索</h2>
+<!-- <h2>登録会社の検索</h2> -->
 
 <body>
     
@@ -31,8 +31,8 @@
         </div>
     </div>
         <?php
-            if (isset($_POST['search']) or isset($_POST['delete'])){
-            
+            echo $tabletext;
+            /* if (isset($_POST['search']) or isset($_POST['delete'])){
         ?>
                 
     </form>
@@ -63,7 +63,7 @@
                             </form></td>';
                         echo '</tr>';
                     }
-            }
+            } */
                     
                     ?>
     </table>

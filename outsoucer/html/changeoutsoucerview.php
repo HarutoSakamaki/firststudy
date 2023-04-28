@@ -10,7 +10,7 @@
 </head>
 <body>
 <br><br><br><br><br>
-<h2>アウトソーサーの詳細変更</h2>
+<!-- <h2>アウトソーサーの詳細変更</h2> -->
 
 <?php
     include("../header.php");
@@ -23,7 +23,8 @@
             <p>フリガナ: <input type = 'text' name = 'furigana' value = <?php echo $settextfurigana; ?>></p>
             <p>生年月日:
                 <?php
-                    echo '<select name=\'birthyear\'>'."\n".
+                    echo $birthdaytext;
+                    /* echo '<select name=\'birthyear\'>'."\n".
                         "<option value = {$settextbirthyear}>{$settextbirthyear}</option>\n";
                     for($i = date('Y'); $i >= 0; $i--) {
                         echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
@@ -40,7 +41,7 @@
                     for ($i = 1; $i <= 31; $i++) {
                         echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
                     }
-                    echo '</select>日' . "\n";
+                    echo '</select>日' . "\n"; */
                 ?>
                 
             </p>
@@ -56,7 +57,8 @@
             <p>電話番号(ハイフンなし): <input type = 'text' name = 'phonenumber' value = <?php echo $settextphonenumber; ?>></p>
             <p>職歴: <input type = "button" class = 'commonbutton' value ='入力欄を増やす' id = 'workhistoryincreasetext'><input type = "button" class = 'commonbutton'value ='入力欄を減らす' id = 'workhistorydecreasetext'>
                 <?php
-                    echo '<input type = \'hidden\' id = \'workhistory-1\' >';
+                    echo $workhistorytext;
+                    /* echo '<input type = \'hidden\' id = \'workhistory-1\' >';
                     if(isset($settextworkhistory[0])){
                         echo '<br id=\'workhistorybr0\'><input type = \'text\' name = \'workhistory0\' value = \''.$settextworkhistory[0].'\' id = \'workhistory0\' >';
                         $count = 1;
@@ -67,7 +69,7 @@
                         echo '<br id=\'workhistorybr'.$count.'\'><input type = \'text\' name = \'workhistory'.$count.'\' value = \''.$settextworkhistory[$count].'\' id = \'workhistory'.$count.'\'>';
                         $count++;
                     }
-                    $workhistorycount_json = json_encode($count);
+                    $workhistorycount_json = json_encode($count); */
                 ?>
 
                 <script>
@@ -76,7 +78,8 @@
 
             <p id = 'licensep'>免許や資格: <input type = "button" class = 'commonbutton' value ='入力欄を増やす' id = 'licenseincreasetext'><input type = "button" class = 'commonbutton' value ='入力欄を減らす' id = 'licensedecreasetext'>
                 <?php
-                    echo '<input type = \'hidden\' id = \'license-1\' >';
+                    echo $licensetext;
+                    /* echo '<input type = \'hidden\' id = \'license-1\' >';
                     if(isset($settextlicense[0])){
                         echo '<br id = \'licensebr0\'><input type = \'text\' name = \'license0\' value = \''.$settextlicense[0].'\' id = \'license0\' >';
                         $count = 1;
@@ -87,7 +90,7 @@
                         echo '<br id = \'licensebr'.$count.'\'><input type = \'text\' name = \'license'.$count.'\' value = \''.$settextlicense[$count].'\' id = \'license'.$count.'\'>';
                         $count++;
                     }
-                    $licensecount_json = json_encode($count);
+                    $licensecount_json = json_encode($count); */
                 ?>
 
                 <script>
@@ -97,8 +100,8 @@
             <p>志望理由:<br><textarea name = "motivation" cols = '30' row = '5' class = 'smalltext textarea' ><?php echo $settextmotivation; ?></textarea></p>
             <p>入社日:
                 <?php
-
-                    echo '<select name=\'joinyear\'>'."\n".
+                    echo $joindaytext;
+                    /* echo '<select name=\'joinyear\'>'."\n".
                         "<option value = {$settextjoinyear}>{$settextjoinyear}</option>\n";
                     for($i = date('Y'); $i >= 0; $i--) {
                         echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
@@ -115,34 +118,10 @@
                     for ($i = 1; $i <= 31; $i++) {
                         echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
                     }
-                    echo '</select>日' . "\n";
+                    echo '</select>日' . "\n"; */
                 ?>
             </p>
-            <!-- <p>外勤先(待機中なら無しとお答えください):
-                <input type = 'button' id = 'subwindowbutton' onClick = 'disp("../subwindow/selectcompany.php")' value = '外勤先の変更'>
-                    <?php
-                            echo <<<EOM
-                                <p class = 'choicecompany'>$postcompany</p>
-                                <input type = 'hidden' name = 'companyid' class = 'choicecompany' value = ' $postid '>
-                                <input type = 'hidden' name = 'company' class = 'choicecompany' value = ' $postcompany '>
-                                EOM;
-                    ?> -->
-
-                    
-                <!-- <?php
-                    $companyquery = $database->query('SELECT company FROM company ORDER BY numberofemployees DESC');
-                    echo '<select name="company">'. "\n";
-                    echo '<option value = '.$settextcompany.'>'.$settextcompany.'</option>';
-                    if($row['company']!='無し'){
-                        echo '<option value = \'無し\'>無し</option>';
-                    }
-                    while($value = mysqli_fetch_assoc($companyquery)){
-                        echo '<option value = '.$value['company'].'>'.$value['company'].'</option>'.'\n';
-                    }
-                    echo '</select>' . "\n";
-                ?> -->
-                
-            </p>
+            
             <input type = 'hidden' name = 'id' value = <?php echo '\''.$id.'\'' ?>>
             <p><button type = 'submit' class = 'btn' name = 'change' value='change'>変更</button></p>
         </form>

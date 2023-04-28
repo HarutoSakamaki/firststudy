@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
-<link rel="stylesheet" href="../css/searchoutsoucer.css">
+<link rel="stylesheet" href="../css/changeworkplace.css">
 <head>
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,7 +11,7 @@
 <body>
 
     <?php
-    include("../header.php");
+        include("../header.php");
     ?>
     <br><br><br><br><br>
     <h2>外勤先の変更</h2>
@@ -38,15 +38,31 @@
         }, 100);
     });
     function ablejudge(){
-
-        var enddateelem = document.getElementById('inputenddate');
-        var button = document.getElementById('enddatebutton');
-        if(enddateelem.value == ''){
-            button.disabled = 'disabled';
-        }else{
-            button.disabled = null;
-        }
-
+        var checkchangedate = document.querySelectorAll(".checknextnext");
+        var checknext = document.querySelectorAll(".checknext");
+        /* console.log(checkchangedate); */
+        checkchangedate.forEach(function(element){
+            if(element.checked){
+                var nextelement = element.nextElementSibling;
+                var nextnextelement = nextelement.nextElementSibling;
+                nextelement.disabled = false;
+                nextnextelement.disabled = false;
+            }else{
+                var nextelement = element.nextElementSibling;
+                var nextnextelement = nextelement.nextElementSibling;
+                nextelement.disabled = true;
+                nextnextelement.disabled = true;
+            }
+        });
+        checknext.forEach(function(element){
+            if(element.checked){
+                var nextelement = element.nextElementSibling;
+                nextelement.disabled = false;
+            }else{
+                var nextelement = element.nextElementSibling;
+                nextelement.disabled = true;
+            }
+        });
     }
 
 </script>

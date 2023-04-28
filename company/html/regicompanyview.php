@@ -16,11 +16,10 @@
 	<?php
 		require_once '../link.php';
 		$database = database('staff');
-
 	?>
 </p>
 <br><br><br><br><br><br>
-<h2>登録フォーム</h2>
+<!-- <h2>登録フォーム</h2> -->
 </body>
 
 <body>
@@ -34,7 +33,8 @@
 			<p> 従業員数: <input type="text" name="numberofemployees" value="<?php if(isset($_POST['addcompany'])){echo $_POST['numberofemployees'];}?>"></p>
 			
 			<?php
-				echo '<p>設立日<select name="year">'. "\n";
+				echo $birthdaytext;
+				/* echo '<p>設立日<select name="year">'. "\n";
 				if(isset($_POST['addcompany'])){echo '<option value = '.$_POST['year'].'>'.$_POST['year'].'</option>\n';}
 				for($i = date('Y'); $i >= 0; $i--) {
 					echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
@@ -51,7 +51,7 @@
 				for ($i = 1; $i <= 31; $i++) {
 					echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
 				}
-				echo '</select>日</p>' . "\n";
+				echo '</select>日</p>' . "\n"; */
 			?>
 
 
@@ -62,8 +62,6 @@
 	</div>
 </div>
 <p class = 'floatclear'></p>
-	
-
 	<?php
 		if (isset($_POST['displayoutsoucer'])) {
 			$result = "登録しました";

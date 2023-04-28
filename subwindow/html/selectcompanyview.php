@@ -25,45 +25,26 @@
         </form>
     </div>
     <?php
-        if (isset($_POST['search'])){
+        echo $tabletext;
     ?>
         
     
-    <table border="1">
-                    <tr>
-                    <th>会社名</th>
-                    <th>従業員数</th>
-                    <th>選択</th>
-                    </tr>
-                    <?php
-
-                    
-                    $searchquery = formquery($searchquery);
-
-                    while($row = mysqli_fetch_assoc($searchresult)){
-                        echo '<tr>';
-                        echo '<td>'.$row['company'].'</td><td>'.$row['numberofemployees'].'</td>';
-                        echo '<td><form action = \'selectcompany.php\' method=post><input type = \'submit\'name=\'selectcompany\'value=\'選択\' >
-                            <input type= \'hidden\' name=  \'companyid\' value =  \''.$row['id'].'\'>
-                            <input type= \'hidden\' name=  \'searchcompany\' value =  \''.$row['company'].'\'>
-                            <input id = \'inputsearchquery\' type=\'hidden\' name=  \'searchquery\' value =  \''.$searchquery.'\'>
-                            </form></td>';
-                        echo '</tr>';
-                    }
-                }
-                    
-                    ?>
-    </table>
-    <p>仕事開始日の選択<input type = 'date' id = 'inputstartdate' value = '<?php echo $settextstartdate?>'></p>
+    
     <div>
-        
+        <p>仕事開始日の選択<input type = 'date' id = 'inputstartdate' value = '<?php echo $settextstartdate?>'></p>
+        <p>仕事終了予定日の選択<input type = 'date' id = 'inputenddate' value = '<?php echo $settextenddate?>'></p>
         <form action = '../subwindow/selectcompany.php' method='post'>
-            <p><?php echo $settextcompany ?></p>
-            <p><a id = 'asettextstartdate'></a></p>
+
+        
+            <p>会社名:<?php echo $settextcompany ?></p>
+            <p>仕事開始日:<a id = 'asettextstartdate'></a></p>
+            <p>仕事終了予定日:<a id = 'asettextenddate'></a></p>
             <input type = 'hidden' name = 'searchcompany' value = '<?php echo $settextcompany?>'>
             <input type = 'hidden' name = 'startdate' id = 'startdateform'>
-            <input type = 'hidden' name = 'companyid' value = <?php echo $settextcompanyid;?> >
-            <input type = 'submit' name = 'register' value = '登録'>
+            <input type = 'hidden' name = 'enddate' id = 'enddateform'>
+            <input type = 'hidden' name = 'companyid' id = 'companyidform' value = <?php echo $settextcompanyid;?> >
+            <input type = 'submit' name = 'register' id = 'registerbutton' value = '登録'>
+
 
         </form>
     </div>
@@ -77,24 +58,49 @@
 
 
 <script>
-    settextstartdate();
+    settextstartenddate();
     window.addEventListener('DOMContentLoaded', function(){
     // 0.5秒ごとに実行
         setInterval(() => {
-            startdatereflect();
+            startenddatereflect();
         }, 100);
     });
 
-    function startdatereflect(){
+    function startenddatereflect(){
         var startdateelement = document.getElementById('inputstartdate');
         var astartdateelement = document.getElementById('asettextstartdate');
         var startdateform = document.getElementById('startdateform');
         startdateform.value = startdateelement.value;
         astartdateelement.textContent = startdateelement.value;
         window.sessionStorage.setItem('startdate',startdateelement.value);
+        var enddateelement = document.getElementById('inputenddate');
+        var aenddateelement = document.getElementById('asettextenddate');
+        var enddateform = document.getElementById('enddateform');
+        enddateform.value = enddateelement.value;
+        aenddateelement.textContent = enddateelement.value;
+        window.sessionStorage.setItem('enddate',enddateelement.value);
+        var companyform = document.getElementById('companyidform');
+        var submitbutton = document.getElementById('registerbutton');
+        if(startdateelement.value != ''){
+            enddateelement.setAttribute('min',startdateelement.value);
+        }else{
+            enddateelement.setAttribute('min','');
+        }
+        if(enddateelement.value != ''){
+            startdateelement.setAttribute('max',enddateelement.value);
+        }else{
+            startdateelement.setAttribute('max','');
+        }
+        if(startdateform.value !='' && enddateform.value !='' && companyform.value !=''){
+            submitbutton.disabled = false;
+        }else{
+            submitbutton.disabled = true;
+        }
     }
-    function settextstartdate(){
+    function settextstartenddate(){
         var startdateelement = document.getElementById('inputstartdate');
         startdateelement.value = sessionStorage.getItem('startdate');
+        var enddateelement = document.getElementById('inputenddate');
+        enddateelement.value = sessionStorage.getItem('enddate');
     }
 </script>

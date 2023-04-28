@@ -103,5 +103,44 @@
         $settextestablishday = $establishdatearray[2];
         $settexthomepage = $row['homepage'];
     }
+
+    $businessdetailtext = '';
+    $businessdetailtext.='<input type = \'hidden\' id = \'businessdetails-1\' >';
+    if(isset($settextbusinessdetails[0])){
+        $businessdetailtext.='<br id = \'businessdetailsbr0\'><input type = \'text\' name = \'businessdetails0\' value = \''.$settextbusinessdetails[0].'\' id = \'businessdetails0\' >';
+        $count = 1;
+    }else{
+        $count = 0;
+    }
+    while(isset($settextbusinessdetails[$count])){
+        $businessdetailtext.='<br id = \'businessdetailsbr'.$count.'\'><input type = \'text\' name = \'businessdetails'.$count.'\' value = \''.$settextbusinessdetails[$count].'\' id = \'businessdetails'.$count.'\'>';
+        $count++;
+    }
+    $businessdetailscount_json = json_encode($count);
+
+    $joindaytext = '';
+
+    $joindaytext.='<select name=\'establishyear\'>'."\n".
+        "<option value = {$settextestablishyear}>{$settextestablishyear}</option>\n";
+    for($i = date('Y'); $i >= 0; $i--) {
+        $joindaytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
+    }
+    $joindaytext.='</select>年' . "\n".
+        '<select name=\'establishmonth\' >' . "\n".
+        "<option value = {$settextestablishmonth} >{$settextestablishmonth}</option>\n";
+    for ($i = 1; $i <= 12; $i++) {
+        $joindaytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
+    }
+    $joindaytext.= '</select>月' . "\n".
+        '<select name=\'establishday\'>' . "\n".
+        "<option value = {$settextestablishday} >{$settextestablishday}</option>\n";
+    for ($i = 1; $i <= 31; $i++) {
+        $joindaytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
+    }
+    $joindaytext.='</select>日' . "\n";
+
+
+
+
     require_once('html/changecompanyview.php');
 ?>

@@ -156,6 +156,79 @@
         $postcompany = $_POST['company'];
         $postid = $_POST['companyid'];
     } */
+    $birthdaytext = '';
+
+    $birthdaytext.= '<select name=\'birthyear\'>'."\n".
+        "<option value = {$settextbirthyear}>{$settextbirthyear}</option>\n";
+    for($i = date('Y'); $i >= 0; $i--) {
+        $birthdaytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
+    }
+    $birthdaytext.= '</select>年' . "\n".
+        '<select name=\'birthmonth\' >' . "\n".
+        "<option value = {$settextbirthmonth} >{$settextbirthmonth}</option>\n";
+    for ($i = 1; $i <= 12; $i++) {
+        $birthdaytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
+    }
+    $birthdaytext.= '</select>月' . "\n".
+        '<select name=\'birthday\'>' . "\n".
+        "<option value = {$settextbirthday} >{$settextbirthday}</option>\n";
+    for ($i = 1; $i <= 31; $i++) {
+        $birthdaytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
+    }
+    $birthdaytext.='</select>日' . "\n";
+
+    $workhistorytext= '';
+    $workhistorytext.= '<input type = \'hidden\' id = \'workhistory-1\' >';
+    if(isset($settextworkhistory[0])){
+        $workhistorytext.='<br id=\'workhistorybr0\'><input type = \'text\' name = \'workhistory0\' value = \''.$settextworkhistory[0].'\' id = \'workhistory0\' >';
+        $count = 1;
+    }else{
+        $count = 0;
+    }
+    while(isset($settextworkhistory[$count])){
+        $workhistorytext .='<br id=\'workhistorybr'.$count.'\'><input type = \'text\' name = \'workhistory'.$count.'\' value = \''.$settextworkhistory[$count].'\' id = \'workhistory'.$count.'\'>';
+        $count++;
+    }
+    $workhistorycount_json = json_encode($count);
+
+    $licensetext = '';
+
+    $licensetext.='<input type = \'hidden\' id = \'license-1\' >';
+    if(isset($settextlicense[0])){
+        $licensetext.='<br id = \'licensebr0\'><input type = \'text\' name = \'license0\' value = \''.$settextlicense[0].'\' id = \'license0\' >';
+        $count = 1;
+    }else{
+        $count = 0;
+    }
+    while(isset($settextlicense[$count])){
+        $licensetext.='<br id = \'licensebr'.$count.'\'><input type = \'text\' name = \'license'.$count.'\' value = \''.$settextlicense[$count].'\' id = \'license'.$count.'\'>';
+        $count++;
+    }
+    $licensecount_json = json_encode($count);
+
+    $joindaytext ='';
+
+    $joindaytext.='<select name=\'joinyear\'>'."\n".
+        "<option value = {$settextjoinyear}>{$settextjoinyear}</option>\n";
+    for($i = date('Y'); $i >= 0; $i--) {
+        $joindaytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
+    }
+    $joindaytext.='</select>年' . "\n".
+        '<select name=\'joinmonth\' >' . "\n".
+        "<option value = {$settextjoinmonth} >{$settextjoinmonth}</option>\n";
+    for ($i = 1; $i <= 12; $i++) {
+        $joindaytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
+    }
+    $joindaytext.='</select>月' . "\n".
+        '<select name=\'joinday\'>' . "\n".
+        "<option value = {$settextjoinday} >{$settextjoinday}</option>\n";
+    for ($i = 1; $i <= 31; $i++) {
+        $joindaytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
+    }
+    $joindaytext.='</select>日' . "\n";
+
+
+
     require_once('html/changeoutsoucerview.php');
     
 

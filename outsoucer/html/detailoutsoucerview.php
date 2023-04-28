@@ -21,21 +21,18 @@
         <p>メールアドレス:<?php echo $row['mailaddress']; ?></p>
         <p>電話番号:<?php echo $row['phonenumber']; ?></p>
         <p>職歴:<br>
-            <?php 
-                $count = 0;
-                while(isset($workhistoryarray[$count])){
-                    echo  $count.'.'.$workhistoryarray[$count].'<br>';
-                    $count++;
-                }
+            <?php
+                echo $workhistorytext;
             ?>
         </p>
         <p>免許や資格:<br>
             <?php 
-                $count = 0;
+                echo $licensetext;
+                /* $count = 0;
                 while(isset($licensearray[$count])){
                     echo  $count.'.'.$licensearray[$count].'<br>';
                     $count++;
-                }
+                } */
             ?>
         </p>
         <p>志望理由:<br>

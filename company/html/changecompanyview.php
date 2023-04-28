@@ -23,7 +23,8 @@
             <p>社長名: <input type = 'text' name = 'president' value = <?php echo $settextpresident; ?>></p>
             <p>事業内容: <input type = "button" class = 'commonbutton' value ='入力欄を増やす' id = 'businessdetailsincreasetext'><input type = "button" class = 'commonbutton' value ='入力欄を減らす' id = 'businessdetailsdecreasetext'>
                 <?php
-                    echo '<input type = \'hidden\' id = \'businessdetails-1\' >';
+                    echo $businessdetailtext;
+                    /* echo '<input type = \'hidden\' id = \'businessdetails-1\' >';
                     if(isset($settextbusinessdetails[0])){
                         echo '<br id = \'businessdetailsbr0\'><input type = \'text\' name = \'businessdetails0\' value = \''.$settextbusinessdetails[0].'\' id = \'businessdetails0\' >';
                         $count = 1;
@@ -34,7 +35,7 @@
                         echo '<br id = \'businessdetailsbr'.$count.'\'><input type = \'text\' name = \'businessdetails'.$count.'\' value = \''.$settextbusinessdetails[$count].'\' id = \'businessdetails'.$count.'\'>';
                         $count++;
                     }
-                    $businessdetailscount_json = json_encode($count);
+                    $businessdetailscount_json = json_encode($count); */
                 ?>
 
                 <script>
@@ -52,7 +53,8 @@
             <p>従業員数: <input type = 'text' name = 'numberofemployees' value = <?php echo $settextnumberofemployees; ?>></p>
             <p>設立日:
                 <?php
-                    echo '<select name=\'establishyear\'>'."\n".
+                    echo $joindaytext;
+                    /* echo '<select name=\'establishyear\'>'."\n".
                         "<option value = {$settextestablishyear}>{$settextestablishyear}</option>\n";
                     for($i = date('Y'); $i >= 0; $i--) {
                         echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
@@ -69,7 +71,7 @@
                     for ($i = 1; $i <= 31; $i++) {
                         echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
                     }
-                    echo '</select>日' . "\n";
+                    echo '</select>日' . "\n"; */
                 ?>
             </p>
             <p>ホームページアドレス: <input type = 'text' name = 'homepage' value = <?php echo $settexthomepage; ?>></p>

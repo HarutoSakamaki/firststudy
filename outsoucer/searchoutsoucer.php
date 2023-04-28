@@ -69,6 +69,39 @@
             echo "検索できませんでした";
         }
     }
+    $tabletext= '';
+    if(isset($_POST['delete']) or isset($_POST['search'])){
+        $tabletext.= <<<EDO
+            <table border="1">
+                <tr>
+                    <th>名前</th>
+                    <th>生年月日</th>
+                    <th>入社日</th>
+                    <th id = "deltd">削除</th>
+                    <th id = "deltd">詳細と変更</th>
+                </tr>
+            EDO;
+                
+        $searchquery = formquery($searchquery);
+        while($row = mysqli_fetch_assoc($searchresult)){
+            $tabletext .= <<<EDO
+                <tr>
+                    <td>{$row['name']}</td><td>{$row['birthday']}</td><td>{$row['joincompanyday']}</td>
+                    <td id = "deltd"><form action = 'searchoutsoucer.php' method=post><input type = 'button'class = 'commonbutton'name='delete'value='削除' onClick = 'deleteform()'>
+                    <input type='hidden' name=  'id' value =  '{$row['id']}'>
+                    <input id = 'inputsearchquery' type='hidden' name=  'searchquery' value =  '{$searchquery}'>
+                    </form></td>
+                    <td id = "deltd"><form action = 'detailoutsoucer.php' method=post><input class='commonbutton' type = 'submit' name='detail' value='詳細と変更'>
+                    <input type='hidden' name=  'id' value =  '{$row['id']}'>
+                    </form></td>
+                </tr>
+            EDO;
+        }
+        $tabletext.='</table>';
+    }
+
+
+
     require_once('html/searchoutsoucerview.php');
 ?>
 

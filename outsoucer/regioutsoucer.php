@@ -20,8 +20,6 @@
 <?php
     require_once '../link.php';
     $database = database('staff');
-?>
-<?php
 	$regiflag = false;
 		if(isset($_POST['addoutsoucer'])){
 			if($_POST['name']==''or$_POST['birthyear']==''or$_POST['birthmonth']==''or$_POST['birthday']==''or$_POST['joinyear']==''or$_POST['joinmonth']==''or$_POST['joinday']==''){
@@ -54,6 +52,47 @@
 				}
 			}
 		}
+
+
+
+		$daytext = '';
+		$daytext.='<p>生年月日:<select name="birthyear">'. "\n";
+		if(isset($_POST['addoutsoucer'])){$daytext.='<option value = '.$_POST['birthyear'].'>'.$_POST['birthyear'].'</option>\n';}
+		for($i = date('Y'); $i >= 1900; $i--) {
+			$daytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
+		}
+		$daytext.='</select>年' . "\n".
+			'<select name="birthmonth">' . "\n";
+		if(isset($_POST['addoutsoucer'])){$daytext.='<option value = '.$_POST['birthmonth'].'>'.$_POST['birthmonth'].'</option>\n';}
+		for ($i = 1; $i <= 12; $i++) {
+			$daytext.= '<option value="' .$i . '">' . $i .'</option>'. "\n";
+		}
+		$daytext.='</select>月' . "\n".
+			'<select name="birthday">' . "\n";
+		if(isset($_POST['addoutsoucer'])){$daytext.='<option value = '.$_POST['birthday'].'>'.$_POST['birthday'].'</option>\n';}
+		for ($i = 1; $i <= 31; $i++) {
+			$daytext .= '<option value="' .$i . '">' . $i .'</option>'. "\n";
+		}
+		$daytext.='</select>日</p>' . "\n";
+	
+		$daytext.='<p>入社日(アスパーク)<select name="joinyear">'. "\n";
+		if(isset($_POST['addoutsoucer'])){$daytext.='<option value = '.$_POST['joinyear'].'>'.$_POST['joinyear'].'</option>\n';}
+		for($i = date('Y'); $i >= 1900; $i--) {
+			$daytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
+		}
+		$daytext.='</select>年' . "\n".
+			'<select name="joinmonth">' . "\n";
+		if(isset($_POST['addoutsoucer'])){$daytext.='<option value = '.$_POST['joinmonth'].'>'.$_POST['joinmonth'].'</option>\n';}
+		for ($i = 1; $i <= 12; $i++) {
+			$daytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
+		}
+		$daytext.='</select>月' . "\n".
+			'<select name="joinday">' . "\n";
+		if(isset($_POST['addoutsoucer'])){$daytext.='<option value = '.$_POST['joinday'].'>'.$_POST['joinday'].'</option>\n';}
+		for ($i = 1; $i <= 31; $i++) {
+			$daytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
+		}
+		$daytext.='</select>日</p>' . "\n";
 
     require_once('html/regioutsoucerview.php');
     

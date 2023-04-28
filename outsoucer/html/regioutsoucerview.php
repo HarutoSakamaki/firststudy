@@ -15,7 +15,7 @@
 <p>
 </p>
 <br><br><br><br><br><br>
-<h2>登録フォーム</h2>
+<!-- <h2>登録フォーム</h2> -->
 
 <p class = 'formclear'></p>
 <div id = 'regiemployees' class = 'formsize box'>
@@ -25,7 +25,8 @@
 			<p> 名前: <input type="text" name="name" value ="<?php if(isset($_POST['addoutsoucer'])){echo $_POST['name'];}?>"></p>
 			
 			<?php
-				echo '<p>生年月日:<select name="birthyear">'. "\n";
+				echo $daytext;
+				/* echo '<p>生年月日:<select name="birthyear">'. "\n";
 				if(isset($_POST['addoutsoucer'])){echo '<option value = '.$_POST['birthyear'].'>'.$_POST['birthyear'].'</option>\n';}
 				for($i = date('Y'); $i >= 1900; $i--) {
 					echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
@@ -61,11 +62,9 @@
 				for ($i = 1; $i <= 31; $i++) {
 					echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
 				}
-				echo '</select>日</p>' . "\n";
+				echo '</select>日</p>' . "\n"; */
 				
-				$companyquery = $database->query('SELECT company id FROM company  WHERE del = false ORDER BY company DESC ');
-				
-				
+				/* $companyquery = $database->query('SELECT company id FROM company  WHERE del = false ORDER BY company DESC '); */
 			?>
 			<!-- <input type = 'button' id = 'subwindowbutton' onClick = 'disp("../subwindow/selectcompany.php")' value = '外勤先の選択'> -->
 			<!-- <?php

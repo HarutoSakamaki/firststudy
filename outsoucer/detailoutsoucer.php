@@ -26,5 +26,18 @@
         $licensearray = json_decode($row['license'],true);
         $workhistoryarray = json_decode($row['workhistory'],true);
 
+        $workhistorytext = '';
+        $count = 0;
+        while(isset($workhistoryarray[$count])){
+            $workhistorytext.=  $count.'.'.$workhistoryarray[$count].'<br>';
+            $count++;
+        }
+        $count = 0;
+        $licensetext = '';
+        while(isset($licensearray[$count])){
+            $licensetext.=$count.'.'.$licensearray[$count].'<br>';
+            $count++;
+        }
+
         require_once('html/detailoutsoucerview.php');
 ?>
