@@ -92,7 +92,7 @@
                     <input id = 'inputsearchquery' type='hidden' name=  'searchquery' value =  '{$searchquery}'>
                     </form></td>
                     <td id = "deltd"><form action = 'detailoutsoucer.php' method=post><input class='commonbutton' type = 'submit' name='detail' value='詳細と変更'>
-                    <input type='hidden' name=  'id' value =  '{$row['id']}'>
+                    <input type='hidden' name=  'staffid' value =  '{$row['id']}'>
                     </form></td>
                 </tr>
             EDO;

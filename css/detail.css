@@ -31,3 +31,24 @@
   .detailbox .detailboxcontent{
     margin:20px;
   }
+
+  .alldetail{
+    display: flex;
+    margin: 0 auto;
+    width : 80%;
+  }
+
+  .workplacebox{
+    width : 50%;
+    background-color : #ffb6c1;
+  }
+  .detailbox{
+    width:50%;
+    margin-right: 0;
+  }
+  table tr:nth-child(odd){
+    background-color: rgba(171, 207, 243, 0.973);
+  }
+  table tr:nth-child(even){
+    background-color: rgb(247, 161, 161);
+  }
