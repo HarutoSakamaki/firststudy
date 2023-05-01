@@ -12,10 +12,11 @@
     include("../header.php");
 ?>
 <br><br><br><br><br>
-<h2>登録会社の詳細</h2>
+<!-- <h2>登録会社の詳細</h2> -->
+<h3>会社名:<?php echo $row1['company']; ?></h3>
     <div class = "alldetail">
         <div class = "middletextsize detailbox">
-            <h3>会社名:<?php echo $row1['company']; ?></h3>
+            <!-- <h3>会社名:<?php echo $row1['company']; ?></h3> -->
             <div class = "detailboxcontent">
                 <p>社長名:<?php echo $row1['president']; ?></p>
                 

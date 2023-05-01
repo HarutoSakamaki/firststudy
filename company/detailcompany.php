@@ -149,13 +149,13 @@
                 $nowoutsoucertext.=<<<EDO
                     <div>
                         <form action = 'detailcompany.php' method = 'post'>
-                            名前:{$nowsettext['staffname']}  仕事開始日:{$nowsettext['startdate']}<br>
+                            <div class = 'left'>名前:{$nowsettext['staffname']}  仕事開始日:{$nowsettext['startdate']}</div><br>
                             
-                            <a>仕事終了予定日:{$nowsettext['enddate']}<input type = 'checkbox' class = 'checknextnext'>
-                            <input type = 'date' value = '{$nowsettext['enddate']}' min = '{$nowsettext['startdate']}' name= 'enddate'><input type = 'submit' name = 'changeenddate' value = 変更>
+                            <div class = 'left'><a>仕事終了予定日:{$nowsettext['enddate']}</div><div class = 'left'><input type = 'checkbox' class = 'checknextnext'>
+                            <input type = 'date' value = '{$nowsettext['enddate']}' min = '{$nowsettext['startdate']}' name= 'enddate'><input type = 'submit' name = 'changeenddate' value = 変更></div>
                             </a><br>
                         
-                            <input type = 'checkbox' class = 'checknextnext'><input type = 'submit'  name = 'finishwork' value = '仕事の完了'><input type = 'submit' name ='delete' value = '削除'>
+                            <div class = 'left'><input type = 'checkbox' class = 'checknext'><input type = 'submit'  name = 'finishwork' value = '仕事の完了'></div><div class = 'left'><input type = 'checkbox' class = 'checknext'><input type = 'submit' name ='delete' value = '削除'></div>
                             <input type ='hidden' name = 'historyid' value = '{$nowsettext['id']}'>
                             <input type = 'hidden' name = 'companyid' value = '{$companyid}'>
                         </form>

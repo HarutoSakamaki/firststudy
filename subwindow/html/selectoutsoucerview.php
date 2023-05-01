@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
-<link rel="stylesheet" href="../css/selectcompany.css">
+<link rel="stylesheet" href="../css/selectoutsoucer.css">
 <head>
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,12 +8,12 @@
      <title>アウトソーサーの選択</title>
 </head>
 
-<h2>アウトソーサーの選択</h2>
+
 
 <body>
     
-    
-    <div class = 'box'>
+    <div><h2>アウトソーサーの選択</h2></div>
+    <div class = 'box left selectbox'>
         <form action = 'selectoutsoucer.php' method = post class = 'formsize'>
             <!-- <p>一つ以上入力してください</p> -->
             名前:<input type = 'text' id = 'inputsearchname' name = 'searchname' value = "<?php if($postflag){echo $_POST['searchname'];}?>"><br>
@@ -25,16 +25,15 @@
             <!-- 外勤先企業(一部でも):<input type = 'text' name = 'company' id = 'companyname' value = '<?php if($postflag){echo $_POST['company'];}?>'><br><br> -->
             <button type = 'submit' class = 'btn' name = 'search' value='検索'>検索</button>
         </form>
-    </div>
-    <?php
+    
+    <!-- <?php
         echo $tabletext;
-    ?>
-        
-    
-    
-    <div>
+    ?> -->
         <p>仕事開始日の選択<input type = 'date' id = 'inputstartdate' value = '<?php echo $settextstartdate?>'></p>
         <p>仕事終了予定日の選択<input type = 'date' id = 'inputenddate' value = '<?php echo $settextenddate?>'></p>
+    </div>
+    
+    <div class = 'box left regibox'>
         <form action = '../subwindow/selectoutsoucer.php' method='post'>
 
         
@@ -50,6 +49,10 @@
 
         </form>
     </div>
+
+    <?php
+        echo $tabletext;
+    ?>
 
 
 

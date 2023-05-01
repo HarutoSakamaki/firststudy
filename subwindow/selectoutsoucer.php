@@ -77,7 +77,7 @@
 <?php
     if(isset($_POST['staffid'])){
 
-        echo 'なぜできない';
+        /* echo 'なぜできない'; */
         $settextstaff = $_POST['searchoutsoucer'];
         $settextstaffid = $_POST['staffid'];
     }else{
@@ -107,7 +107,7 @@
             echo 'すべて入力してください';
         }
     }else{
-        echo 'ここが問題か？';
+        /* echo 'ここが問題か？'; */
     }
     function destruction(){
         echo <<<EDO

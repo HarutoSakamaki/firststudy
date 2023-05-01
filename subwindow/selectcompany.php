@@ -44,7 +44,7 @@
 <?php
     if(isset($_POST['companyid'])){
 
-        echo 'なぜできない';
+        /* echo 'なぜできない'; */
         $settextcompany = $_POST['searchcompany'];
         $settextcompanyid = $_POST['companyid'];
     }else{
@@ -74,7 +74,7 @@
             echo 'すべて入力してください';
         }
     }else{
-        echo 'ここが問題か？';
+        /* echo 'ここが問題か？'; */
     }
     function destruction(){
         echo <<<EDO

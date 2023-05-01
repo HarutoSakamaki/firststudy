@@ -8,12 +8,12 @@
      <title>外勤際の選択</title>
 </head>
 
-<h2>外勤先の選択</h2>
+
 
 <body>
+    <div><h2>外勤先の選択</h2></div>
     
-    
-    <div class = 'box'>
+    <div class = 'box left selectbox'>
         <form action = 'selectcompany.php' method = post class = 'formsize'>
             <p>一つ以上入力してください</p>
             <p>会社名:<input type = 'text' id = 'inputsearchcompany' name = 'searchcompany' value = "<?php if($postflag){echo $_POST['searchcompany'];}?>"></p>
@@ -23,16 +23,18 @@
             ?>  -->
             <button type = 'submit' class = 'btn' value='検索する' name = 'search'>検索</button>
         </form>
-    </div>
-    <?php
+    
+    <!-- <?php
         echo $tabletext;
-    ?>
+    ?> -->
         
     
     
-    <div>
+    
         <p>仕事開始日の選択<input type = 'date' id = 'inputstartdate' value = '<?php echo $settextstartdate?>'></p>
         <p>仕事終了予定日の選択<input type = 'date' id = 'inputenddate' value = '<?php echo $settextenddate?>'></p>
+    </div>
+    <div class = 'box left regibox'>
         <form action = '../subwindow/selectcompany.php' method='post'>
 
         
@@ -49,7 +51,9 @@
         </form>
     </div>
 
-
+    <?php
+        echo $tabletext;
+    ?>
 
     <br><br><br>
 </body>

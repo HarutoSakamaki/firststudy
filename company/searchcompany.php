@@ -105,10 +105,6 @@
         $tabletext.='</table>';
 
     }
-
-
-    
-    
     require_once('html/searchcompanyview.php');
 ?>
 
