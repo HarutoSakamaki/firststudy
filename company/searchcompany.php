@@ -90,12 +90,13 @@
             $tabletext .= <<<EDO
                 <tr>
                     <td>{$row['company']}</td><td>{$row['numberofemployees']}</td><td>{$row['establishdate']}</td>
-                    <td><form action = 'searchcompany.php' method=post><input type = 'button' class='commonbutton' name='delete'value='削除' onClick = 'deleteform()'>
+                    <td><form action = 'searchcompany.php' method=post>
+                        <input type = 'button' class='commonbutton' name='delete'value='削除' onClick = 'deleteform({$row['id']},"{$row['company']}")' id = '{$row['id']}' >
                         <input type= 'hidden' name=  'id' value =  '{$row['id']}'>
                         <input id = 'inputsearchquery' type='hidden' name=  'searchquery' value =  '{$searchquery}'>
                     </form></td>
                     <td><form action = 'detailcompany.php' method=post><input type = 'submit'class = 'commonbutton' name='detail'value='詳細と変更'>
-                        <input type='hidden' name=  'id' value =  '{$row['id']}'>
+                        <input type='hidden' name=  'companyid' value =  '{$row['id']}'>
                         <input type='hidden' name=  'searchquery' value =  '{$searchquery}'>
                     </form></td>
                 </tr>
@@ -106,36 +107,7 @@
     }
 
 
-    /* if (isset($_POST['search']) or isset($_POST['delete'])){   
-        </form>
-        </div>
-        <table border="1">
-            <tr>
-            <th>会社名</th>
-            <th>従業員数</th>
-            <th>設立日</th>
-            <th>削除</th>
-            <th>詳細と変更</th>
-            </tr>
-            <?php
-
-            
-            $searchquery = formquery($searchquery);
-
-            while($row = mysqli_fetch_assoc($searchresult)){
-                echo '<tr>';
-                echo '<td>'.$row['company'].'</td><td>'.$row['numberofemployees'].'</td><td>'.$row['establishdate'].'</td>';
-                echo '<td><form action = \'searchcompany.php\' method=post><input type = \'button\' class=\'commonbutton\' name=\'delete\'value=\'削除\' onClick = \'deleteform()\'>
-                    <input type= \'hidden\' name=  \'id\' value =  \''.$row['id'].'\'>
-                    <input id = \'inputsearchquery\' type=\'hidden\' name=  \'searchquery\' value =  \''.$searchquery.'\'>
-                    </form></td>';
-                echo '<td><form action = \'detailcompany.php\' method=post><input type = \'submit\'class = \'commonbutton\' name=\'detail\'value=\'詳細と変更\'>
-                    <input type=\'hidden\' name=  \'id\' value =  \''.$row['id'].'\'>
-                    <input type=\'hidden\' name=  \'searchquery\' value =  \''.$searchquery.'\'>
-                    </form></td>';
-                echo '</tr>';
-            }
-    } */
+    
     
     require_once('html/searchcompanyview.php');
 ?>

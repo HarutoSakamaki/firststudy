@@ -4,11 +4,11 @@
     $database = database('staff');
     
     if(isset($_POST['delete'])){
-        $id = $_POST['id'];
+        $id = $_POST['staffid'];
         try{
             $query = "UPDATE staffname SET del = true where id = '{$id}'";
             $database -> query($query);
-            
+            echo $query;
             echo '削除しました';
         }catch(Exception $e){
             echo "エラー発生:" . $e->getMessage().'<br>';
@@ -87,8 +87,8 @@
             $tabletext .= <<<EDO
                 <tr>
                     <td>{$row['name']}</td><td>{$row['birthday']}</td><td>{$row['joincompanyday']}</td>
-                    <td id = "deltd"><form action = 'searchoutsoucer.php' method=post><input type = 'button'class = 'commonbutton'name='delete'value='削除' onClick = 'deleteform()'>
-                    <input type='hidden' name=  'id' value =  '{$row['id']}'>
+                    <td id = "deltd"><form action = 'searchoutsoucer.php' method=post><input type = 'button'class = 'commonbutton'name='delete'value='削除' onClick = 'deleteform({$row['id']},"{$row['name']}")' id = '{$row['id']}'>
+                    <input type='hidden' name=  'staffid' value =  '{$row['id']}'>
                     <input id = 'inputsearchquery' type='hidden' name=  'searchquery' value =  '{$searchquery}'>
                     </form></td>
                     <td id = "deltd"><form action = 'detailoutsoucer.php' method=post><input class='commonbutton' type = 'submit' name='detail' value='詳細と変更'>

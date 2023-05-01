@@ -2,9 +2,10 @@
 <?php
         require_once '../link.php';
         $database = database('staff');
-
+        session_start();
         
         $id = $_POST['staffid'];
+        $_SESSION['staffid'] = $id;
         try{
             $query = "SELECT * FROM staffname WHERE del = false AND id = ".$id;
             $result = $database -> query($query);
@@ -127,7 +128,7 @@
         }catch(Exception $e){
             echo "エラー発生:" . $e->getMessage().'<br>';
             echo "  外勤先を取得できませんでした";
-        } 
+        }
         $settext = array();
         $nowsettext = array();
         $nowsettextflag = false;
