@@ -1,4 +1,10 @@
 
+<script src = '../js/jquery-3.6.4.min.js'></script>
+<link rel="stylesheet" href="../css/validationEngine.jquery.css">
+<script src="../js/jquery.validationEngine.js"></script>
+<script src="../js/jquery.validationEngine-ja.js" charset="UTF-8"></script>
+
+
 <?php
     require_once '../link.php';
     $database = database('staff');
@@ -17,7 +23,7 @@
         $count = 0;
         while(isset($_POST['businessdetails'.$count])){
             if($_POST['businessdetails'.$count]!=''){
-                $businessdetailsstack[] = $_POST['businessdetails'.$count];
+                $businessdetailsstack[] = htmlentities($_POST['businessdetails'.$count]);
             }
             $count++;
         }
@@ -107,13 +113,13 @@
     $businessdetailtext = '';
     $businessdetailtext.='<input type = \'hidden\' id = \'businessdetails-1\' >';
     if(isset($settextbusinessdetails[0])){
-        $businessdetailtext.='<br id = \'businessdetailsbr0\'><input type = \'text\' name = \'businessdetails0\' value = \''.$settextbusinessdetails[0].'\' id = \'businessdetails0\' >';
+        $businessdetailtext.='<br id = \'businessdetailsbr0\'><input type = \'text\' name = \'businessdetails0\' value = \''.htmlentities($settextbusinessdetails[0]).'\' id = \'businessdetails0\' >';
         $count = 1;
     }else{
         $count = 0;
     }
     while(isset($settextbusinessdetails[$count])){
-        $businessdetailtext.='<br id = \'businessdetailsbr'.$count.'\'><input type = \'text\' name = \'businessdetails'.$count.'\' value = \''.$settextbusinessdetails[$count].'\' id = \'businessdetails'.$count.'\'>';
+        $businessdetailtext.='<br id = \'businessdetailsbr'.$count.'\'><input type = \'text\' name = \'businessdetails'.$count.'\' value = \''.htmlentities($settextbusinessdetails[$count]).'\' id = \'businessdetails'.$count.'\'>';
         $count++;
     }
     $businessdetailscount_json = json_encode($count);

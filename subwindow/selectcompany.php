@@ -1,4 +1,8 @@
 
+<script src = '../js/jquery-3.6.4.min.js'></script>
+<link rel="stylesheet" href="../css/validationEngine.jquery.css">
+<script src="../js/jquery.validationEngine.js"></script>
+<script src="../js/jquery.validationEngine-ja.js" charset="UTF-8"></script>
 
 <?php
     require_once '../link.php';
@@ -10,8 +14,6 @@
     if(isset($_POST['search'])){
         $postflag = true;
     }   
-?>
-<?php
 
     if(isset($_POST['search'])){
 
@@ -98,12 +100,14 @@
         EDO;
         $searchquery = formquery($searchquery);
         while($row = mysqli_fetch_assoc($searchresult)){
+            $setcompany = htmlentities($row['company']);
+            $setnumberofemployees = htmlentities($row['numberofemployees']);
             $tabletext.=<<<EDO
                 <tr>
-                <td>{$row['company']}</td><td>{$row['numberofemployees']}</td>
+                <td>{$setcompany}</td><td>{$setnumberofemployees}</td>
                 <td><form action = 'selectcompany.php' method=post><input type = 'submit'name='selectcompany'value='選択' >
                 <input type= 'hidden' name=  'companyid' value =  '{$row['id']}'>
-                <input type= 'hidden' name=  'searchcompany' value =  '{$row['company']}'>
+                <input type= 'hidden' name=  'searchcompany' value =  '{$setcompany}'>
                 <input id = 'inputsearchquery' type='hidden' name=  'searchquery' value =  '{$searchquery}'>
                 </form></td>
                 </tr>

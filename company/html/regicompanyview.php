@@ -28,9 +28,9 @@
 <div id = "regicompany" class = 'formsize box'>
 	<div class = "boxtitle">会社の登録</div>
 	<div class = "boxcontent">
-		<form action="regicompany.php" method="post">
-			<p> 会社名: <input type="text" name="companyname" value="<?php if(isset($_POST['addcompany'])){echo $_POST['companyname'];}?>"></p>
-			<p> 従業員数: <input type="text" name="numberofemployees" value="<?php if(isset($_POST['addcompany'])){echo $_POST['numberofemployees'];}?>"></p>
+		<form action="regicompany.php" method="post" id = "regicompanyform">
+			<p> 会社名: <input type="text" class = "validate[required]" name="companyname" value="<?php if(isset($_POST['addcompany'])){echo htmlentities($_POST['companyname']);}?>"></p>
+			<p> 従業員数: <input type="text" class = "validate[required,custom[integer]]" name="numberofemployees" value="<?php if(isset($_POST['addcompany'])){echo htmlentities($_POST['numberofemployees']);}?>"></p>
 			
 			<?php
 				echo $birthdaytext;
@@ -48,3 +48,19 @@
 	?>
 </body>
 </html>
+
+
+<script>
+
+
+	$(function(){
+        //<form>タグのidを指定
+        $("#regicompanyform").validationEngine(
+            'attach', {
+                promptPosition: "topRight"//エラーメッセージ位置の指定
+            }
+        );
+    });
+
+
+</script>

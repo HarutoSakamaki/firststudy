@@ -1,4 +1,4 @@
-
+    <script src="../js/jquery-3.6.4.min.js"></script>
     <?php
         require_once '../link.php';
         $database = database('staff');
@@ -23,8 +23,11 @@
         $eastablishyear = $establishdatearray[0];
         $establishmonth = $establishdatearray[1];
         $establishday = $establishdatearray[2];
-        
-
+        if( $row1['prefectures'] == ''){
+            $settextlocation = $row1['location'];
+        }else{
+            $settextlocation = getpref($row1['prefectures']).' '.$row1['location'];
+        }
         $businessdetailsarray = json_decode($row1['businessdetails'],true);
         
 
@@ -105,13 +108,18 @@
         }
 
 
-
+        //ここからworkplace系
 
         try{
-            $query = 'SELECT  staffhistory.id as id, company.company as company, staffhistory.startdate as startdate, staffhistory.enddate as enddate,
+            /* $query = 'SELECT  staffhistory.id as id, company.company as company, staffhistory.startdate as startdate, staffhistory.enddate as enddate,
             staffname.name as staffname , staffhistory.working as working 
             FROM staffhistory LEFT JOIN company ON staffhistory.companyid = company.id LEFT JOIN staffname ON staffname.id = staffhistory.staffid 
             WHERE staffhistory.companyid = '.$companyid.' AND staffhistory.del = 0 
+            ORDER BY startdate DESC'; */
+            $query = 'SELECT  staffhistory.id as id, company.company as company, staffhistory.startdate as startdate, staffhistory.enddate as enddate,
+            staffname.name as staffname , staffhistory.working as working 
+            FROM staffhistory LEFT JOIN company ON staffhistory.companyid = company.id LEFT JOIN staffname ON staffname.id = staffhistory.staffid 
+            WHERE staffhistory.companyid = '.$companyid.' AND working = true AND staffhistory.del = 0 
             ORDER BY startdate DESC';
             /* echo $query.'</br>'; */
             $result = $database -> query($query);
@@ -139,18 +147,18 @@
 
         $nowoutsoucertext = '';
         if($nowsettextflag==false){
-            $nowoutsoucertext =  <<<EOD
+            /* $nowoutsoucertext =  <<<EOD
             現在所属しているアウトソーサーはいません。
-            <button id = 'subwindowbutton' onClick = 'disp("../subwindow/selectoutsoucer.php")' value = 'アウトソーサーの選択'>アウトソーサーの追加</button>
-            EOD;
+            <button id = 'subwindowbutton' onClick = 'disp("../subwindow/selectoutsoucer.php")' value = 'アウトソーサーの選択'>アウトソーサーの追加</button> 
+            EOD; */
+            $nowoutsoucertext = '現在所属しているアウトソーサーはいません';
         }else{
-            $nowoutsoucertext .= '<button id = \'subwindowbutton\' onClick = \'disp("\../subwindow/selectoutsoucer.php")\' value = \'アウトソーサーの選択\'>アウトソーサーの追加</button>';
+            /* $nowoutsoucertext .= '<button id = \'subwindowbutton\' onClick = \'disp("\../subwindow/selectoutsoucer.php")\' value = \'アウトソーサーの選択\'>アウトソーサーの追加</button>'; */
             foreach($nowsettext as $nowsettext){
-                $nowoutsoucertext.=<<<EDO
+                /* $nowoutsoucertext.=<<<EDO
                     <div>
                         <form action = 'detailcompany.php' method = 'post'>
                             <div class = 'left'>名前:{$nowsettext['staffname']}  仕事開始日:{$nowsettext['startdate']}</div><br>
-                            
                             <div class = 'left'><a>仕事終了予定日:{$nowsettext['enddate']}</div><div class = 'left'><input type = 'checkbox' class = 'checknextnext'>
                             <input type = 'date' value = '{$nowsettext['enddate']}' min = '{$nowsettext['startdate']}' name= 'enddate'><input type = 'submit' name = 'changeenddate' value = 変更></div>
                             </a><br>
@@ -160,8 +168,18 @@
                             <input type = 'hidden' name = 'companyid' value = '{$companyid}'>
                         </form>
                     </div>
+                    EDO; */
+                $nowstaffname = htmlentities($nowsettext['staffname']);
+                $nowstartdate = htmlentities($nowsettext['startdate']);
+                $nowenddate = htmlentities($nowsettext['enddate']);
+                $nowoutsoucertext.= <<<EDO
+                    <div>
+                        <form action = 'detailcompany.php' method = 'post'>
+                            <div class = 'left'>名前:{$nowstaffname}  仕事開始日:{$nowstartdate}</div><br>
+                            <div class = 'left'><a>仕事終了予定日:{$nowenddate}</div>
+                        </form>
+                    </div>
                     EDO;
-    
             }
         }
         $historyoutsoucertext='';
@@ -169,11 +187,14 @@
     
             $historyoutsoucertext .= '<div><table border = \'1\'><tr><th>名前</th><th>仕事開始日</th><th>仕事終了日</th><th>履歴の削除</th></tr>';
             foreach($settext as $settext){
+                $setstaffname = htmlentities($settext['staffname']);
+                $setstartdate = htmlentities($settext['startdate']);
+                $setenddate = htmlentities($settext['enddate']);
                 $historyoutsoucertext = $historyoutsoucertext.<<<EOD
                     <tr>
-                        <td>{$settext['staffname']}</td>
-                        <td>{$settext['startdate']}</td>
-                        <td>{$settext['enddate']}</td>
+                        <td>{$setstaffname}</td>
+                        <td>{$setstartdate}</td>
+                        <td>{$setenddate}</td>
                         <td><form action = 'detailcompany.php' method = 'post' class = 'margin0'>
                             <input type = 'checkbox' class = 'checknext'><input type = 'submit' name = 'delete' value = '削除'><input type = 'hidden' name = 'historyid' value = '{$settext['id']}'>
                         </form></td>

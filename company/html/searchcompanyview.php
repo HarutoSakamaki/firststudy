@@ -19,14 +19,16 @@
     <div class = 'box formsize'>
         <div class = "boxtitle">登録会社の検索</div>
         <div class = "boxcontent">
-            <form action = 'searchcompany.php' method = post class = 'formsize'>
+            <form action = 'searchcompany.php' id = 'formCheck' method = post class = 'formsize'>
             <!-- <p>一つ以上入力してください</p> -->
-            <p>会社名(一部でも):<input type = 'text' id = 'inputsearchcompany' name = 'searchcompany' value = "<?php if($postflag){echo $_POST['searchcompany'];}?>"></p>
-            <p>従業員数:<input type = 'text' id  = 'inputminemployees' name = 'minemployees' value = "<?php if($postflag){echo $_POST['minemployees'];}else{echo '0';}?>">~<input type = 'text' id = 'inputmaxemployees'name = 'maxemployees' value = "<?php if($postflag){echo $_POST['maxemployees'];}?>"></p>
+            <p>会社名:<input type = 'text' id = 'inputsearchcompany' name = 'searchcompany' value = "<?php if($postflag){echo htmlentities($_POST['searchcompany']);}?>"></p>
+            <p>従業員数:
+                <input type = 'text' id  = 'inputminemployees' class = 'validate[optional,custom[integer]]'name = 'minemployees' value = "<?php if($postflag){echo htmlentities($_POST['minemployees']); }else{echo '0';}?>" onselect = 'numbercheck(this)'>
+                ~<input type = 'text' id = 'inputmaxemployees' class = 'validate[optional,custom[integer]]' name = 'maxemployees' value = "<?php if($postflag){echo htmlentities($_POST['maxemployees']);}?>" onselect = 'numbercheck(this)' ></p>
             <?php
                 datein("設立日","",['delete','search']);
             ?> 
-            <button type = 'submit' class = 'btn' value='検索する' name = 'search'>検索</button>
+            <button type = 'submit' class = 'btn searchbutton' value='検索する' name = 'search'>検索</button>
             </form>
         </div>
     </div>
@@ -82,5 +84,19 @@
         parentelement.after(Element);
         return Element;
     }
+
+    var checknumber = true;
+
+    //入力チェック頑張るぞい
+    $(function(){
+        //<form>タグのidを指定
+        $("#formCheck").validationEngine(
+            'attach', {
+                promptPosition: "topRight"//エラーメッセージ位置の指定
+            }
+            
+        );
+    });
+
     
  </script>

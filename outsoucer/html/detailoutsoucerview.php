@@ -13,15 +13,15 @@
 ?>
 <br><br><br><br><br>
 <!-- <h2>アウトソーサーの詳細</h2> -->
-<h3>名前:<?php echo $row1['name']; ?></h3>
+<h3>名前:<?php echo htmlentities($row1['name']); ?></h3>
     <div class = "alldetail">
         <div class = "middletextsize detailbox">
-            <!-- <h3>名前:<?php echo $row1['name']; ?></h3> -->
-            <p>フリガナ:<?php echo $row1['furigana']; ?></p>
-            <p>生年月日:<?php echo $birthyear.'年'.$birthmonth.'月'.$birthday.'日'; ?></p>
-            <p>現住所:<?php echo $row1['address']; ?></p>
-            <p>メールアドレス:<?php echo $row1['mailaddress']; ?></p>
-            <p>電話番号:<?php echo $row1['phonenumber']; ?></p>
+            <!-- <h3>名前:<?php echo htmlentities($row1['name']); ?></h3> -->
+            <p>フリガナ:<?php echo htmlentities($row1['furigana']); ?></p>
+            <p>生年月日:<?php echo htmlentities($birthyear.'年'.$birthmonth.'月'.$birthday.'日'); ?></p>
+            <p>現住所:<?php echo htmlentities($settextaddress); ?></p>
+            <p>メールアドレス:<?php echo htmlentities($row1['mailaddress']); ?></p>
+            <p>電話番号:<?php echo htmlentities($row1['phonenumber']); ?></p>
             <p>職歴:<br>
                 <?php
                     echo $workhistorytext;
@@ -38,9 +38,9 @@
                 ?>
             </p>
             <p>志望理由:<br>
-                <div class = 'smalltext'><?php echo $row1['motivation']; ?></div>
+                <div class = 'smalltext'><?php echo htmlentities($row1['motivation']); ?></div>
             </p>
-            <p>入社日:<?php echo $joinyear.'年'.$joinmonth.'月'.$joinday.'日'; ?></p>
+            <p>入社日:<?php echo htmlentities($joinyear.'年'.$joinmonth.'月'.$joinday.'日'); ?></p>
             <!-- <p>外勤先:<?php echo $row['company']; ?></p> -->
             <form action = 'changeoutsoucer.php' method = 'post'>
                 <p><button type = 'submit' class = 'btn' name = 'changeform' >変更フォームへ</button></p>

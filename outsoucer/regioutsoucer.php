@@ -1,19 +1,7 @@
-<!-- <script>
-	function choicecompany(id,company){
-		console.log('チョイス')
-		parentelement = document.getElementById('subwindowbutton');
-		var companydisp = document.createElement('p');
-		companydisp.textContent = company;
-		companydisp.setAttribute('class','choicecompany');
-		parentelement.after(companydisp);
-		var idelement = document.createElement('input');
-		idelement.setAttribute('class','choicecompany');''
-		idelement.setAttribute('type','hidden');
-		idelement.setAttribute('name','companyid');
-		idelement.setAttribute('value',id);
-		parentelement.after(idelement);
-	}
-</script> -->
+<script src = '../js/jquery-3.6.4.min.js'></script>
+<link rel="stylesheet" href="../css/validationEngine.jquery.css">
+<script src="../js/jquery.validationEngine.js"></script>
+<script src="../js/jquery.validationEngine-ja.js" charset="UTF-8"></script>
 
 
 

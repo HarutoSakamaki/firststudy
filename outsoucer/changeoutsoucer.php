@@ -1,4 +1,9 @@
 
+<script src = '../js/jquery-3.6.4.min.js'></script>
+<link rel="stylesheet" href="../css/validationEngine.jquery.css">
+<script src="../js/jquery.validationEngine.js"></script>
+<script src="../js/jquery.validationEngine-ja.js" charset="UTF-8"></script>
+
 <?php
     require_once '../link.php';
     $database = database('staff');
@@ -15,7 +20,7 @@
         $count = 0;
         while(isset($_POST['license'.$count])){
             if($_POST['license'.$count]!=''){
-                $licensestack[] = $_POST['license'.$count];
+                $licensestack[] = htmlentities($_POST['license'.$count]);
             }
             $count++;
         }
@@ -24,7 +29,7 @@
         $count = 0;
         while(isset($_POST['workhistory'.$count])){
             if($_POST['workhistory'.$count]!=''){
-                $workhistorystack[] = $_POST['workhistory'.$count];
+                $workhistorystack[] = htmlentities($_POST['workhistory'.$count]);
             }
             $count++;
         }
@@ -89,19 +94,19 @@
         $workhistory = json_decode($row['workhistory'],true);
     }
     if(isset($_POST['change'])){
-        $settextname = $_POST['name'];
-        $settextfurigana = $_POST['furigana'];
-        $settextbirthyear = $_POST['birthyear'];
-        $settextbirthmonth = $_POST['birthmonth'];
-        $settextbirthday = $_POST['birthday'];
-        $settextprefectures = $_POST['prefectures'];
-        $settextaddress = $_POST['address'];
-        $settextmailaddress = $_POST['mailaddress'];
-        $settextphonenumber = $_POST['phonenumber'];
+        $settextname = htmlentities($_POST['name']);
+        $settextfurigana = htmlentities($_POST['furigana']);
+        $settextbirthyear = htmlentities($_POST['birthyear']);
+        $settextbirthmonth = htmlentities($_POST['birthmonth']);
+        $settextbirthday = htmlentities($_POST['birthday']);
+        $settextprefectures = htmlentities($_POST['prefectures']);
+        $settextaddress = htmlentities($_POST['address']);
+        $settextmailaddress = htmlentities($_POST['mailaddress']);
+        $settextphonenumber = htmlentities($_POST['phonenumber']);
         $count = 0;
         while(true){
             if(isset($_POST['workhistory'.$count])){
-                $settextworkhistory[] = $_POST['workhistory'.$count];
+                $settextworkhistory[] = htmlentities($_POST['workhistory'.$count]);
                 $count++;
             }else{
                 break;
@@ -110,33 +115,33 @@
         $count = 0;
         while(true){
             if(isset($_POST['license'.$count])){
-                $settextlicense[] = $_POST['license'.$count];
+                $settextlicense[] = htmlentities($_POST['license'.$count]);
                 $count++;
             }else{
                 break;
             }
         }
-        $settextmotivation = $_POST['motivation'];
-        $settextjoinyear = $_POST['joinyear'];
-        $settextjoinmonth = $_POST['joinmonth'];
-        $settextjoinday = $_POST['joinday'];
+        $settextmotivation = htmlentities($_POST['motivation']);
+        $settextjoinyear = htmlentities($_POST['joinyear']);
+        $settextjoinmonth = htmlentities($_POST['joinmonth']);
+        $settextjoinday = htmlentities($_POST['joinday']);
         /* $settextcompany = $_POST['company']; */
     }else{
-        $settextname = $row['name'];
-        $settextfurigana = $row['furigana'];
-        $settextbirthyear = $birtharray[0];
-        $settextbirthmonth = $birtharray[1];
-        $settextbirthday = $birtharray[2];
-        $settextprefectures = $row['prefectures'];
-        $settextaddress = $row['address'];
-        $settextmailaddress = $row['mailaddress'];
-        $settextphonenumber = $row['phonenumber'];
+        $settextname = htmlentities($row['name']);
+        $settextfurigana = htmlentities($row['furigana']);
+        $settextbirthyear = htmlentities($birtharray[0]);
+        $settextbirthmonth = htmlentities($birtharray[1]);
+        $settextbirthday = htmlentities($birtharray[2]);
+        $settextprefectures = htmlentities($row['prefectures']);
+        $settextaddress = htmlentities($row['address']);
+        $settextmailaddress = htmlentities($row['mailaddress']);
+        $settextphonenumber = htmlentities($row['phonenumber']);
         $settextworkhistory = $workhistory;
         $settextlicense = $license;
-        $settextmotivation = $row['motivation'];
-        $settextjoinyear = $joinarray[0];
-        $settextjoinmonth = $joinarray[1];
-        $settextjoinday = $joinarray[2];
+        $settextmotivation = htmlentities($row['motivation']);
+        $settextjoinyear = htmlentities($joinarray[0]);
+        $settextjoinmonth = htmlentities($joinarray[1]);
+        $settextjoinday = htmlentities($joinarray[2]);
         /* $settextcompany = $row['company']; */
     }
    

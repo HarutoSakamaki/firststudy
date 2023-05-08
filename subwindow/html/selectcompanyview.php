@@ -14,10 +14,10 @@
     <div><h2>外勤先の選択</h2></div>
     
     <div class = 'box left selectbox'>
-        <form action = 'selectcompany.php' method = post class = 'formsize'>
+        <form action = 'selectcompany.php' id = 'selectform' method = post class = 'formsize'>
             <p>一つ以上入力してください</p>
-            <p>会社名:<input type = 'text' id = 'inputsearchcompany' name = 'searchcompany' value = "<?php if($postflag){echo $_POST['searchcompany'];}?>"></p>
-            <p>従業員数:<input type = 'text' id  = 'inputminemployees' name = 'minemployees' value = "<?php if($postflag){echo $_POST['minemployees'];}else{echo '0';}?>">~<input type = 'text' id = 'inputmaxemployees'name = 'maxemployees' value = "<?php if($postflag){echo $_POST['maxemployees'];}?>"></p>
+            <p>会社名:<input type = 'text' id = 'inputsearchcompany' name = 'searchcompany' value = "<?php if($postflag){echo htmlentities($_POST['searchcompany']);}?>"></p>
+            <p>従業員数:<input type = 'text' id  = 'inputminemployees' class = 'validate[optional,custom[integer]]' name = 'minemployees' value = "<?php if($postflag){echo htmlentities($_POST['minemployees']);}else{echo '0';}?>">~<input type = 'text' id = 'inputmaxemployees' class = 'validate[optional,custom[integer]]' name = 'maxemployees' value = "<?php if($postflag){echo htmlentities($_POST['maxemployees']);}?>"></p>
             <!-- <?php
                 datein("設立日","",['delete','search']);
             ?>  -->
@@ -31,20 +31,20 @@
     
     
     
-        <p>仕事開始日の選択<input type = 'date' id = 'inputstartdate' value = '<?php echo $settextstartdate?>'></p>
-        <p>仕事終了予定日の選択<input type = 'date' id = 'inputenddate' value = '<?php echo $settextenddate?>'></p>
+        <p>仕事開始日の選択<input type = 'date' id = 'inputstartdate' value = '<?php echo htmlentities($settextstartdate)?>'></p>
+        <p>仕事終了予定日の選択<input type = 'date' id = 'inputenddate' value = '<?php echo htmlentities($settextenddate)?>'></p>
     </div>
     <div class = 'box left regibox'>
-        <form action = '../subwindow/selectcompany.php' method='post'>
+        <form action = '../subwindow/selectcompany.php'  method='post'>
 
         
-            <p>会社名:<?php echo $settextcompany ?></p>
-            <p>仕事開始日:<a id = 'asettextstartdate'></a></p>
-            <p>仕事終了予定日:<a id = 'asettextenddate'></a></p>
-            <input type = 'hidden' name = 'searchcompany' value = '<?php echo $settextcompany?>'>
+            <p>会社名:<?php echo htmlentities($settextcompany) ?></p>
+            <p>仕事開始日:<a id = 'asettextstartdate'  ></a></p>
+            <p>仕事終了予定日:<a id = 'asettextenddate'  ></a></p>
+            <input type = 'hidden' name = 'searchcompany' value = '<?php echo htmlentities($settextcompany)?>'>
             <input type = 'hidden' name = 'startdate' id = 'startdateform'>
             <input type = 'hidden' name = 'enddate' id = 'enddateform'>
-            <input type = 'hidden' name = 'companyid' id = 'companyidform' value = <?php echo $settextcompanyid;?> >
+            <input type = 'hidden' name = 'companyid' id = 'companyidform' value = <?php echo htmlentities($settextcompanyid);?> >
             <input type = 'submit' name = 'register' id = 'registerbutton' value = '登録'>
 
 
@@ -107,4 +107,14 @@
         var enddateelement = document.getElementById('inputenddate');
         enddateelement.value = sessionStorage.getItem('enddate');
     }
+
+    $(function(){
+        //<form>タグのidを指定
+        $("#selectform").validationEngine(
+            'attach', {
+                promptPosition: "topRight"//エラーメッセージ位置の指定
+            }
+        );
+    });
+
 </script>

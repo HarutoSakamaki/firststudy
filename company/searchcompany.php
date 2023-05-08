@@ -1,4 +1,10 @@
 
+<script src = '../js/jquery-3.6.4.min.js'></script>
+<link rel="stylesheet" href="../css/validationEngine.jquery.css">
+<script src="../js/jquery.validationEngine.js"></script>
+<script src="../js/jquery.validationEngine-ja.js" charset="UTF-8"></script>
+
+
 <?php
     require_once '../link.php';
     $database = database('staff');
@@ -43,7 +49,11 @@
 
     if(isset($_POST['search'])){
         $company = $_POST['searchcompany'];
-        $minemployees = $_POST['minemployees'];
+        if($_POST['minemployees']==''){
+            $minemployees = '0';
+        }else{
+            $minemployees = $_POST['minemployees'];
+        }
         $maxemployees = $_POST['maxemployees'];
         $minestablish = $_POST['minyear'].'-'.$_POST['minmonth'].'-'.$_POST['minday'];
         $maxestablish = $_POST['maxyear'].'-'.$_POST['maxmonth'].'-'.$_POST['maxday'];
@@ -63,7 +73,7 @@
         try{
             
             $query = 'SELECT * FROM company WHERE '.$companyterms.$employeesterms.$establishterms.' AND del = false AND id != 1 ORDER BY numberofemployees DESC';
-            /* echo $query; */
+            /* echo $query;  */
             $searchresult = $database -> query($query);
             $searchquery = $query;
             
@@ -87,11 +97,15 @@
             EDO;
         $searchquery = formquery($searchquery);
         while($row = mysqli_fetch_assoc($searchresult)){
+            $companytable = htmlentities($row['company']);
+            $numberofemployeestable = htmlentities($row['numberofemployees']);
+            $establishdatetable = htmlentities($row['establishdate']);
+
             $tabletext .= <<<EDO
                 <tr>
-                    <td>{$row['company']}</td><td>{$row['numberofemployees']}</td><td>{$row['establishdate']}</td>
+                    <td>{$companytable}</td><td>{$numberofemployeestable}</td><td>{$row['establishdate']}</td>
                     <td><form action = 'searchcompany.php' method=post>
-                        <input type = 'button' class='commonbutton' name='delete'value='削除' onClick = 'deleteform({$row['id']},"{$row['company']}")' id = '{$row['id']}' >
+                        <input type = 'button' class='commonbutton' name='delete'value='削除' onClick = 'deleteform({$row['id']},"{$companytable}")' id = '{$row['id']}' >
                         <input type= 'hidden' name=  'id' value =  '{$row['id']}'>
                         <input id = 'inputsearchquery' type='hidden' name=  'searchquery' value =  '{$searchquery}'>
                     </form></td>

@@ -84,10 +84,13 @@
                 
         $searchquery = formquery($searchquery);
         while($row = mysqli_fetch_assoc($searchresult)){
+            $setname = htmlentities($row['name']);
+            $setbirthday = htmlentities($row['birthday']);
+            $setjoincompanyday = htmlentities($row['joincompanyday']);
             $tabletext .= <<<EDO
                 <tr>
-                    <td>{$row['name']}</td><td>{$row['birthday']}</td><td>{$row['joincompanyday']}</td>
-                    <td id = "deltd"><form action = 'searchoutsoucer.php' method=post><input type = 'button'class = 'commonbutton'name='delete'value='削除' onClick = 'deleteform({$row['id']},"{$row['name']}")' id = '{$row['id']}'>
+                    <td>{$setname}</td><td>{$setbirthday}</td><td>{$setjoincompanyday}</td>
+                    <td id = "deltd"><form action = 'searchoutsoucer.php' method=post><input type = 'button'class = 'commonbutton'name='delete'value='削除' onClick = 'deleteform({$row['id']},"{$setname}")' id = '{$row['id']}'>
                     <input type='hidden' name=  'staffid' value =  '{$row['id']}'>
                     <input id = 'inputsearchquery' type='hidden' name=  'searchquery' value =  '{$searchquery}'>
                     </form></td>

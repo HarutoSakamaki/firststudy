@@ -1,10 +1,12 @@
+<script src = '../js/jquery-3.6.4.min.js'></script>
+<link rel="stylesheet" href="../css/validationEngine.jquery.css">
+<script src="../js/jquery.validationEngine.js"></script>
+<script src="../js/jquery.validationEngine-ja.js" charset="UTF-8"></script>
+
 
 <?php
 	require_once '../link.php';
 	$database = database('staff');
-
-?>
-<?php
 	
 	if(isset($_POST['addcompany'])){
 		/* 入力規則チェック */
@@ -21,11 +23,11 @@
 			
 			if($numberofemployeesflag == true){
 				try{
-					$numberringquery = "UPDATE numberring SET id = LAST_INSERT_ID(id + 1) WHERE tablename = 'company'";
-					$database -> query($numberringquery);
-					$numberringquery = 'SELECT id FROM numberring where tablename = \'company\' ';
-					$numberringid = mysqli_fetch_assoc($database -> query($numberringquery));
-					$info = '\''.$numberringid['id'].'\',\''.$_POST['companyname'].'\',\''.$regidate.'\',\''.$_POST['numberofemployees'].'\'';
+					$numberingquery = "UPDATE numbering SET numbering = LAST_INSERT_ID(numbering + 1) WHERE tablename = 'company'";
+					$database -> query($numberingquery);
+					$numberingquery = 'SELECT numbering FROM numbering where tablename = \'company\' ';
+					$numberingid = mysqli_fetch_assoc($database -> query($numberingquery));
+					$info = '\''.$numberingid['numbering'].'\',\''.$_POST['companyname'].'\',\''.$regidate.'\',\''.$_POST['numberofemployees'].'\'';
 					$query = "INSERT INTO company (id , company , establishdate, numberofemployees)VALUES(".$info.")";
 					$database -> query($query);
 					echo '会社を登録しました';
