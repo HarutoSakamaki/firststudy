@@ -8,15 +8,14 @@
         $id = $_POST['companyid'];
         $companyid = $id;
         $_SESSION['companyid'] = $id;
-        echo $id;
         try{
             $query = "SELECT * FROM company WHERE del = false AND id = ".$id;
             $result = $database -> query($query);
             $row1 = mysqli_fetch_assoc($result);
-            echo '詳細を取得しました';
+            /* echo '詳細を取得しました'; */
         }catch(Exception $e){
-            echo "エラー発生:" . $e->getMessage().'<br>';
-            echo "  詳細を取得できませんでした。";
+            /* echo "エラー発生:" . $e->getMessage().'<br>';
+            echo "  詳細を取得できませんでした。"; */
         }
         
         $establishdatearray = explode('-', $row1['establishdate']);
@@ -29,14 +28,52 @@
             $settextlocation = getpref($row1['prefectures']).' '.$row1['location'];
         }
         $businessdetailsarray = json_decode($row1['businessdetails'],true);
+        $bankarray = json_decode($row1['bank'],true);
         
 
         $businessdetailtext = '';
         $count = 0;
         while(isset($businessdetailsarray[$count])){
-            $businessdetailtext.=$count.'.'.$businessdetailsarray[$count].'<br>';
+            $businessdetailtext.=($count+1).'.'.$businessdetailsarray[$count].'<br>';
             $count++;
         }
+
+        $banktext = '';
+        $count = 0;
+        while(isset($bankarray[$count])){
+            $banktext.=($count+1).'.'.$bankarray[$count].'<br>';
+            $count++;
+        }
+
+        if($row1['averageage'] ==''){
+            $settextaverageage = '';
+        }else{
+            $settextaverageage = $row1['averageage'].'歳';
+        }
+        if($row1['closingmonth'] ==''){
+            $settextclosingmonth = '';
+        }else{
+            $settextclosingmonth = $row1['closingmonth'].'月';
+        }
+        $settextsales = $row1['sales'];
+        $settextdigit = '';
+        if($settextsales != ''){
+            $settextsales = $settextsales;
+            $digit =  1;
+            while($settextsales%10000 == 0 and $settextsales !=0){
+                $settextsales = $settextsales/10000;
+                $digit = $digit*10000;
+            }if($digit == 1){
+                $settextsales = $settextsales.'円';
+            }elseif($digit == 10000){
+                $settextsales = $settextsales.'万円';
+            }elseif($digit == 100000000){
+                $settextsales = $settextsales.'億円';
+            }elseif($digit == 1000000000000){
+                $settextsales = $settextsales.'兆円';
+            }
+        }
+
 
 
         //ここからworkplace系
@@ -57,11 +94,11 @@
                     WHERE id = {$_POST['historyid']};
                 EDO;
                 $result = $database -> query($query);
-                echo $query;
-                echo '終了日時を設定できました';
+                /* echo $query; */
+                /* echo '終了日時を設定できました'; */
             }catch(Exception $e){
-                echo "エラー発生:" . $e->getMessage().'<br>';
-                echo "  外勤先を取得できませんでした";
+                /* echo "エラー発生:" . $e->getMessage().'<br>';
+                echo "  外勤先を取得できませんでした"; */
             } 
         }
         if(isset($_POST['finishwork'])){
@@ -74,8 +111,8 @@
                 EDO;
                 $result = $database -> query($query);
             }catch(Exception $e){
-                echo "エラー発生:" . $e->getMessage().'<br>';
-                echo "  外勤先を取得できませんでした";
+                /* echo "エラー発生:" . $e->getMessage().'<br>';
+                echo "  外勤先を取得できませんでした"; */
             } 
         }
         if(isset($_POST['changeenddate'])){
@@ -88,8 +125,8 @@
                 EDO;
                 $result = $database -> query($query);
             }catch(Exception $e){
-                echo "エラー発生:" . $e->getMessage().'<br>';
-                echo "  外勤先を取得できませんでした";
+                /* echo "エラー発生:" . $e->getMessage().'<br>';
+                echo "  外勤先を取得できませんでした"; */
             }
         }
         if(isset($_POST['delete'])){
@@ -102,8 +139,8 @@
                 EDO;
                 $result = $database -> query($query);
             }catch(Exception $e){
-                echo "エラー発生:" . $e->getMessage().'<br>';
-                echo "  外勤先を取得できませんでした";
+                /* echo "エラー発生:" . $e->getMessage().'<br>';
+                echo "  外勤先を取得できませんでした"; */
             }
         }
 
@@ -111,23 +148,19 @@
         //ここからworkplace系
 
         try{
-            /* $query = 'SELECT  staffhistory.id as id, company.company as company, staffhistory.startdate as startdate, staffhistory.enddate as enddate,
-            staffname.name as staffname , staffhistory.working as working 
+            
+            $query = 'SELECT  staffhistory.id as id, company.company as company, staffhistory.startdate as startdate, staffhistory.enddate as enddate,
+            staffname.name as staffname  
             FROM staffhistory LEFT JOIN company ON staffhistory.companyid = company.id LEFT JOIN staffname ON staffname.id = staffhistory.staffid 
             WHERE staffhistory.companyid = '.$companyid.' AND staffhistory.del = 0 
-            ORDER BY startdate DESC'; */
-            $query = 'SELECT  staffhistory.id as id, company.company as company, staffhistory.startdate as startdate, staffhistory.enddate as enddate,
-            staffname.name as staffname , staffhistory.working as working 
-            FROM staffhistory LEFT JOIN company ON staffhistory.companyid = company.id LEFT JOIN staffname ON staffname.id = staffhistory.staffid 
-            WHERE staffhistory.companyid = '.$companyid.' AND working = true AND staffhistory.del = 0 
-            ORDER BY startdate DESC';
+            ORDER BY enddate DESC';
             /* echo $query.'</br>'; */
             $result = $database -> query($query);
             /* $row = mysqli_fetch_assoc($result); */
-            echo '外勤先を取得しました';
+            /* echo '外勤先を取得しました'; */
         }catch(Exception $e){
-            echo "エラー発生:" . $e->getMessage().'<br>';
-            echo "  外勤先を取得できませんでした";
+            /* echo "エラー発生:" . $e->getMessage().'<br>';
+            echo "  外勤先を取得できませんでした"; */
         }
 
         $settext = array();
@@ -135,75 +168,45 @@
         $nowsettextflag = false;
         $settextflag = false;
         while($row = mysqli_fetch_assoc($result)){
-    
-            if($row['working'] == true){
-                $nowsettext[] = ['company'=>$row['company'],'startdate'=>$row['startdate'],'enddate'=>$row['enddate'],'id'=>$row['id'],'staffname'=>$row['staffname']];
-                $nowsettextflag =true;
-            }else{
-                $settext[] = ['company'=>$row['company'],'startdate'=>$row['startdate'],'enddate'=>$row['enddate'],'id'=>$row['id'],'staffname'=>$row['staffname']];
-                $settextflag = true;
-            }
+            $settext[] = ['company'=>$row['company'],'startdate'=>$row['startdate'],'enddate'=>$row['enddate'],'id'=>$row['id'],'staffname'=>$row['staffname']];
+            $settextflag = true;
         }
 
-        $nowoutsoucertext = '';
-        if($nowsettextflag==false){
-            /* $nowoutsoucertext =  <<<EOD
-            現在所属しているアウトソーサーはいません。
-            <button id = 'subwindowbutton' onClick = 'disp("../subwindow/selectoutsoucer.php")' value = 'アウトソーサーの選択'>アウトソーサーの追加</button> 
-            EOD; */
-            $nowoutsoucertext = '現在所属しているアウトソーサーはいません';
-        }else{
-            /* $nowoutsoucertext .= '<button id = \'subwindowbutton\' onClick = \'disp("\../subwindow/selectoutsoucer.php")\' value = \'アウトソーサーの選択\'>アウトソーサーの追加</button>'; */
-            foreach($nowsettext as $nowsettext){
-                /* $nowoutsoucertext.=<<<EDO
-                    <div>
-                        <form action = 'detailcompany.php' method = 'post'>
-                            <div class = 'left'>名前:{$nowsettext['staffname']}  仕事開始日:{$nowsettext['startdate']}</div><br>
-                            <div class = 'left'><a>仕事終了予定日:{$nowsettext['enddate']}</div><div class = 'left'><input type = 'checkbox' class = 'checknextnext'>
-                            <input type = 'date' value = '{$nowsettext['enddate']}' min = '{$nowsettext['startdate']}' name= 'enddate'><input type = 'submit' name = 'changeenddate' value = 変更></div>
-                            </a><br>
-                        
-                            <div class = 'left'><input type = 'checkbox' class = 'checknext'><input type = 'submit'  name = 'finishwork' value = '仕事の完了'></div><div class = 'left'><input type = 'checkbox' class = 'checknext'><input type = 'submit' name ='delete' value = '削除'></div>
-                            <input type ='hidden' name = 'historyid' value = '{$nowsettext['id']}'>
-                            <input type = 'hidden' name = 'companyid' value = '{$companyid}'>
-                        </form>
-                    </div>
-                    EDO; */
-                $nowstaffname = htmlentities($nowsettext['staffname']);
-                $nowstartdate = htmlentities($nowsettext['startdate']);
-                $nowenddate = htmlentities($nowsettext['enddate']);
-                $nowoutsoucertext.= <<<EDO
-                    <div>
-                        <form action = 'detailcompany.php' method = 'post'>
-                            <div class = 'left'>名前:{$nowstaffname}  仕事開始日:{$nowstartdate}</div><br>
-                            <div class = 'left'><a>仕事終了予定日:{$nowenddate}</div>
-                        </form>
-                    </div>
-                    EDO;
-            }
-        }
         $historyoutsoucertext='';
         if($settextflag  == true){
-    
-            $historyoutsoucertext .= '<div><table border = \'1\'><tr><th>名前</th><th>仕事開始日</th><th>仕事終了日</th><th>履歴の削除</th></tr>';
+            $nowdate = new DateTime(date('Y-m-d'));
+            $historyoutsoucertext .= '<div><table class = \'workplacetable\'><tr><th>アウトソーサー</th><th>仕事開始日</th><th>仕事終了日</th><th>状態</th><th>履歴の削除</th></tr>';
             foreach($settext as $settext){
+                $setcompany = htmlentities($settext['company']);
                 $setstaffname = htmlentities($settext['staffname']);
                 $setstartdate = htmlentities($settext['startdate']);
                 $setenddate = htmlentities($settext['enddate']);
-                $historyoutsoucertext = $historyoutsoucertext.<<<EOD
+                $comparestart = new DateTime($setstartdate);
+                $compareend = new DateTime($setenddate);
+                if($comparestart > $nowdate){
+                    $status = '予定';
+                }elseif($compareend < $nowdate){
+                    $status = '完了';
+                }else{
+                    $status = '外勤中';
+                }
+                $historyoutsoucertext .=<<<EOD
                     <tr>
                         <td>{$setstaffname}</td>
                         <td>{$setstartdate}</td>
                         <td>{$setenddate}</td>
-                        <td><form action = 'detailcompany.php' method = 'post' class = 'margin0'>
-                            <input type = 'checkbox' class = 'checknext'><input type = 'submit' name = 'delete' value = '削除'><input type = 'hidden' name = 'historyid' value = '{$settext['id']}'>
+                        <td>{$status}</td>
+                        <td><form action = 'detailoutsoucer.php' method = 'post' class = 'margin0' id = 'delete{$settext['id']}' onsubmit="return deleteform()">
+                            <input type = 'submit' name = 'delete' value = '削除' >
+                            <input type = 'hidden' name = 'historyid' value = '{$settext['id']}'>
+                            <input type = 'hidden' name = 'companyid' value = '{$companyid}'>
                         </form></td>
                     </tr>
                 EOD;
             }
             $historyoutsoucertext .= '</table></div>';
         }else{
-            
+            $historyoutsoucertext .= '履歴がありません';
     
         }
 

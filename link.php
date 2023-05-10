@@ -12,7 +12,7 @@
 		return $link;
 	}
     
-    function datein($indate , $firstdatename , $postname , $initialvalue = [0,1,1,123456,12,31]){
+    function datein($indate , $firstdatename , $postname , $initialvalue = [0,1,1,123456,12,31],$minminyear = 0){
         $postnameflag = false;
         foreach($postname as $value){
             if(isset($_POST[$value])){
@@ -22,7 +22,7 @@
         $minyearset = $initialvalue[0];
         $minmonthset = $initialvalue[1];
         $mindayset = $initialvalue[2];
-        if($initialvalue[3]){
+        if(isset($initialvalue[3])){
             $maxyearset = date('Y');
         }
         $maxmonthset = $initialvalue[4];
@@ -30,21 +30,21 @@
         if($postnameflag==true){
             $minyearset = $_POST[$firstdatename.'minyear'];
             $minmonthset = $_POST[$firstdatename.'minmonth'];
-            $mindayset = $_POST[$firstdatename.'minday'];
+            /* $mindayset = $_POST[$firstdatename.'minday']; */
             $maxyearset = $_POST[$firstdatename.'maxyear'];
             $maxmonthset = $_POST[$firstdatename.'maxmonth'];
-            $maxdayset = $_POST[$firstdatename.'maxday'];
+            /* $maxdayset = $_POST[$firstdatename.'maxday']; */
         }else{
             $minyearset = 0;
             $minmonthset = 1;
-            $mindayset = 1;
+            /* $mindayset = 1; */
             $maxyearset = date('Y');
             $maxmonthset = 12;
-            $maxdayset = 31;
+            /* $maxdayset = 31; */
         }
         echo '<p>'.$indate.':<select id = \'input'.$firstdatename.'minyear\' name=\''.$firstdatename.'minyear\'>'. "\n".
             '<option value = \''.$minyearset.'\' >'.$minyearset.'</option>\n';
-        for($i = date('Y'); $i >= 0; $i--) {
+        for($i = date('Y'); $i >= $minminyear; $i--) {
             echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
         }
         echo '</select>年' . "\n";
@@ -54,15 +54,16 @@
             echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
         }
         echo '</select>月' . "\n";
-        echo '<select id = \'input'.$firstdatename.'minday\' name=\''.$firstdatename.'minday\'>' . "\n".
+        /* echo '<select id = \'input'.$firstdatename.'minday\' name=\''.$firstdatename.'minday\'>' . "\n".
             '<option value = \''.$mindayset.'\' >'.$mindayset.'</option>\n';
         for ($i = 1; $i <= 31; $i++) {
             echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
         }
-        echo '</select>日~' ;
+        echo '</select>日~' ; */
+        echo '~';
         echo '<select id = \'input'.$firstdatename.'maxyear\' name=\''.$firstdatename.'maxyear\'>'. "\n".
             '<option value = \''.$maxyearset.'\' >'.$maxyearset.'</option>\n';
-        for($i = date('Y'); $i >= 0; $i--) {
+        for($i = date('Y'); $i >= $minminyear; $i--) {
             echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
         }
         echo '</select>年' . "\n";
@@ -72,12 +73,13 @@
             echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
         }
         echo '</select>月' . "\n";
-        echo '<select id = \'input'.$firstdatename.'maxday\' name=\''.$firstdatename.'maxday\'>' . "\n".
+        /* echo '<select id = \'input'.$firstdatename.'maxday\' name=\''.$firstdatename.'maxday\'>' . "\n".
             '<option value = \''.$maxdayset.'\' >'.$maxdayset.'</option>\n';
         for ($i = 1; $i <= 30; $i++) {
             echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
         }
-        echo '</select>日</p>' . "\n";
+        echo '</select>日</p>' . "\n"; */
+        echo '</p>';
     }
     function uuid(){
         return preg_replace_callback(

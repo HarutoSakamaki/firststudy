@@ -13,13 +13,19 @@
         $company = $_POST['company'];
         $changecompany = ' company = \'' . $_POST['company'].'\' ';
         $changepresident = ' president = \'' .$_POST['president'].'\'';
+        $changesales = ' sales = \''.$_POST['sales']*$_POST['digit'].'\' ';
         $changeprefectures = ' prefectures = \''.$_POST['prefectures'].'\' ';
         $changelocation = ' location = \'' .$_POST['location'].'\'';
         $changenumberofemployees = ' numberofemployees = \'' .$_POST['numberofemployees'].'\'';
         $changeestablishdate = ' establishdate = \'' . $_POST['establishyear'].'-'.$_POST['establishmonth'].'-'.$_POST['establishday'].'\'';
-        $changehomepage = ' homepage = \'' .$_POST['homepage'].'\'';
+        $changecapital = ' capital = \''.$_POST['capital'].'\' ';
+        $changeclosingmonth = ' closingmonth = \''.$_POST['closingmonth'].'\' ';
+        $changeaverageage = ' averageage = \''.$_POST['averageage'].'\' ';
+        $changehomepage = ' homepage = \'' .$_POST['homepage'].'\' ';
+        
 
         $businessdetailsstack = array();
+        
         $count = 0;
         while(isset($_POST['businessdetails'.$count])){
             if($_POST['businessdetails'.$count]!=''){
@@ -28,11 +34,23 @@
             $count++;
         }
         $businessdetailsjson = json_encode($businessdetailsstack, JSON_UNESCAPED_UNICODE);
+
+        $count = 0;
+        $bankstack = array();
+        while(isset($_POST['bank'.$count])){
+            if($_POST['bank'.$count]!=''){
+                $bankstack[] = htmlentities($_POST['bank'.$count]);
+            }
+            $count++;
+        }
+        $bankjson = json_encode($bankstack,JSON_UNESCAPED_UNICODE);
         
         $changebusinessdetails = ' businessdetails = \'' .$businessdetailsjson.'\'';
-        $changechangedate = ' update_at = \''.date('Y-m-d').'\'';
-        $changequery = "UPDATE company SET ".$changecompany. ','.$changepresident. ','.$changeprefectures.','.$changelocation. ','
-            .$changenumberofemployees. ','.$changeestablishdate. ',' .$changehomepage. ','.$changebusinessdetails. ','.$changechangedate.
+        $changebank = ' bank = \''.$bankjson.'\' ';
+        $changechangedate = ' update_at = \''.date('Y-m-d H:i:s').'\'';
+        $changequery = "UPDATE company SET ".$changecompany. ','.$changepresident. ','.$changesales.','.$changeprefectures.','.$changelocation. ','
+            .$changenumberofemployees. ','.$changeestablishdate. ','.$changecapital.','.$changeaverageage.','.$changeclosingmonth.','.$changehomepage. ','
+            .$changebusinessdetails.','.$changebank.','.$changechangedate.
             ' WHERE del = false AND id = \''.$id.'\'';
 
         /* echo $changequery; */
@@ -74,6 +92,7 @@
         $establishmonth = $establishdatearray[1];
         $establishday = $establishdatearray[2];
         $businessdetails = json_decode($row['businessdetails'],true);
+        $bank = json_decode($row['bank'],true);
         $postflag = false;
     }
     if(isset($_POST['change'])){
@@ -89,26 +108,69 @@
                 break;
             }
         }
+        $count = 0;
+        while(true){
+            if(isset($_POST['bank'.$count])){
+                $settextbank[] = $_POST['bank'.$count];
+                $count++;
+            }else{
+                break;
+            }
+        }
+        
+
         $settextprefectures = $_POST['prefectures'];
+        
+        $settextsales = $_POST['sales'];
+        $settextdigit = $_POST['digit'];
+        
+
         $settextlocation = $_POST['location'];
         $settextnumberofemployees = $_POST['numberofemployees'];
         $settextestablishyear = $_POST['establishyear'];
         $settextestablishmonth = $_POST['establishmonth'];
         $settextestablishday = $_POST['establishday'];
+        $settextcapital = $_POST['capital'];
+        $settextaverageage = $_POST['averageage'];
+        $settextclosingmonth = $_POST['closingmonth'];
+        /* $settextbank = $_POST['bank']; */
         $settexthomepage = $_POST['homepage'];
     }else{
         $settextcompany = $row['company'];
         $settextpresident = $row['president'];
-        $settextcompany = $row['company'];
+        /* $settextsales = $row['sales']; */
         $settextbusinessdetails = $businessdetails;
+        $settextbank = $bank;
         $settextprefectures = $row['prefectures'];
         $settextlocation = $row['location'];
         $settextnumberofemployees = $row['numberofemployees'];
         $settextestablishyear = $establishdatearray[0];
         $settextestablishmonth = $establishdatearray[1];
         $settextestablishday = $establishdatearray[2];
+        $settextcapital = $row['capital'];
+        $settextaverageage = $row['averageage'];
+        $settextclosingmonth = $row['closingmonth'];
+        /* $settextbank = $row['bank']; */
         $settexthomepage = $row['homepage'];
+
+        $settextdigit = 1000;
+        $settextsales = $row['sales']/1000;
+        while($settextsales % 1000 == 0 and $settextsales != 0){
+            $settextsales = $settextsales/1000;
+            $settextdigit = $settextdigit*1000;
+        }
     }
+
+    if($settextdigit == '1000'){
+        $settextdigit2 = '千円';
+    }elseif($settextdigit == '1000000'){
+        $settextdigit2 = '百万円';
+    }elseif($settextdigit == '1000000000'){
+        $settextdigit2 = '十億円';
+    }elseif($settextdigit == '1000000000000'){
+        $settextdigit2 = '兆円';
+    }
+
 
     $businessdetailtext = '';
     $businessdetailtext.='<input type = \'hidden\' id = \'businessdetails-1\' >';
@@ -116,13 +178,32 @@
         $businessdetailtext.='<br id = \'businessdetailsbr0\'><input type = \'text\' name = \'businessdetails0\' value = \''.htmlentities($settextbusinessdetails[0]).'\' id = \'businessdetails0\' >';
         $count = 1;
     }else{
-        $count = 0;
+        $businessdetailtext.='<br id = \'businessdetailsbr0\'><input type = \'text\' name = \'businessdetails0\' value = \'\' id = \'businessdetails0\' >';
+        $count = 1;
     }
     while(isset($settextbusinessdetails[$count])){
         $businessdetailtext.='<br id = \'businessdetailsbr'.$count.'\'><input type = \'text\' name = \'businessdetails'.$count.'\' value = \''.htmlentities($settextbusinessdetails[$count]).'\' id = \'businessdetails'.$count.'\'>';
         $count++;
     }
     $businessdetailscount_json = json_encode($count);
+
+    $banktext = '';
+    $banktext.='<input type = \'hidden\' id = \'bank-1\' >';
+    if(isset($settextbank[0])){
+        $banktext.='<br id = \'bankbr0\'><input type = \'text\' name = \'bank0\' value = \''.htmlentities($settextbank[0]).'\' id = \'bank0\' >';
+        $count = 1;
+    }else{
+        $banktext.='<br id = \'bankbr0\'><input type = \'text\' name = \'bank0\' value = \'\' id = \'bank0\' >';
+        $count = 1;
+    }
+    while(isset($settextbank[$count])){
+        $banktext.='<br id = \'bankbr'.$count.'\'><input type = \'text\' name = \'bank'.$count.'\' value = \''.htmlentities($settextbank[$count]).'\' id = \'bank'.$count.'\'>';
+        $count++;
+    }
+    $bankcount_json = json_encode($count);
+
+
+
 
     $joindaytext = '';
 

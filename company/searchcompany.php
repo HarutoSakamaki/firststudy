@@ -55,8 +55,8 @@
             $minemployees = $_POST['minemployees'];
         }
         $maxemployees = $_POST['maxemployees'];
-        $minestablish = $_POST['minyear'].'-'.$_POST['minmonth'].'-'.$_POST['minday'];
-        $maxestablish = $_POST['maxyear'].'-'.$_POST['maxmonth'].'-'.$_POST['maxday'];
+        $minestablish = $_POST['minyear'].'-'.$_POST['minmonth'].'-1 ';
+        $maxestablish = $_POST['maxyear'].'-'.$_POST['maxmonth'].'-31 ';
         if($company != ""){
             $companyterms = ' company LIKE \'%'.$company.'%\' ';
         }else{
@@ -86,7 +86,7 @@
     if (isset($_POST['search']) or isset($_POST['delete'])){
         $tabletext .= <<<EDO
             
-            <table border="1">
+            <table border="1" class = 'table1'>
                 <tr>
                     <th>会社名</th>
                     <th>従業員数</th>

@@ -30,6 +30,15 @@
                     let businessdetailsfunc = inputfield('businessdetails',<?php echo $businessdetailscount_json; ?>);
                 </script>
             </p>
+            <p>売上高:<input type = 'number' name = 'sales' class = 'validate[optional,custom[integer]]' value = '<?php echo $settextsales; ?>'><select name = 'digit'>
+                    <option value = '<?php echo $settextdigit?>'><?php echo $settextdigit2 ?></option>
+                    <option value = '1000'>千円</option>
+                    <option value = '1000000'>百万円</option>
+                    <option value = '1000000000'>十億円</option>
+                    <option value = '1000000000000'>兆円</option>
+
+                </select>
+            </p>
             <p>本社所在地: <br>
             都道府県
             <select name = 'prefectures'>
@@ -42,8 +51,34 @@
             <p>設立日:
                 <?php
                     echo $joindaytext;
-                    
                 ?>
+            </p>
+            <p>資本金:<input type = 'number' name = 'capital' class = 'validate[optional,custom[integer]]' value = '<?php echo $settextcapital; ?>' ></p>
+            <p>平均年齢:<input type = 'text' name = 'averageage' class = 'validate[optional,custom[number]]' value = '<?php echo htmlentities($settextaverageage); ?>'>歳</p>
+
+            <!-- <p>決算月:<input type = 'number' name = 'closingmonth' class = 'validate[optional,custom[integer]]' value = '<?php echo htmlentities($settextclosingmonth); ?>'></p> -->
+            <p>決算月:<select name = 'closingmonth' class = 'validate[optional,custom[integer]]'></p>
+                <option value = '<?php echo htmlentities($settextclosingmonth); ?>'><?php echo htmlentities($settextclosingmonth);?>月</option>
+                <option value = '1'>1月</option>
+                <option value = '2'>2月</option>
+                <option value = '3'>3月</option>
+                <option value = '4'>4月</option>
+                <option value = '5'>5月</option>
+                <option value = '6'>6月</option>
+                <option value = '7'>7月</option>
+                <option value = '8'>8月</option>
+                <option value = '9'>9月</option>
+                <option value = '10'>10月</option>
+                <option value = '11'>11月</option>
+                <option value = '12'>12月</option>
+            </select>
+            <p>取引銀行:<input type = "button" class = 'commonbutton' value ='入力欄を増やす' id = 'bankincreasetext'><input type = "button" class = 'commonbutton' value ='入力欄を減らす' id = 'bankdecreasetext'>
+                <?php
+                    echo $banktext;
+                ?>
+                <script>
+                    let bankfunc = inputfield('bank',<?php echo $bankcount_json; ?>);
+                </script>
             </p>
             <p>ホームページアドレス: <input type = 'text' class = 'validate[optional,custom[url]]' name = 'homepage' value = <?php echo htmlentities($settexthomepage); ?>></p>
             <input type = 'hidden' name = 'id' value = <?php echo $id; ?>>

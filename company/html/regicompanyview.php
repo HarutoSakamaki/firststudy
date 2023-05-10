@@ -30,7 +30,7 @@
 	<div class = "boxcontent">
 		<form action="regicompany.php" method="post" id = "regicompanyform">
 			<p> 会社名: <input type="text" class = "validate[required]" name="companyname" value="<?php if(isset($_POST['addcompany'])){echo htmlentities($_POST['companyname']);}?>"></p>
-			<p> 従業員数: <input type="text" class = "validate[required,custom[integer]]" name="numberofemployees" value="<?php if(isset($_POST['addcompany'])){echo htmlentities($_POST['numberofemployees']);}?>"></p>
+			<p> 従業員数: <input type="number" class = "validate[required,custom[integer]]" name="numberofemployees" value="<?php if(isset($_POST['addcompany'])){echo htmlentities($_POST['numberofemployees']);}?>"></p>
 			
 			<?php
 				echo $birthdaytext;

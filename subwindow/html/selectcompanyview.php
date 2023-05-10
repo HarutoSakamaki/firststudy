@@ -15,41 +15,14 @@
     
     <div class = 'box left selectbox'>
         <form action = 'selectcompany.php' id = 'selectform' method = post class = 'formsize'>
-            <p>一つ以上入力してください</p>
             <p>会社名:<input type = 'text' id = 'inputsearchcompany' name = 'searchcompany' value = "<?php if($postflag){echo htmlentities($_POST['searchcompany']);}?>"></p>
-            <p>従業員数:<input type = 'text' id  = 'inputminemployees' class = 'validate[optional,custom[integer]]' name = 'minemployees' value = "<?php if($postflag){echo htmlentities($_POST['minemployees']);}else{echo '0';}?>">~<input type = 'text' id = 'inputmaxemployees' class = 'validate[optional,custom[integer]]' name = 'maxemployees' value = "<?php if($postflag){echo htmlentities($_POST['maxemployees']);}?>"></p>
-            <!-- <?php
-                datein("設立日","",['delete','search']);
-            ?>  -->
+            <p>従業員数:<input type = 'number' id  = 'inputminemployees' class = 'validate[optional,custom[integer]]' name = 'minemployees' value = "<?php if($postflag){echo htmlentities($_POST['minemployees']);}else{echo '0';}?>">
+            ~<input type = 'text' id = 'inputmaxemployees' class = 'validate[optional,custom[integer]]' name = 'maxemployees' value = "<?php if($postflag){echo htmlentities($_POST['maxemployees']);}?>"></p>
+            
             <button type = 'submit' class = 'btn' value='検索する' name = 'search'>検索</button>
         </form>
-    
-    <!-- <?php
-        echo $tabletext;
-    ?> -->
-        
-    
-    
-    
-        <p>仕事開始日の選択<input type = 'date' id = 'inputstartdate' value = '<?php echo htmlentities($settextstartdate)?>'></p>
-        <p>仕事終了予定日の選択<input type = 'date' id = 'inputenddate' value = '<?php echo htmlentities($settextenddate)?>'></p>
     </div>
-    <div class = 'box left regibox'>
-        <form action = '../subwindow/selectcompany.php'  method='post'>
-
-        
-            <p>会社名:<?php echo htmlentities($settextcompany) ?></p>
-            <p>仕事開始日:<a id = 'asettextstartdate'  ></a></p>
-            <p>仕事終了予定日:<a id = 'asettextenddate'  ></a></p>
-            <input type = 'hidden' name = 'searchcompany' value = '<?php echo htmlentities($settextcompany)?>'>
-            <input type = 'hidden' name = 'startdate' id = 'startdateform'>
-            <input type = 'hidden' name = 'enddate' id = 'enddateform'>
-            <input type = 'hidden' name = 'companyid' id = 'companyidform' value = <?php echo htmlentities($settextcompanyid);?> >
-            <input type = 'submit' name = 'register' id = 'registerbutton' value = '登録'>
-
-
-        </form>
-    </div>
+    
 
     <?php
         echo $tabletext;
@@ -62,59 +35,6 @@
 
 
 <script>
-    settextstartenddate();
-    window.addEventListener('DOMContentLoaded', function(){
-    // 0.5秒ごとに実行
-        setInterval(() => {
-            startenddatereflect();
-        }, 100);
-    });
-
-    function startenddatereflect(){
-        var startdateelement = document.getElementById('inputstartdate');
-        var astartdateelement = document.getElementById('asettextstartdate');
-        var startdateform = document.getElementById('startdateform');
-        startdateform.value = startdateelement.value;
-        astartdateelement.textContent = startdateelement.value;
-        window.sessionStorage.setItem('startdate',startdateelement.value);
-        var enddateelement = document.getElementById('inputenddate');
-        var aenddateelement = document.getElementById('asettextenddate');
-        var enddateform = document.getElementById('enddateform');
-        enddateform.value = enddateelement.value;
-        aenddateelement.textContent = enddateelement.value;
-        window.sessionStorage.setItem('enddate',enddateelement.value);
-        var companyform = document.getElementById('companyidform');
-        var submitbutton = document.getElementById('registerbutton');
-        if(startdateelement.value != ''){
-            enddateelement.setAttribute('min',startdateelement.value);
-        }else{
-            enddateelement.setAttribute('min','');
-        }
-        if(enddateelement.value != ''){
-            startdateelement.setAttribute('max',enddateelement.value);
-        }else{
-            startdateelement.setAttribute('max','');
-        }
-        if(startdateform.value !='' && enddateform.value !='' && companyform.value !=''){
-            submitbutton.disabled = false;
-        }else{
-            submitbutton.disabled = true;
-        }
-    }
-    function settextstartenddate(){
-        var startdateelement = document.getElementById('inputstartdate');
-        startdateelement.value = sessionStorage.getItem('startdate');
-        var enddateelement = document.getElementById('inputenddate');
-        enddateelement.value = sessionStorage.getItem('enddate');
-    }
-
-    $(function(){
-        //<form>タグのidを指定
-        $("#selectform").validationEngine(
-            'attach', {
-                promptPosition: "topRight"//エラーメッセージ位置の指定
-            }
-        );
-    });
+    
 
 </script>

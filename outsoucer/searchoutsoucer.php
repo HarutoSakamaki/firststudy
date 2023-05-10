@@ -5,8 +5,9 @@
     
     if(isset($_POST['delete'])){
         $id = $_POST['staffid'];
+        $changeup_date = ' update_at = \''.date("Y-m-d H:i:s").'\' ';
         try{
-            $query = "UPDATE staffname SET del = true where id = '{$id}'";
+            $query = "UPDATE staffname SET del = true".$changeup_date." where id = '{$id}'";
             $database -> query($query);
             echo $query;
             echo '削除しました';
@@ -37,10 +38,10 @@
 
     if(isset($_POST['search'])){
         $searchname = $_POST['searchname'];
-        $minbirth = $_POST['birthminyear'].'-'.$_POST['birthminmonth'].'-'.$_POST['birthminday'];
-        $maxbirth = $_POST['birthmaxyear'].'-'.$_POST['birthmaxmonth'].'-'.$_POST['birthmaxday'];
-        $minjoin = $_POST['joinminyear'].'-'.$_POST['joinminmonth'].'-'.$_POST['joinminday'];
-        $maxjoin = $_POST['joinmaxyear'].'-'.$_POST['joinmaxmonth'].'-'.$_POST['joinmaxday'];
+        $minbirth = $_POST['birthminyear'].'-'.$_POST['birthminmonth'].'-0 ';
+        $maxbirth = $_POST['birthmaxyear'].'-'.$_POST['birthmaxmonth'].'-31 ';
+        $minjoin = $_POST['joinminyear'].'-'.$_POST['joinminmonth'].'-0 ';
+        $maxjoin = $_POST['joinmaxyear'].'-'.$_POST['joinmaxmonth'].'-31 ';
        /*  $searchcompany = $_POST['company']; */
         if($searchname != ""){
             $searchnameterms = ' name LIKE \'%'.$searchname.'%\' ';
@@ -51,12 +52,7 @@
         $birthterms = ' AND birthday BETWEEN DATE(\''.$minbirth.'\') and DATE(\''.$maxbirth.'\') ';
         $jointerms = ' AND joincompanyday BETWEEN DATE(\''.$minjoin.'\') and DATE(\''.$maxjoin.'\') ';
         
-        /* if($searchcompany != ""){
-            $companyterms = ' AND company LIKE \'%'.$searchcompany.'%\' ';
-        }else{
-            $companyterms = ' AND company LIKE \'%\' ';
-            $companyterms = '';
-        }  */
+        
         
         try{
             $query = 'SELECT * FROM staffname 
@@ -72,7 +68,7 @@
     $tabletext= '';
     if(isset($_POST['delete']) or isset($_POST['search'])){
         $tabletext.= <<<EDO
-            <table border="1">
+            <table border="1" class = 'table1'>
                 <tr>
                     <th>名前</th>
                     <th>生年月日</th>

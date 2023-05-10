@@ -38,8 +38,8 @@
         $changeworkhistory = ' workhistory = \'' .$workhistoryjson.'\'';
         $changemotivation = ' motivation = \'' .$_POST['motivation'].'\'';
         $changejoincompanyday = ' joincompanyday = \'' .$_POST['joinyear'].'-'.$_POST['joinmonth'].'-'.$_POST['joinday'].'\'';
-        /* $changecompany = 'company=\''.$_POST['companyid'].'\''; */
-        $changechangedate = ' update_at = \''.date('Y-m-d').'\'';
+        
+        $changechangedate = ' update_at = \''.date("Y-m-d H:i:s").'\'';
         $changequery = "UPDATE staffname SET ".$changefurigana. ','.$changebirthday. ','.$changeaddress. ','.$changeprefectures.','
             .$changemailaddress. ','.$changephonenumber. ',' .$changeworkhistory. ','.$changelicense. ','.$changemotivation. ','.$changejoincompanyday. ','
             .$changechangedate.' WHERE id = '.$id;
@@ -145,22 +145,7 @@
         /* $settextcompany = $row['company']; */
     }
    
-    /* if(isset($_POST['changeform'])){
-        $query = "SELECT * FROM company WHERE del = false AND id = ".$settextcompany;
-        $result = $database -> query($query);
-        $rowcompany = mysqli_fetch_assoc($result);
-        print_r($rowcompany);
-        if($rowcompany != null){
-            $postcompany = $rowcompany['company'];
-            $postid = $rowcompany['id'];
-        }else{
-            $postcompany = '無し';
-            $postid = '1';
-        }
-    }else{
-        $postcompany = $_POST['company'];
-        $postid = $_POST['companyid'];
-    } */
+    
     $birthdaytext = '';
 
     $birthdaytext.= '<select name=\'birthyear\'>'."\n".
@@ -188,7 +173,8 @@
         $workhistorytext.='<br id=\'workhistorybr0\'><input type = \'text\' name = \'workhistory0\' value = \''.$settextworkhistory[0].'\' id = \'workhistory0\' >';
         $count = 1;
     }else{
-        $count = 0;
+        $workhistorytext.='<br id=\'workhistorybr0\'><input type = \'text\' name = \'workhistory0\' value = \'\' id = \'workhistory0\' >';
+        $count = 1;
     }
     while(isset($settextworkhistory[$count])){
         $workhistorytext .='<br id=\'workhistorybr'.$count.'\'><input type = \'text\' name = \'workhistory'.$count.'\' value = \''.$settextworkhistory[$count].'\' id = \'workhistory'.$count.'\'>';
@@ -203,7 +189,8 @@
         $licensetext.='<br id = \'licensebr0\'><input type = \'text\' name = \'license0\' value = \''.$settextlicense[0].'\' id = \'license0\' >';
         $count = 1;
     }else{
-        $count = 0;
+        $licensetext.='<br id = \'licensebr0\'><input type = \'text\' name = \'license0\' value = \'\' id = \'license0\' >';
+        $count = 1;
     }
     while(isset($settextlicense[$count])){
         $licensetext.='<br id = \'licensebr'.$count.'\'><input type = \'text\' name = \'license'.$count.'\' value = \''.$settextlicense[$count].'\' id = \'license'.$count.'\'>';

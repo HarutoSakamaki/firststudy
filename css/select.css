@@ -41,7 +41,7 @@ table{
     background-color: rgba(151, 199, 247, 0.945);
   }
   table tr:nth-child(even){
-    background-color: rgba(247, 154, 154, 0.979);
+    background-color: rgba(248, 246, 246, 0.945);
   }
   .left{
     vertical-align: top;

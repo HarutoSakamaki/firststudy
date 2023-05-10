@@ -28,8 +28,8 @@
                 名前:<input type = 'text' id = 'inputsearchname' name = 'searchname' value = "<?php if($postflag){echo htmlentities($_POST['searchname']);}?>"><br>
                 
                 <?php
-                    datein('生年月日','birth',['delete','search']);
-                    datein('入社日','join',['delete','search']);
+                    datein('生年月日','birth',['delete','search'],[0,1,1,2000,1,1],1900);
+                    datein('入社日','join',['delete','search'],[0,1,1,2000,1,1],1900);
                 ?>
                 <!-- 外勤先企業(一部でも):<input type = 'text' name = 'company' id = 'companyname' value = '<?php if($postflag){echo htmlentities($_POST['company']);}?>'><br><br> -->
                 <button type = 'submit' class = 'btn' name = 'search' value='検索'>検索</button>

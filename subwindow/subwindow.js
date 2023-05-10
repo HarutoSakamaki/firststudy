@@ -18,4 +18,6 @@ function disp(url){
 	/* var SubWinOpt = "width=400,height=300,top=445,left=860"; */
 	console.log(SubWinOpt);
 	window.open(url,"_blank", SubWinOpt);
+	/* window.open(url,target = this.target,SubWinOpt); */
+	return false;
 }

@@ -1,34 +1,29 @@
-.detailbox{
-    margin:  0 auto;
-    /* width : 80%; */
-    width:fit-content; 
-    /* display: inline-block;
-    text-align: center; */
-    
-    background-color : whitesmoke;
-    
-}
-h3{
-    margin:0px;
-    font-size:35px;
+  
+  .detailbox{
+      margin:  0 auto;
+      width:fit-content; 
+      
+  }
+
+  h3{
     position: relative;
-    display: inline-block;
-    padding: 1rem 2rem 1rem 4rem;
-    color: #fff;
-    border-radius: 100vh 0 0 100vh;
-    background: #fa4141;
-    margin-left : 30px;
+    padding: 0.35em 0.5em;
+    background: #b6faff;
+    color: #393939;
+    font-size : 25px;
+    margin-bottom : 20px;
   }
   
   h3:before{
+    content: " ";
     position: absolute;
-    top: calc(50% - 7px);
-    left: 10px;
-    width: 14px;
-    height: 14px;
-    content: '';
-    border-radius: 50%;
-    background: #fff;
+    top: -16px;
+    left: 0;
+    width: -webkit-calc(100% - 16px);
+    width: calc(100% - 16px);
+    height: 0;
+    border: solid 8px transparent;
+    border-bottom-color: #b2eef0;
   }
 
   .detailbox .detailboxcontent{
@@ -36,23 +31,179 @@ h3{
   }
 
   .alldetail{
+    margin: 0 auto;
+    width : 90%;
+  }
+  .alldetailcontent{
     display: flex;
     margin: 0 auto;
-    width : 80%;
+
   }
 
   .workplacebox{
-    width : 50%;
-    background-color : #ffb6c1;
+    width : 40%;
     padding : 10px;
+    padding-top : 0px;
   }
-  .detailbox{
-    width:50%;
-    margin-right: 0;
+
+  #addcompanyform{
+    margin-bottom:0px;
   }
-  table tr:nth-child(odd){
-    background-color: rgba(171, 207, 243, 0.973);
-  }
-  table tr:nth-child(even){
-    background-color: rgb(243, 241, 241);
-  }
+ 
+  
+
+  .nowbox {
+    padding: 0.5em 1em;
+    margin: 2em 0;
+    /* color: #00BCD4; */
+    color: #000607;
+    background: #e4fcff;/*背景色*/
+    border-top: solid 6px #1dc1d6;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.32);/*影*/
+}
+.detailbox{
+  padding: 0.5em 1em;
+  width:60%;
+  background: #f4f4f4;
+  border-left: solid 6px #16d9f3;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.33);
+}
+.detailbox p {
+  border-bottom: 1px solid rgb(0, 204, 255);
+  margin: 0; 
+  padding: 5px;
+}
+
+/* 通常ボタン */
+.btn{
+  font-size:25px;
+}
+
+/* addcompanyボタン */
+
+.addcompany {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 240px;
+  padding: 5px 10px;
+  color: #FFF;
+  transition: 0.3s ease-in-out;
+  font-weight: 600;
+  background: #6bdcff;
+  filter: drop-shadow(0px 2px 4px #ccc);
+  border-radius: 3px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.addcompany:after {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transition: 0.2s ease-in-out;
+  /* content: "\f0da"; */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  transform: translateY(-50%);
+}
+
+.addcompany:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px -5px rgb(0 0 0 / 15%), 0 0 5px rgb(0 0 0 / 10%);
+}
+
+
+/* detailtableです */
+.detailtable tr td, .detailtable tr th{
+  border-bottom: 1px solid rgb(16, 214, 240);
+  vertical-align: top;
+  padding : 7px;
+}
+.detailtable tr th{
+  background-color : rgb(212, 245, 250);
+  font-weight:400;
+  vertical-align: middle;
+}
+
+.detailtable{
+  border-collapse : collapse;
+  width:100%;
+  font-size:20px;
+}
+.regibox{
+  padding: 0.5em 1em;
+  color: #070707;
+  background: #c6e4ff;
+  border-bottom: solid 6px #aac5de;
+  border-radius: 9px;
+}
+
+.regitable{
+  width:100%;
+  margin-bottom : 20px;
+}
+.regitable tr td{
+  padding : 5px;
+  position: relative;
+}
+
+/* workplacetable */
+
+.workplacetable{
+  width: 100%;
+  border-collapse:separate;
+  border-spacing: 0;
+  margin-top : 10px;
+}
+
+.workplacetable th:first-child{
+  border-radius: 5px 0 0 0;
+}
+
+.workplacetable th:last-child{
+  border-radius: 0 5px 0 0;
+  border-right: 1px solid #3c6690;
+}
+
+.workplacetable th{
+  text-align: center;
+  color:white;
+  background: linear-gradient(#829ebc,#225588);
+  border-left: 1px solid #3c6690;
+  border-top: 1px solid #3c6690;
+  border-bottom: 1px solid #3c6690;
+  box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;
+  width: 25%;
+  padding: 10px 0;
+}
+
+.workplacetable td{
+  text-align: center;
+  border-left: 1px solid #a8b7c5;
+  border-bottom: 1px solid #a8b7c5;
+  border-top:none;
+  box-shadow: 0px -2px 3px 1px #797878 inset;
+  width: 25%;
+  padding: 10px 0;
+}
+
+.workplacetable td:last-child{
+  border-right: 1px solid #a8b7c5;
+}
+
+.workplacetable tr:last-child td:first-child {
+  border-radius: 0 0 0 5px;
+}
+
+.workplacetable tr:last-child td:last-child {
+  border-radius: 0 0 5px 0;
+}
+.workplacetable tr:nth-child(odd){
+  background-color: #b9edfd
+}
+.workplacetable tr:nth-child(even){
+  background-color: #c3d1fda4
+}

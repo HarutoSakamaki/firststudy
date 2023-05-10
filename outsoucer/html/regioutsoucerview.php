@@ -71,69 +71,6 @@
 
 <script>
 
-	function choicecompany(id,company){
-		console.log('チョイス')
-		parentelement = document.getElementById('subwindowbutton');
-		var companydisp = document.createElement('p');
-		companydisp.textContent = company;
-		companydisp.setAttribute('class','choicecompany');
-		parentelement.after(companydisp);
-		var idelement = document.createElement('input');
-		idelement.setAttribute('class','choicecompany');''
-		idelement.setAttribute('type','hidden');
-		idelement.setAttribute('name','companyid');
-		idelement.setAttribute('value',id);
-		parentelement.after(idelement);
-	}
-
-	function disp(url){
-		console.log("クリック");
-		var subw = 800;   // サブウインドウの横幅
-		var subh = 600;   // サブウインドウの高さ
-		// 表示座標の計算
-		console.log(screen.availWidth);
-		
-		var subx = ( screen.width  - subw ) / 2;   // X座標
-		var suby = ( screen.width - subh ) / 2;   // Y座標
-		console.log(subx);
-
-		// サブウインドウのオプション文字列を作る
-		var SubWinOpt = " width=" + subw + ", height=" + subh + ", top=" + suby + ", left=" + subx+ "";
-		/* var SubWinOpt = "width=400,height=300,top=445,left=860"; */
-		console.log(SubWinOpt);
-		window.open(url,"_blank", SubWinOpt);
-	}
-	/* choicecompany('id','company'); */
-	function choicecompany(id,company){
-		/* ここからはリムーブコード */
-		var removeelements = document.getElementsByClassName('choicecompany');
-		for (var i = 0; i < removeelements.length; i++) {
-			var e = removeelements[i];
-			if (e) {
-				e.parentNode.removeChild(e);
-			}
-		}
-		/* 次からは追加コード */
-
-		parentelement = document.getElementById('subwindowbutton');
-		var companydisp = document.createElement('p');
-		companydisp.textContent = company;
-		companydisp.setAttribute('class','choicecompany');
-		parentelement.after(companydisp);
-		var idelement = document.createElement('input');
-		idelement.setAttribute('class','choicecompany');''
-		idelement.setAttribute('type','hidden');
-		idelement.setAttribute('name','companyid');
-		idelement.setAttribute('value',id);
-		parentelement.after(idelement);
-		var companyelement = document.createElement('input');
-		companyelement.setAttribute('class','choicecompany');''
-		companyelement.setAttribute('type','hidden');
-		companyelement.setAttribute('name','company');
-		companyelement.setAttribute('value',company);
-		parentelement.after(companyelement);
-	}
-
 
 	$(function(){
         //<form>タグのidを指定

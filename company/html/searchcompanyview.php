@@ -23,8 +23,8 @@
             <!-- <p>一つ以上入力してください</p> -->
             <p>会社名:<input type = 'text' id = 'inputsearchcompany' name = 'searchcompany' value = "<?php if($postflag){echo htmlentities($_POST['searchcompany']);}?>"></p>
             <p>従業員数:
-                <input type = 'text' id  = 'inputminemployees' class = 'validate[optional,custom[integer]]'name = 'minemployees' value = "<?php if($postflag){echo htmlentities($_POST['minemployees']); }else{echo '0';}?>" onselect = 'numbercheck(this)'>
-                ~<input type = 'text' id = 'inputmaxemployees' class = 'validate[optional,custom[integer]]' name = 'maxemployees' value = "<?php if($postflag){echo htmlentities($_POST['maxemployees']);}?>" onselect = 'numbercheck(this)' ></p>
+                <input type = 'number' id  = 'inputminemployees' class = 'validate[optional,custom[integer]]'name = 'minemployees' value = "<?php if($postflag){echo htmlentities($_POST['minemployees']); }else{echo '0';}?>" onselect = 'numbercheck(this)'>
+                ~<input type = 'number' id = 'inputmaxemployees' class = 'validate[optional,custom[integer]]' name = 'maxemployees' value = "<?php if($postflag){echo htmlentities($_POST['maxemployees']);}?>" onselect = 'numbercheck(this)' ></p>
             <?php
                 datein("設立日","",['delete','search']);
             ?> 

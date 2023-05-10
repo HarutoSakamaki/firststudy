@@ -12,38 +12,79 @@
     include("../header.php");
 ?>
 <br><br><br><br><br>
-<!-- <h2>登録会社の詳細</h2> -->
-<h3>会社名:<?php echo htmlentities($row1['company']); ?></h3>
-    <div class = "alldetail">
-        <div class = "middletextsize detailbox">
-            <!-- <h3>会社名:<?php echo htmlentities($row1['company']); ?></h3> -->
-            <div class = "detailboxcontent">
-                <p>社長名:<?php echo htmlentities($row1['president']); ?></p>
-                
-                <p>事業内容:<br>
-                    <?php 
-                        echo $businessdetailtext;
-                    ?>
-                </p>
-                <p>本社住所:<?php echo htmlentities($settextlocation); ?></p>
-                <p>従業員数:<?php echo htmlentities($row1['numberofemployees']); ?></p>
-                <p>設立日:<?php echo htmlentities($eastablishyear.'年'.$establishmonth.'月'.$establishday.'日'); ?></p>
-                <p>ホームページ:<?php echo '<a href = '.htmlentities($row1['homepage']).'>'.htmlentities($row1['location']).'</a>';?></p>
 
-                <form action = 'changecompany.php' method = 'post'>
-                    <p><button type = 'submit' class = 'btn' name = 'changeform' >変更フォームへ</button></p>
-                    <input type = 'hidden' name = 'company' value = '<?php echo htmlentities($company); ?>'>
-                    <input type = 'hidden' name = 'id' value = '<?php echo $id; ?>'>
-                </form>
+
+    <div class = "alldetail">
+        <h3>会社名:<?php echo htmlentities($row1['company']); ?></h3>
+        <div class = "alldetailcontent">
+            <div class = 'floatclear'></div>
+            <div class = "middletextsize detailbox">
+                <div class = "detailboxcontent">
+                    
+                    <table class = 'detailtable'>
+                        <tr>
+                            <th>会社名</th>
+                            <td><?php echo htmlentities($row1['company']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>社長名</th>
+                            <td><?php echo htmlentities($row1['president']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>事業内容</th>
+                            <td><?php echo $businessdetailtext;?></td>
+                        </tr>
+                        <tr>
+                            <th>売上高</th>
+                            <td><?php echo htmlentities($settextsales); ?></td>
+                        </tr>
+                        <tr>
+                            <th>本社住所</th>
+                            <td><?php echo htmlentities($settextlocation); ?></td>
+                        </tr>
+                        <tr>
+                            <th>従業員数</th>
+                            <td><?php echo htmlentities($row1['numberofemployees']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>設立日</th>
+                            <td><?php echo htmlentities($eastablishyear.'年'.$establishmonth.'月'.$establishday.'日'); ?></td>
+                        </tr>
+                        <tr>
+                            <th>資本金</th>
+                            <td><?php echo htmlentities($row1['capital']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>平均年齢</th>
+                            <td><?php echo htmlentities($settextaverageage); ?></td>
+                        </tr>
+                        <tr>
+                            <th>決算月</th>
+                            <td><?php echo htmlentities($settextclosingmonth)?></td>
+                        </tr>
+                        <tr>
+                            <th>取引銀行</th>
+                            <td><?php echo $banktext;?></td>
+                        </tr>
+                        <tr>
+                            <th>ホームページ</th>
+                            <td><?php echo '<a href = '.htmlentities($row1['homepage']).'>'.htmlentities($row1['company']).'</a>';?></td>
+                        </tr>
+
+                    </table>
+
+                    <form action = 'changecompany.php' method = 'post'>
+                        <button type = 'submit' class = 'btn' name = 'changeform' >変更フォームへ</button>
+                        <input type = 'hidden' name = 'id' value = '<?php echo $id; ?>'>
+                    </form>
+                </div>
+            </div>
+            <div class = 'workplacebox'>
+                <?php
+                    echo $historyoutsoucertext;
+                ?>
             </div>
         </div>
-        <div class = 'workplacebox'>
-            <?php
-                echo $nowoutsoucertext;
-                echo $historyoutsoucertext;
-            ?>
-        </div>
-
     </div>
 
 
@@ -54,38 +95,8 @@
 </script>
 
 <script>
-    window.addEventListener('DOMContentLoaded', function(){
-    // 0.5秒ごとに実行
-        setInterval(() => {
-            ablejudge();
-        }, 100);
-    });
-    function ablejudge(){
-        var checkchangedate = document.querySelectorAll(".checknextnext");
-        var checknext = document.querySelectorAll(".checknext");
-        /* console.log(checkchangedate); */
-        checkchangedate.forEach(function(element){
-            if(element.checked){
-                var nextelement = element.nextElementSibling;
-                var nextnextelement = nextelement.nextElementSibling;
-                nextelement.disabled = false;
-                nextnextelement.disabled = false;
-            }else{
-                var nextelement = element.nextElementSibling;
-                var nextnextelement = nextelement.nextElementSibling;
-                nextelement.disabled = true;
-                nextnextelement.disabled = true;
-            }
-        });
-        checknext.forEach(function(element){
-            if(element.checked){
-                var nextelement = element.nextElementSibling;
-                nextelement.disabled = false;
-            }else{
-                var nextelement = element.nextElementSibling;
-                nextelement.disabled = true;
-            }
-        });
+    function deleteform(formname){
+        return window.confirm('本当に削除しますか');
     }
 
 </script>

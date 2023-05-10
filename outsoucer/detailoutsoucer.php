@@ -1,5 +1,8 @@
 
-<script src="../js/jquery-3.6.4.min.js"></script>
+<script src = '../js/jquery-3.6.4.min.js'></script>
+<link rel="stylesheet" href="../css/validationEngine.jquery.css">
+<script src="../js/jquery.validationEngine.js"></script>
+<script src="../js/jquery.validationEngine-ja.js" charset="UTF-8"></script>
 
 
 <?php
@@ -13,10 +16,10 @@
             $query = "SELECT * FROM staffname WHERE del = false AND id = ".$id;
             $result = $database -> query($query);
             $row1 = mysqli_fetch_assoc($result);
-            echo '詳細を取得しました';
+            /* echo '詳細を取得しました'; */
         }catch(Exception $e){
-            echo "エラー発生:" . $e->getMessage().'<br>';
-            echo "  詳細を取得できませんでした。";
+            /* echo "エラー発生:" . $e->getMessage().'<br>';
+            echo "  詳細を取得できませんでした。"; */
         }
         
         $birtharray = explode('-', $row1['birthday']);
@@ -41,13 +44,13 @@
         }
         $count = 0;
         while(isset($workhistoryarray[$count])){
-            $workhistorytext.=  $count.'.'.$workhistoryarray[$count].'<br>';
+            $workhistorytext.=  $workhistoryarray[$count].'<br>';
             $count++;
         }
         $count = 0;
         $licensetext = '';
         while(isset($licensearray[$count])){
-            $licensetext.=$count.'.'.$licensearray[$count].'<br>';
+            $licensetext.= $licensearray[$count].'<br>';
             $count++;
         }
 
@@ -64,49 +67,22 @@
         }else{
             $staffid = $_SESSION['staffid'];
         }
-    
-        if(isset($_POST['decideenddate'])){
+
+        if(isset($_POST['addcompany'])){
+            $settextcompanyid = $_POST['selectcompanyid'];
             try{
-                $update_at = date("Y-m-d H:i:s");
-                $query = <<<EDO
-                    UPDATE staffhistory SET 
-                    enddate = '{$_POST['enddate']}' , update_at = '{$update_at}' 
-                    WHERE id = {$_POST['historyid']};
-                EDO;
+                $numberringquery = "UPDATE numbering SET numbering = LAST_INSERT_ID(numbering + 1) WHERE tablename = 'staffhistory'";
+                $database -> query($numberringquery);
+                $numberringquery = 'SELECT numbering FROM numbering where tablename = \'staffhistory\' ';
+                $numberring = mysqli_fetch_assoc($database -> query($numberringquery));
+                $numberringid = $numberring['numbering'];
+                $query = 'INSERT staffhistory (id , staffid , companyid, startdate, enddate) VALUES('.$numberringid.','.$staffid.','.$settextcompanyid.',\''.$_POST['startdate'].'\',\''.$_POST['enddate'].'\')';
+                
                 $result = $database -> query($query);
-                echo $query;
-                echo '終了日時を設定できました';
-            }catch(Exception $e){
-                echo "エラー発生:" . $e->getMessage().'<br>';
-                echo "  外勤先を取得できませんでした";
-            } 
-        }
-        if(isset($_POST['finishwork'])){
-            try{
-                $update_at = date("Y-m-d H:i:s");
-                $query = <<<EDO
-                    UPDATE staffhistory SET 
-                    working = 0 , update_at = '{$update_at}' 
-                    WHERE id = {$_POST['historyid']};
-                EDO;
-                $result = $database -> query($query);
-            }catch(Exception $e){
-                echo "エラー発生:" . $e->getMessage().'<br>';
-                echo "  外勤先を取得できませんでした";
-            } 
-        }
-        if(isset($_POST['changeenddate'])){
-            try{
-                $update_at = date("Y-m-d H:i:s");
-                $query = <<<EDO
-                    UPDATE staffhistory SET 
-                    enddate =  '{$_POST["enddate"]}', update_at = '{$update_at}' 
-                    WHERE id = {$_POST['historyid']};
-                EDO;
-                $result = $database -> query($query);
-            }catch(Exception $e){
-                echo "エラー発生:" . $e->getMessage().'<br>';
-                echo "  外勤先を取得できませんでした";
+                /* echo '成功'; */
+            }catch(e){
+                /* echo "エラー発生:" . $e->getMessage().'<br>';
+                echo "  外勤先を取得できませんでした"; */
             }
         }
         if(isset($_POST['delete'])){
@@ -119,94 +95,68 @@
                 EDO;
                 $result = $database -> query($query);
             }catch(Exception $e){
-                echo "エラー発生:" . $e->getMessage().'<br>';
-                echo "  外勤先を取得できませんでした";
+                /* echo "エラー発生:" . $e->getMessage().'<br>';
+                echo "  外勤先を取得できませんでした"; */
             }
         }
     
-    
-    
-    
         try{
-            $query = 'SELECT  staffhistory.id as id, company.company as company, staffhistory.startdate as startdate, staffhistory.enddate as enddate,
-            staffname.name as name , staffhistory.working as working 
+            $query = 'SELECT  staffhistory.id as id, company.company as company, staffhistory.startdate as startdate, staffhistory.enddate as enddate, 
+            staffname.name as name  
             FROM staffhistory LEFT JOIN company ON staffhistory.companyid = company.id LEFT JOIN staffname ON staffname.id = staffhistory.staffid 
             WHERE staffhistory.staffid = '.$staffid.' AND staffhistory.del = 0 
-            ORDER BY startdate DESC';
+            ORDER BY enddate DESC';
             /* echo $query.'</br>'; */
             $result = $database -> query($query);
             /* $row = mysqli_fetch_assoc($result); */
-            echo '外勤先を取得しました';
+            /* echo '外勤先を取得しました'; */
         }catch(Exception $e){
-            echo "エラー発生:" . $e->getMessage().'<br>';
-            echo "  外勤先を取得できませんでした";
+            /* echo "エラー発生:" . $e->getMessage().'<br>';
+            echo "  外勤先を取得できませんでした"; */
         }
         $settext = array();
         $nowsettext = array();
         $nowsettextflag = false;
         $settextflag = false;
         while($row = mysqli_fetch_assoc($result)){
-    
-            if($row['working'] == true){
-                $nowsettext[] = ['company'=>$row['company'],'startdate'=>$row['startdate'],'enddate'=>$row['enddate'],'id'=>$row['id']];
-                $nowsettextflag =true;
-            }else{
-                $settext[] = ['company'=>$row['company'],'startdate'=>$row['startdate'],'enddate'=>$row['enddate'],'id'=>$row['id']];
-                $settextflag = true;
-            }
+            $settext[] = ['company'=>$row['company'],'startdate'=>$row['startdate'],'enddate'=>$row['enddate'],'id'=>$row['id']];
+            $settextflag = true;
         }
-        $nowcompanytext = '';
-        if($nowsettextflag==false){
-            $nowcompanytext =  <<<EOD
-            現在所属している会社はありません。
-            <button id = 'subwindowbutton' onClick = 'disp("../subwindow/selectcompany.php")' value = '外勤先の選択'>外勤先の追加</button>
-            EOD;
-        }else{
-            $nowcompanytext .= '<button id = \'subwindowbutton\' onClick = \'disp("\../subwindow/selectcompany.php")\' value = \'外勤先の選択\'>外勤先の追加</button>';
-            foreach($nowsettext as $nowsettext){
-                $nowcompany = htmlentities($nowsettext['company']);
-                $nowstartdate = htmlentities($nowsettext['startdate']);
-                $nowenddate = htmlentities($nowsettext['enddate']);
-                $nowcompanytext.=<<<EDO
-                    <div class = 'flex'>
-                        <form action = 'detailoutsoucer.php' method = 'post' >
-                            会社名:{$nowcompany}  仕事開始日:{$nowstartdate}<br>
-                            
-                            <a><div class = 'left'>仕事終了予定日:{$nowenddate}</div><div class = 'left'><input type = 'checkbox' class = 'checknextnext'>
-                            <input type = 'date' value = '{$nowenddate}' min = '{$nowstartdate}' name= 'enddate'><input type = 'submit' name = 'changeenddate' value = 変更></div>
-                            </a><br>
-                        
-                            <div class = 'left'><input type = 'checkbox' class = 'checknext'><input type = 'submit'  name = 'finishwork' value = '仕事の完了'></div><div class = 'left'><input type = 'checkbox' class = 'checknext'><input type = 'submit' name ='delete' value = '削除'></div>
-                            <input type ='hidden' name = 'historyid' value = '{$nowsettext['id']}'>
-                            <input type = 'hidden' name = 'staffid' value = '{$staffid}'>
-                        </form>
-                    </div>
-                    EDO;
-    
-            }
-        }
+        
         $historycompanytext='';
         if($settextflag  == true){
-    
-            $historycompanytext .= '<div><table border = \'1\'><tr><th>会社</th><th>仕事開始日</th><th>仕事終了日</th><th>履歴の削除</th></tr>';
+            $nowdate = new DateTime(date('Y-m-d'));
+            $historycompanytext .= '<div><table class = \'workplacetable\'><tr><th>会社</th><th>仕事開始日</th><th>仕事終了日</th><th>状態</th><th>履歴の削除</th></tr>';
             foreach($settext as $settext){
                 $setcompany = htmlentities($settext['company']);
                 $setstartdate = htmlentities($settext['startdate']);
                 $setenddate = htmlentities($settext['enddate']);
+                $comparestart = new DateTime($setstartdate);
+                $compareend = new DateTime($setenddate);
+                if($comparestart > $nowdate){
+                    $status = '予定';
+                }elseif($compareend < $nowdate){
+                    $status = '完了';
+                }else{
+                    $status = '外勤中';
+                }
                 $historycompanytext = $historycompanytext.<<<EOD
                     <tr>
                         <td>{$setcompany}</td>
                         <td>{$setstartdate}</td>
                         <td>{$setenddate}</td>
-                        <td><form action = 'detailoutsoucer.php' method = 'post' class = 'margin0'>
-                            <input type = 'checkbox' class = 'checknext'><input type = 'submit' name = 'delete' value = '削除'><input type = 'hidden' name = 'historyid' value = '{$settext['id']}'>
+                        <td>{$status}</td>
+                        <td><form action = 'detailoutsoucer.php' method = 'post' class = 'margin0' id = 'delete{$settext['id']}' onsubmit="return deleteform()">
+                            <input type = 'submit' name = 'delete' value = '削除' >
+                            <input type = 'hidden' name = 'historyid' value = '{$settext['id']}'>
+                            <input type = 'hidden' name = 'staffid' value = '{$staffid}'>
                         </form></td>
                     </tr>
                 EOD;
             }
             $historycompanytext .= '</table></div>';
         }else{
-            
+            $historycompanytext .= '履歴がありません';
     
         }
         
