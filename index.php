@@ -1,4 +1,8 @@
 <?php
+
+	header('Location: others/login.php');
+	exit();
+	
 	if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
 		$uri = 'https://';
 	} else {

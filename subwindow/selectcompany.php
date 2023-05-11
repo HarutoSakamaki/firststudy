@@ -7,8 +7,15 @@
 <?php
     require_once '../link.php';
     $database = database('staff');
-    session_start();
     
+    session_start();
+    if(isset($_SESSION['login'])){
+        
+    }else{
+        $_SESSION['againlogin'] = true;
+        header("Location: ../others/login.php");
+        exit();
+    }
 
     $postflag = false;
     if(isset($_POST['search'])){
@@ -42,15 +49,6 @@
             echo "検索できませんでした";
         }
     }
-
-    /* if(isset($_POST['companyid'])){
-
-        $settextcompany = $_POST['searchcompany'];
-        $settextcompanyid = $_POST['companyid'];
-    }else{
-        $settextcompany = '';
-        $settextcompanyid = '';
-    } */
 
     if(isset($_POST['selectcompany'])){
 

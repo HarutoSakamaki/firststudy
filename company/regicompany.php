@@ -8,6 +8,15 @@
 	require_once '../link.php';
 	$database = database('staff');
 	
+	session_start();
+    if(isset($_SESSION['login'])){
+        
+    }else{
+        $_SESSION['againlogin'] = true;
+        header("Location: ../others/login.php");
+        exit();
+    }
+
 	if(isset($_POST['addcompany'])){
 		/* 入力規則チェック */
 		$numberofemployeesflag = false;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <link rel="stylesheet" href="../css/changeoutsoucer.css">
-<script src = "../change.js"></script>
+<script src = "../js/change.js"></script>
 <head>
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,14 +19,22 @@
     <div class = "boxtitle">変更</div>
     <div class = "boxcontent">
         <form action="changeoutsoucer.php" id = 'changeform' method="post">
-            <table>
+            <table class = 'changetable'>
                 <tr>
                     <th>名前</th>
                     <td><input type = 'text' name = 'name' class = 'validate[required]' value = <?php echo $settextname; ?>></td>
-                </tr>
-                <tr>
                     <th>フリガナ</th>
                     <td><input type = 'text' name = 'furigana' class = 'validate[optional,custom[katakana]]' value = <?php echo $settextfurigana; ?>></td>
+                </tr>
+                <!-- <tr>
+                    <th>フリガナ</th>
+                    <td><input type = 'text' name = 'furigana' class = 'validate[optional,custom[katakana]]' value = <?php echo $settextfurigana; ?>></td>
+                </tr> -->
+                <tr>
+                    <th>生年月日</th>
+                    <td><?php echo $birthdaytext;?></td>
+                    <th>入社日</th>
+                    <td><?php echo $joindaytext;?></td>
                 </tr>
                 <tr>
                     <th>現住所(都道府県)</th>
@@ -36,36 +44,53 @@
                             <?php selectpref();?>
                         </select>
                     </td>
-                </tr>
-                <tr>
                     <th>現住所(市区町村以下)</th>
                     <td><input type = 'text' name = 'address' value = <?php echo $settextaddress; ?>></td>
                 </tr>
+                <!-- <tr>
+                    <th>現住所(市区町村以下)</th>
+                    <td><input type = 'text' name = 'address' value = <?php echo $settextaddress; ?>></td>
+                </tr> -->
+                <!-- <tr>
+                    <th>メールアドレス</th>
+                    <td><input type = 'text' name = 'mailaddress' class = 'validate[custom[email]]' value = <?php echo $settextmailaddress; ?>></td>
+                </tr> -->
                 <tr>
+                    <th>電話番号(ハイフンなし)</th>
+                    <td><input type = 'number' name = 'phonenumber' class = 'validate[custom[phone]]' value = <?php echo $settextphonenumber; ?>></td>
                     <th>メールアドレス</th>
                     <td><input type = 'text' name = 'mailaddress' class = 'validate[custom[email]]' value = <?php echo $settextmailaddress; ?>></td>
                 </tr>
                 <tr>
-                    <th>電話番号(ハイフンなし)</th>
-                    <td><input type = 'number' name = 'phonenumber' class = 'validate[custom[phone]]' value = <?php echo $settextphonenumber; ?>></td>
+                    <th>職歴</th>
+                    <td class = 'arrayitem'>
+                        <input type = "button" class = 'commonbutton' value ='入力欄を増やす' id = 'workhistoryincreasetext'><input type = "button" class = 'commonbutton'value ='入力欄を減らす' id = 'workhistorydecreasetext'>
+                        <?php echo $workhistorytext;?>
+                    </td>
+                    <th>免許や資格</th>
+                    <td class = 'arrayitem'>
+                        <input type = "button" class = 'commonbutton' value ='入力欄を増やす' id = 'licenseincreasetext'><input type = "button" class = 'commonbutton' value ='入力欄を減らす' id = 'licensedecreasetext'>
+                        <?php echo $licensetext;?>
+                    </td>
                 </tr>
-                <tr>
-                    <th>職歴<input type = "button" class = 'commonbutton' value ='入力欄を増やす' id = 'workhistoryincreasetext'><input type = "button" class = 'commonbutton'value ='入力欄を減らす' id = 'workhistorydecreasetext'></th>
-                    <td><?php echo $workhistorytext;?></td>
-                </tr>
-                <tr>
-                    <th>免許や資格<input type = "button" class = 'commonbutton' value ='入力欄を増やす' id = 'licenseincreasetext'><input type = "button" class = 'commonbutton' value ='入力欄を減らす' id = 'licensedecreasetext'></th>
-                    <td><?php echo $licensetext;?></td>
-                </tr>
+                <!-- <tr>
+                    <th>免許や資格</th>
+                    <td class = 'arrayitem'>
+                        <input type = "button" class = 'commonbutton' value ='入力欄を増やす' id = 'licenseincreasetext'><input type = "button" class = 'commonbutton' value ='入力欄を減らす' id = 'licensedecreasetext'>
+                        <?php echo $licensetext;?>
+                    </td>
+                </tr> -->
                 <tr>
                     <th>志望理由</th>
-                    <td><textarea name = "motivation" cols = '30' row = '5' class = 'smalltext textarea' ><?php echo $settextmotivation; ?></textarea></td>
+                    <td colspan="2"><textarea name = "motivation" cols = '30' row = '5' class = 'smalltext textarea' ><?php echo $settextmotivation; ?></textarea></td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <th>入社日</th>
                     <td><?php echo $joindaytext;?></td>
-                </tr>
+                </tr> -->
             </table>
+            
+            
             <input type = 'hidden' name = 'id' value = <?php echo '\''.$id.'\'' ?>>
             <p><button type = 'submit' class = 'btn' name = 'change' value='change'>変更</button></p>
         </form>
@@ -75,6 +100,8 @@
 
 </body>
 <script>
+    let workhistoryfunc = inputfield('workhistory',<?php echo $workhistorycount_json; ?>);
+    let licensefunc = inputfield('license',<?php echo $licensecount_json; ?>);
     function choicecompany(id,company){
         /* ここからはリムーブコード */
         var removeelements = document.getElementsByClassName('choicecompany');

@@ -8,8 +8,16 @@
 <?php
         require_once '../link.php';
         $database = database('staff');
+
         session_start();
-        
+        if(isset($_SESSION['login'])){
+            
+        }else{
+            $_SESSION['againlogin'] = true;
+            header("Location: ../others/login.php");
+            exit();
+        }
+            
         $id = $_POST['staffid'];
         $_SESSION['staffid'] = $id;
         try{
@@ -150,7 +158,8 @@
                             <input type = 'submit' name = 'delete' value = '削除' >
                             <input type = 'hidden' name = 'historyid' value = '{$settext['id']}'>
                             <input type = 'hidden' name = 'staffid' value = '{$staffid}'>
-                        </form></td>
+                            </form>
+                        </td>
                     </tr>
                 EOD;
             }

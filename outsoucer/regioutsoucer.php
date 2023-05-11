@@ -8,6 +8,16 @@
 <?php
     require_once '../link.php';
     $database = database('staff');
+
+	session_start();
+    if(isset($_SESSION['login'])){
+        
+    }else{
+        $_SESSION['againlogin'] = true;
+        header("Location: ../others/login.php");
+        exit();
+    }
+
 	$regiflag = false;
 		if(isset($_POST['addoutsoucer'])){
 			if($_POST['name']==''or$_POST['birthyear']==''or$_POST['birthmonth']==''or$_POST['birthday']==''or$_POST['joinyear']==''or$_POST['joinmonth']==''or$_POST['joinday']==''){

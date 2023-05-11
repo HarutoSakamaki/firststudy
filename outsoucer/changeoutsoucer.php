@@ -7,6 +7,16 @@
 <?php
     require_once '../link.php';
     $database = database('staff');
+
+    session_start();
+    if(isset($_SESSION['login'])){
+        
+    }else{
+        $_SESSION['againlogin'] = true;
+        header("Location: ../others/login.php");
+        exit();
+    }
+
     if(isset($_POST['change'])){
         $id = $_POST['id'];
         $changename = ' name = \'' . $_POST['name'].'\' ';
@@ -60,10 +70,10 @@
         if($furiganaflag and $mailaddressflag and $phonenumberflag){
             try{
                 $database -> query($changequery);
-                echo '変更できました<br>';
+                /* echo '変更できました<br>'; */
             }catch(Exception $e){
-                echo "エラー発生:" . $e->getMessage().'<br>';
-                echo "  更新できませんでした。";
+                /* echo "エラー発生:" . $e->getMessage().'<br>';
+                echo "  更新できませんでした。"; */
             }
         }else{
             echo '値が有効ではありません';
@@ -77,10 +87,10 @@
             $query = "SELECT * FROM staffname WHERE del = false AND id = ".$id;
             $result = $database -> query($query);
             $row = mysqli_fetch_assoc($result);
-            echo '詳細を取得しました';
+            /* echo '詳細を取得しました'; */
         }catch(Exception $e){
-            echo "エラー発生:" . $e->getMessage().'<br>';
-            echo "  詳細を取得できませんでした。";
+           /*  echo "エラー発生:" . $e->getMessage().'<br>';
+            echo "  詳細を取得できませんでした。"; */
         }
         $birtharray = explode('-', $row['birthday']);
         $birthyear = $birtharray[0];

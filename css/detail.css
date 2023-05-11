@@ -133,6 +133,8 @@
   width:100%;
   font-size:20px;
 }
+
+
 .regibox{
   padding: 0.5em 1em;
   color: #070707;
@@ -205,5 +207,5 @@
   background-color: #b9edfd
 }
 .workplacetable tr:nth-child(even){
-  background-color: #c3d1fda4
+  background-color: #edf0fdfd
 }

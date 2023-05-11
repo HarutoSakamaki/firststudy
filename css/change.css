@@ -1,0 +1,41 @@
+/* changetableです */
+.changetable tr td, .changetable tr th{
+    border-bottom: 1px solid rgb(16, 214, 240);
+    vertical-align: top;
+    padding-top:18px;
+    padding-bottom:18px;
+    padding-left:20px;
+    position: relative;
+  }
+  .changetable tr th{
+    background-color : rgb(212, 245, 250);
+    font-weight:400;
+    vertical-align: middle;
+    padding-left:0px;
+  }
+  .changetable tr .arrayitem input{
+    margin-top:5px;
+  }
+  
+  .changetable{
+    border-collapse : collapse;
+    width:100%;
+    font-size:20px;
+  }
+  .box{
+    width:90%;
+  }
+  .commonbutton{
+    margin-right:30px;
+    font-size:18px;
+    padding-top:1px;
+    padding-bottom:1px;
+    padding-right:1px;
+    padding-left:1px;
+  }
+
+  .btn{
+    font-size:30px;
+    margin-bottom:60px;
+    margin-left : 60px;
+  }

@@ -2,8 +2,16 @@
     <?php
         require_once '../link.php';
         $database = database('staff');
+
         session_start();
-        
+        if(isset($_SESSION['login'])){
+            
+        }else{
+            $_SESSION['againlogin'] = true;
+            header("Location: ../others/login.php");
+            exit();
+        }
+            
         
         $id = $_POST['companyid'];
         $companyid = $id;

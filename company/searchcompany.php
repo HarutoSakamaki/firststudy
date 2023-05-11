@@ -8,16 +8,26 @@
 <?php
     require_once '../link.php';
     $database = database('staff');
+
+    session_start();
+    if(isset($_SESSION['login'])){
+        
+    }else{
+        $_SESSION['againlogin'] = true;
+        header("Location: ../others/login.php");
+        exit();
+    }
+
     if(isset($_POST['delete'])){
         $companyid = $_POST['id'];
-        echo $companyid;
+        $changeup_date = ' update_at = \''.date("Y-m-d H:i:s").'\' ';
         try{
-            $query = 'UPDATE company SET del = true WHERE company.id = \''.$companyid.'\'';
+            $query = 'UPDATE company SET del = true , '.$changeup_date.' WHERE company.id = \''.$companyid.'\'';
             $database -> query($query);
-            echo "削除しました";
+            /* echo "削除しました"; */
         }catch(Exception $e){
-            echo "エラー発生:" . $e->getMessage().'<br>';
-            echo "削除できませんでした";
+            /* echo "エラー発生:" . $e->getMessage().'<br>';
+            echo "削除できませんでした"; */
         }
     }
 
@@ -105,10 +115,14 @@
                 <tr>
                     <td>{$companytable}</td><td>{$numberofemployeestable}</td><td>{$row['establishdate']}</td>
                     <td><form action = 'searchcompany.php' method=post>
-                        <input type = 'button' class='commonbutton' name='delete'value='削除' onClick = 'deleteform({$row['id']},"{$companytable}")' id = '{$row['id']}' >
-                        <input type= 'hidden' name=  'id' value =  '{$row['id']}'>
-                        <input id = 'inputsearchquery' type='hidden' name=  'searchquery' value =  '{$searchquery}'>
-                    </form></td>
+                            <button type = 'button' class='commonbutton' name='del'value='削除' onClick = 'deleteform({$row['id']},"{$companytable}")' id = '{$row['id']}' >
+                                <img src="../img/deleteicon.png" alt=""/>削除
+                            </button>
+                            <input type= 'hidden' name=  'id' value =  '{$row['id']}'>
+                            <input type = 'hidden' name = 'delete' value = '削除'>
+                            <input id = 'inputsearchquery' type='hidden' name=  'searchquery' value =  '{$searchquery}'>
+                        </form>
+                    </td>
                     <td><form action = 'detailcompany.php' method=post><input type = 'submit'class = 'commonbutton' name='detail'value='詳細と変更'>
                         <input type='hidden' name=  'companyid' value =  '{$row['id']}'>
                         <input type='hidden' name=  'searchquery' value =  '{$searchquery}'>
