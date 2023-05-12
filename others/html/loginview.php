@@ -15,20 +15,24 @@
 
     <div class="login-page">
       <div class="form">
-        <form class="register-form">
-          <input type="text" placeholder="name"/>
-          <input type="password" placeholder="password"/>
-          <input type="text" placeholder="email address"/>
-          <button>create</button>
-          <p class="message">Already registered? <a href="#">Sign In</a></p>
+        <form class="register-form" action = 'login.php' method = 'post' id = 'signupformid'>
+            <div><a><?php echo $loginadmintext; ?></a></div>
+            <div>管理者のログインフォーム</div>
+            <div><input type="text" name = 'username' class = 'validate[required]' placeholder="username"/></div>
+            <div><input type="password" name = 'password' class = 'validate[required]' placeholder="password"/></div>
+            <input type = 'hidden'  name = 'adminlogin' value = 'adminlogin' >
+            <button>login</button>
+            <p class="message"><a href="#">社員ログイン画面へ</a></p>
         </form>
         <form class="login-form" action = 'login.php' method = 'post' id = 'loginformid'>
-            <?php echo $logintext; ?>
-          <input type="text"  name = 'username' class = 'validate[required]'placeholder="username"/>
-          <input type="password" name = 'password' class = validate[required] placeholder="password"/>
+            <div><a><?php echo $logintext; ?></a></div>
+            <div>社員のログインフォーム</div>
+            <div><input type="text"  name = 'username' class = 'validate[required]' placeholder="username"/></div>
+            <div><input type="password" name = 'password' class = validate[required] placeholder="password"/></div>
+            
           <input type = 'hidden'  name = 'login' value = 'login' >
           <button  name = 'login' value = 'login'>login</button>
-          <p class="message">Not registered? <a href="#">Create an account</a></p>
+          <p class="message"><a href="#">管理者ページへ</a></p>
         </form>
       </div>
     </div>
@@ -38,13 +42,20 @@
 
 <script>
 
-  $('.message a').click(function(){
+    $('.message a').click(function(){
       $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
-  });
+    });
 
-  $(function(){
-        //<form>タグのidを指定
+    $(function(){
         $("#loginformid").validationEngine(
+            'attach', {
+                promptPosition: "topRight"//エラーメッセージ位置の指定
+            }
+        );
+    });
+
+    $(function(){
+        $("#signupformid").validationEngine(
             'attach', {
                 promptPosition: "topRight"//エラーメッセージ位置の指定
             }

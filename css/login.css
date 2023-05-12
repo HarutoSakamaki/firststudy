@@ -2,7 +2,7 @@
 
 
 .login-page {
-  width: 360px;
+  /* width: 360px; */
   padding: 8% 0 0;
   margin: auto;
 }
@@ -20,7 +20,7 @@
   font-family: "Roboto", sans-serif;
   outline: 0;
   background: #f2f2f2;
-  width: 100%;
+  /* width: 100%; */
   border: 0;
   margin: 0 0 15px;
   padding: 15px;
@@ -98,3 +98,21 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      
 }
+
+.form form .maildomain{
+    text-align: initial;
+    margin-top:0;
+    color:#999999;
+}
+.form form input{
+    text-align: left;
+}
+.form form div{
+    display:flex;
+    align-items: flex-end;
+}
+.form form div a{
+    color:#EF3B3A;
+    text-align:left;
+}
+
