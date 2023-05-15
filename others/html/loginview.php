@@ -15,15 +15,15 @@
 
     <div class="login-page">
       <div class="form">
-        <form class="register-form" action = 'login.php' method = 'post' id = 'signupformid'>
-            <div><a><?php echo $loginadmintext; ?></a></div>
+        <!-- <form class="register-form" action = 'login.php' method = 'post' id = 'signupformid'>
+            <div><a></a></div>
             <div>管理者のログインフォーム</div>
             <div><input type="text" name = 'username' class = 'validate[required]' placeholder="username"/></div>
             <div><input type="password" name = 'password' class = 'validate[required]' placeholder="password"/></div>
             <input type = 'hidden'  name = 'adminlogin' value = 'adminlogin' >
             <button>login</button>
             <p class="message"><a href="#">社員ログイン画面へ</a></p>
-        </form>
+        </form> -->
         <form class="login-form" action = 'login.php' method = 'post' id = 'loginformid'>
             <div><a><?php echo $logintext; ?></a></div>
             <div>社員のログインフォーム</div>
@@ -32,7 +32,7 @@
             
           <input type = 'hidden'  name = 'login' value = 'login' >
           <button  name = 'login' value = 'login'>login</button>
-          <p class="message"><a href="#">管理者ページへ</a></p>
+          <!-- <p class="message"><a href="#">管理者ページへ</a></p> -->
         </form>
       </div>
     </div>

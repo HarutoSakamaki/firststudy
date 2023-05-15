@@ -77,3 +77,8 @@ h2:before {
 .addbox .redfont{
     color: rgb(252, 67, 67);
 }
+
+.passwordplaceholder::placeholder{
+    font-size:11px;
+
+}

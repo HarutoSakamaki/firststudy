@@ -30,7 +30,8 @@
     $addsuccess = false;
     if(isset($_POST['addaccount'])){
         
-        if($_POST['password'] == $_POST['passwordagain'] and preg_match('/^[a-zA-Z0-9_]{7,14}$/',$_POST['password']) and preg_match("/^[a-zA-Z0-9]+$/",$_POST['username'])){
+        if($_POST['password'] == $_POST['passwordagain'] and preg_match('/^[a-zA-Z0-9_]{8,}$/',$_POST['password']) and preg_match("/^[a-zA-Z0-9]+$/",$_POST['username'])
+        and preg_match('/[0-9]/',$_POST['login']) and preg_match("/[a-zA-Z]/", $_POST['login'])){
 
             try{
                 $query = 'SELECT * FROM login WHERE username = \''.$_POST['username'].'\' AND del = 0 ORDER BY ID DESC';
@@ -40,7 +41,7 @@
                 exit();
             }
             if(isset(mysqli_fetch_assoc($result)['id'])){
-                $addaccountsuccesstext .= $_POST['username'].'はすでに存在しています<br>';
+                $addaccountsuccesstext .= htmlspecialchars($_POST['username']).'はすでに存在しています<br>';
             }else{
                 if($_POST['adminregi'] == 'はい'){
                     $admin = 1;
@@ -64,15 +65,22 @@
                 }
             }
         }else{
+            
+            if(!preg_match("/^[a-zA-Z0-9]+$/",$_POST['username'])){
+                $addaccountsuccesstext .= 'usernameは半角英数字で入力してください<br>';
+            }
+            if(!preg_match('/^[a-zA-Z0-9_]{8,}$/',$_POST['password'])){
+                $addaccountsuccesstext .= 'passwordは半角数字8文字以上で入力してください<br>';
+            }
             if($_POST['password'] != $_POST['passwordagain']){
                 $addaccountsuccesstext .= '二つのpasswordの値が違います<br>';
             }
-            if(!preg_match('/^[a-zA-Z0-9_]{7,14}$/',$_POST['password'])){
-                $addaccountsuccesstext .= 'passwordは半角数字7文字以上14文字以下で入力してください<br>';
+            if(!preg_match('/[0-9]/',$_POST['password'])){
+                $addaccountsuccesstext .= 'passwordは半角数字を含んでください<br>';
             }
-            if(!preg_match("/^[a-zA-Z0-9]+$/",$_POST['username'])){
-                $addaccountsuccesstext .= 'usernameは半角英数字で入力してください<br>';
-            }   
+            if(!preg_match('/[a-zA-Z]/',$_POST['password'])){
+                $addaccountsuccesstext .= 'passwordは半角英字を含んでください<br>';
+            }
         }
         if($addsuccess == false){
             $settextaddusername = $_POST['username'];

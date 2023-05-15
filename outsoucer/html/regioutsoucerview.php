@@ -23,20 +23,10 @@
 	<div class = "boxcontent">
 		<form action="regioutsoucer.php" method="post" id = "regiform">
 			<p> 名前: <input type="text" name="name" class = "validate[required]" value ="<?php if(isset($_POST['addoutsoucer'])){echo htmlentities($_POST['name']);}?>"></p>
-			
+			<p>社員番号: <input type = "number" name = "employeeid" class = "validate[required]" value = ""></p>
 			<?php
 				echo $daytext;
 			?>
-			<!-- <?php
-				if($regiflag){
-					echo <<<EOM
-					<form action = 'changeoutsoucer.php' method = 'post'>
-						<input type = 'submit' name = 'changeform' value = '詳細を設定する'>
-						<input type = 'hidden' name = 'id' value = '{$newid}'>
-					</form>
-					EOM;
-				}
-			?> -->
 			<p><button type="subit" name="addoutsoucer" class = "btn">従業員の登録</button></p>
 			
 			
@@ -72,13 +62,13 @@
 <script>
 
 
-	$(function(){
+	/* $(function(){
         //<form>タグのidを指定
         $("#regiform").validationEngine(
             'attach', {
                 promptPosition: "topRight"//エラーメッセージ位置の指定
             }
         );
-    });
+    }); */
 
 </script>

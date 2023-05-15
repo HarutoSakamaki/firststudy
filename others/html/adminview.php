@@ -8,12 +8,16 @@
     </head>
 
     <body>
+        <?php
+            include("../header.php");
+        ?>
+        <br><br><br><br><br>
         <h2>管理者画面</h2>
         <div class = 'allbox'>
 
             <div class = 'addbox'>
                 <h3>アカウントの追加</h3>
-                <a class = 'redfont'><?php echo htmlspecialchars($addaccountsuccesstext) ?></a>
+                <a class = 'redfont'><?php echo $addaccountsuccesstext ?></a>
                 <form action = 'admin.php' method = 'post' id = 'regiform'>
                     <table class = 'addtable'>
                         <tr>
@@ -22,7 +26,7 @@
                         </tr>
                         <tr>
                             <th>password</th>
-                            <td><input type = 'password' name = 'password' placeholder="半角英数字7~14文字"><td>
+                            <td><input type = 'password' name = 'password' placeholder="半角英数字をそれぞれ1種類以上含む8文字以上" class = 'passwordplaceholder'><td>
                         </tr>
                         <tr>
                             <th>password(again)</th>
