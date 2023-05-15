@@ -53,15 +53,21 @@
 
     if(isset($_POST['search'])){
         $searchname = $_POST['searchname'];
+        $searchemployeeid = $_POST['employeeid'];
         $minbirth = $_POST['birthminyear'].'-'.$_POST['birthminmonth'].'-0 ';
         $maxbirth = $_POST['birthmaxyear'].'-'.$_POST['birthmaxmonth'].'-31 ';
         $minjoin = $_POST['joinminyear'].'-'.$_POST['joinminmonth'].'-0 ';
         $maxjoin = $_POST['joinmaxyear'].'-'.$_POST['joinmaxmonth'].'-31 ';
-       /*  $searchcompany = $_POST['company']; */
+       
         if($searchname != ""){
             $searchnameterms = ' name LIKE \'%'.$searchname.'%\' ';
         }else{
             $searchnameterms = ' name LIKE \'%\' ';
+        }
+        if($searchemployeeid != ''){
+            $searchemployeeidterms = ' AND employeeid LIKE \'%'.$searchemployeeid.'%\' ';
+        }else{
+            $searchemployeeidterms = ' AND employeeid LIKE \'%\' ';
         }
         
         $birthterms = ' AND birthday BETWEEN DATE(\''.$minbirth.'\') and DATE(\''.$maxbirth.'\') ';
@@ -71,10 +77,10 @@
         
         try{
             $query = 'SELECT * FROM staffname 
-            WHERE '.$searchnameterms.$birthterms.$jointerms.' AND staffname.del = false ORDER BY ID ASC';
+            WHERE '.$searchnameterms.$searchemployeeidterms.$birthterms.$jointerms.' AND staffname.del = false ORDER BY ID ASC';
             $searchresult = $database -> query($query);
             $searchquery = $query;
-            /* echo $query; */
+            
         }catch(Exception $e){
             /* echo "エラー発生:" . $e->getMessage().'<br>';
             echo "検索できませんでした"; */
@@ -86,6 +92,7 @@
             <table class = 'table1'>
                 <tr>
                     <th>名前</th>
+                    <th>社員番号</th>
                     <th>生年月日</th>
                     <th>入社日</th>
                     <th>削除</th>
@@ -96,11 +103,12 @@
         $searchquery = formquery($searchquery);
         while($row = mysqli_fetch_assoc($searchresult)){
             $setname = htmlentities($row['name']);
+            $setemployeeid = htmlentities($row['employeeid']);
             $setbirthday = htmlentities($row['birthday']);
             $setjoincompanyday = htmlentities($row['joincompanyday']);
             $tabletext .= <<<EDO
                 <tr>
-                    <td>{$setname}</td><td>{$setbirthday}</td><td>{$setjoincompanyday}</td>
+                    <td>{$setname}</td><td>{$setemployeeid}</td><td>{$setbirthday}</td><td>{$setjoincompanyday}</td>
                     <td>
                         <form action = 'searchoutsoucer.php' method=post>
                             <button type = 'button'class = 'commonbutton'name='del'value='削除' onClick = 'deleteform({$row['id']},"{$setname}")' id = '{$row['id']}'>

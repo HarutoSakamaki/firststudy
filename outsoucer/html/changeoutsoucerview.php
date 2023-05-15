@@ -19,6 +19,7 @@
     <div class = "boxtitle">変更</div>
     <div class = "boxcontent">
         <form action="changeoutsoucer.php" id = 'changeform' method="post">
+            <a class = 'failfont'><?php echo $changesuccesstext; ?></a>
             <table class = 'changetable'>
                 <tr>
                     <th>名前</th>
@@ -26,10 +27,7 @@
                     <th>フリガナ</th>
                     <td><input type = 'text' name = 'furigana' class = 'validate[optional,custom[katakana]]' value = <?php echo $settextfurigana; ?>></td>
                 </tr>
-                <!-- <tr>
-                    <th>フリガナ</th>
-                    <td><input type = 'text' name = 'furigana' class = 'validate[optional,custom[katakana]]' value = <?php echo $settextfurigana; ?>></td>
-                </tr> -->
+                
                 <tr>
                     <th>生年月日</th>
                     <td><?php echo $birthdaytext;?></td>
@@ -47,14 +45,7 @@
                     <th>現住所(市区町村以下)</th>
                     <td><input type = 'text' name = 'address' value = <?php echo $settextaddress; ?>></td>
                 </tr>
-                <!-- <tr>
-                    <th>現住所(市区町村以下)</th>
-                    <td><input type = 'text' name = 'address' value = <?php echo $settextaddress; ?>></td>
-                </tr> -->
-                <!-- <tr>
-                    <th>メールアドレス</th>
-                    <td><input type = 'text' name = 'mailaddress' class = 'validate[custom[email]]' value = <?php echo $settextmailaddress; ?>></td>
-                </tr> -->
+                
                 <tr>
                     <th>電話番号(ハイフンなし)</th>
                     <td><input type = 'number' name = 'phonenumber' class = 'validate[custom[phone]]' value = <?php echo $settextphonenumber; ?>></td>
@@ -73,21 +64,14 @@
                         <?php echo $licensetext;?>
                     </td>
                 </tr>
-                <!-- <tr>
-                    <th>免許や資格</th>
-                    <td class = 'arrayitem'>
-                        <input type = "button" class = 'commonbutton' value ='入力欄を増やす' id = 'licenseincreasetext'><input type = "button" class = 'commonbutton' value ='入力欄を減らす' id = 'licensedecreasetext'>
-                        <?php echo $licensetext;?>
-                    </td>
-                </tr> -->
+                
                 <tr>
                     <th>志望理由</th>
-                    <td colspan="2"><textarea name = "motivation" cols = '30' row = '5' class = 'smalltext textarea' ><?php echo $settextmotivation; ?></textarea></td>
+                    <td><textarea name = "motivation" cols = '30' row = '5' class = 'smalltext textarea' ><?php echo $settextmotivation; ?></textarea></td>
+                    <th>社員番号</th>
+                    <td><input type = 'number' name = 'employeeid' value = <?php echo $settextemployeeid; ?>></td>
                 </tr>
-                <!-- <tr>
-                    <th>入社日</th>
-                    <td><?php echo $joindaytext;?></td>
-                </tr> -->
+                
             </table>
             
             

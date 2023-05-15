@@ -29,13 +29,30 @@
 	<div class = "boxtitle">会社の登録</div>
 	<div class = "boxcontent">
 		<form action="regicompany.php" method="post" id = "regicompanyform">
-			<p> 会社名: <input type="text" class = "validate[required]" name="companyname" value="<?php if(isset($_POST['addcompany'])){echo htmlentities($_POST['companyname']);}?>"></p>
+			<!-- <p> 会社名: <input type="text" class = "validate[required]" name="companyname" value="<?php if(isset($_POST['addcompany'])){echo htmlentities($_POST['companyname']);}?>"></p>
 			<p> 従業員数: <input type="number" class = "validate[required,custom[integer]]" name="numberofemployees" value="<?php if(isset($_POST['addcompany'])){echo htmlentities($_POST['numberofemployees']);}?>"></p>
 			
 			<?php
 				echo $birthdaytext;
-			?>
+			?> -->
+
+
+			<table class = 'inputtable'>
+				<tr>
+					<th>会社名</th>
+					<td><input type="text" class = "validate[required]" name="companyname" value="<?php if(isset($_POST['addcompany'])){echo htmlentities($_POST['companyname']);}?>"></td>
+				</tr>
+				<tr>
+					<th>従業員数</th>
+					<td><input type="number" class = "validate[required,custom[integer]]" name="numberofemployees" value="<?php if(isset($_POST['addcompany'])){echo htmlentities($_POST['numberofemployees']);}?>"></td>
+				</tr>
+				<tr>
+					<th>設立日</th>
+					<td><?php echo $establishdaytext ?></td>
+				</tr>
+			</table>
 			<button type="subit" name="addcompany" class = "btn">外勤先の会社の登録</button>
+
 			
 		</form>
 	</div>

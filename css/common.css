@@ -213,3 +213,33 @@ select{
     position : absolute;
     bottom : 0;
   }
+  .failfont{
+    color : rgb(248, 46, 46);
+    font-size: 14px;
+  }
+
+  /* inputtableについて */
+  .inputtable tr td, .inputtable tr th{
+    border-bottom: 1px solid rgb(16, 214, 240);
+    vertical-align: top;
+    padding-top:18px;
+    padding-bottom:18px;
+    padding-left:20px;
+    position: relative;
+  }
+  .inputtable tr th{
+    background-color : rgb(212, 245, 250);
+    font-weight:400;
+    vertical-align: middle;
+    padding-right:10px;
+    padding-left:10px;
+  }
+  .inputtable tr .arrayitem input{
+    margin-top:5px;
+  }
+  
+  .inputtable{
+    border-collapse : collapse;
+    width:100%;
+    font-size:20px;
+  }

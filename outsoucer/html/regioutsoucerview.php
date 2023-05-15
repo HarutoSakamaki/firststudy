@@ -22,11 +22,27 @@
 	<div class = "boxtitle">アウトソーサーの登録</div>
 	<div class = "boxcontent">
 		<form action="regioutsoucer.php" method="post" id = "regiform">
-			<p> 名前: <input type="text" name="name" class = "validate[required]" value ="<?php if(isset($_POST['addoutsoucer'])){echo htmlentities($_POST['name']);}?>"></p>
-			<p>社員番号: <input type = "number" name = "employeeid" class = "validate[required]" value = ""></p>
-			<?php
-				echo $daytext;
-			?>
+			<a class = 'failfont'><?php echo $regisuccesstext; ?></a>
+
+			<table class = 'inputtable'>
+				<tr>
+					<th>名前</th>
+					<td><input type="text" name="name" class = "validate[required]" value ="<?php echo htmlentities($settextname);?>"></td>
+				</tr>
+				<tr>
+					<th>社員番号</th>
+					<td><input type = "number" name = "employeeid" class = "validate[required]" value = "<?php echo htmlentities($settextemployeeid) ?>"></td>
+				</tr>
+				<tr>
+					<th>生年月日</th>
+					<td><?php echo $daytext ?></td>
+				</tr>
+				<tr>
+					<th>入社日(アスパーク)</th>
+					<td><?php echo $joindaytext ?></td>
+				</tr>
+			</table>
+
 			<p><button type="subit" name="addoutsoucer" class = "btn">従業員の登録</button></p>
 			
 			

@@ -23,13 +23,24 @@
         <div class = "boxtitle">アウトソーサーの検索</div>
         <div class = "boxcontent">
             <form action = 'searchoutsoucer.php' method = post class = 'formsize'>
-                <!-- <p>一つ以上入力してください</p> -->
-                名前:<input type = 'text' id = 'inputsearchname' name = 'searchname' value = "<?php if($postflag){echo htmlentities($_POST['searchname']);}?>"><br>
-                
-                <?php
-                    datein('生年月日','birth',['delete','search'],[0,1,1,2000,1,1],1900);
-                    datein('入社日','join',['delete','search'],[0,1,1,2000,1,1],1900);
-                ?>
+                <table class = 'inputtable'>
+                    <tr>
+                        <th>名前</th>
+                        <td><input type = 'text' id = 'inputsearchname' name = 'searchname' value = "<?php if($postflag){echo htmlentities($_POST['searchname']);}?>"></td>
+                    </tr>
+                    <tr>
+                        <th>社員番号</th>
+                        <td><input type = 'number' id = 'inputemployeeid' name = 'employeeid' value = "<?php if($postflag){echo htmlentities($_POST['employeeid']);}?>"></td>
+                    </tr>
+                    <tr>
+                        <th>生年月日</th>
+                        <td><?php datein('','birth',['delete','search'],[0,1,1,2000,1,1],1900) ?></td>
+                    </tr>
+                    <tr>
+                        <th>入社日</th>
+                        <td><?php datein('','join',['delete','search'],[0,1,1,2000,1,1],1900) ?></td>
+                    </tr>
+                </table>
                 <button type = 'submit' class = 'btn' name = 'search' value='検索'>検索</button>
             
             </form>
@@ -49,32 +60,28 @@
             let parentelement = document.getElementById($staffid);
             let searchname = document.getElementById('inputsearchname');
             let searchnameelement = createhidden('searchname', searchname.value,parentelement);
+            let employeeid = document.getElementById('inputemployeeid');
+            let employeeidelement = createhidden('employeeid', employeeid.value,parentelement);
             let birthminyear = document.getElementById('inputbirthminyear');
             let birthminyearelement = createhidden('birthminyear', birthminyear.value,parentelement);
             let birthminmonth = document.getElementById('inputbirthminmonth');
             let birthminmonthelement = createhidden('birthminmonth', birthminmonth.value,parentelement);
-            /* let birthminday = document.getElementById('inputbirthminday');
-            let birthmindayelement = createhidden('birthminday', birthminday.value,parentelement); */
+            
             let birthmaxyear = document.getElementById('inputbirthmaxyear');
             let birthmaxyearelement = createhidden('birthmaxyear', birthmaxyear.value,parentelement);
             let birthmaxmonth = document.getElementById('inputbirthmaxmonth');
             let birthmaxmonthelement = createhidden('birthmaxmonth', birthmaxmonth.value,parentelement);
-            /* let birthmaxday = document.getElementById('inputbirthmaxday');
-            let birthmaxdayelement = createhidden('birthmaxday', birthmaxday.value,parentelement); */
+            
             let joinminyear = document.getElementById('inputjoinminyear');
             let joinminyearelement = createhidden('joinminyear', joinminyear.value,parentelement);
             let joinminmonth = document.getElementById('inputjoinminmonth');
             let joinminmonthelement = createhidden('joinminmonth', joinminmonth.value,parentelement);
-            /* let joinminday = document.getElementById('inputjoinminday');
-            let joinmindayelement = createhidden('joinminday', joinminday.value,parentelement); */
+            
             let joinmaxyear = document.getElementById('inputjoinmaxyear');
             let joinmaxyearelement = createhidden('joinmaxyear', joinmaxyear.value,parentelement);
             let joinmaxmonth = document.getElementById('inputjoinmaxmonth');
             let joinmaxmonthelement = createhidden('joinmaxmonth', joinmaxmonth.value,parentelement);
-            /* let joinmaxday = document.getElementById('inputjoinmaxday');
-            let joinmaxdayelement = createhidden('joinmaxday', joinmaxday.value,parentelement); */
-            /* let companyname = document.getElementById('companyname');
-            let companyelement = createhidden('company', companyname.value,parentelement); */
+            
             var submitelement = document. createElement('input');
             submitelement.setAttribute('type','submit');
             submitelement.setAttribute('name','delete');

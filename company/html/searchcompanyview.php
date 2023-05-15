@@ -20,15 +20,23 @@
         <div class = "boxtitle">登録会社の検索</div>
         <div class = "boxcontent">
             <form action = 'searchcompany.php' id = 'formCheck' method = post class = 'formsize'>
-            <!-- <p>一つ以上入力してください</p> -->
-            <p>会社名:<input type = 'text' id = 'inputsearchcompany' name = 'searchcompany' value = "<?php if($postflag){echo htmlentities($_POST['searchcompany']);}?>"></p>
-            <p>従業員数:
-                <input type = 'number' id  = 'inputminemployees' class = 'validate[optional,custom[integer]]'name = 'minemployees' value = "<?php if($postflag){echo htmlentities($_POST['minemployees']); }else{echo '0';}?>" onselect = 'numbercheck(this)'>
-                ~<input type = 'number' id = 'inputmaxemployees' class = 'validate[optional,custom[integer]]' name = 'maxemployees' value = "<?php if($postflag){echo htmlentities($_POST['maxemployees']);}?>" onselect = 'numbercheck(this)' ></p>
-            <?php
-                datein("設立日","",['delete','search']);
-            ?> 
-            <button type = 'submit' class = 'btn searchbutton' value='検索する' name = 'search'>検索</button>
+
+                <table class = 'inputtable'>
+                    <tr>
+                        <th>会社名</th>
+                        <td><input type = 'text' id = 'inputsearchcompany' name = 'searchcompany' value = "<?php if($postflag){echo htmlentities($_POST['searchcompany']);}?>"></td>
+                    </tr>
+                    <tr>
+                        <th>従業員数</th>
+                        <td><input type = 'number' id  = 'inputminemployees' class = 'validate[optional,custom[integer]]'name = 'minemployees' value = "<?php if($postflag){echo htmlentities($_POST['minemployees']); }else{echo '0';}?>" onselect = 'numbercheck(this)'>
+                            ~<input type = 'number' id = 'inputmaxemployees' class = 'validate[optional,custom[integer]]' name = 'maxemployees' value = "<?php if($postflag){echo htmlentities($_POST['maxemployees']);}?>" onselect = 'numbercheck(this)' > </td>
+                    </tr>
+                    <tr>
+                        <th>設立日</th>
+                        <td><?php datein('','',['delete','search']); ?></td>
+                    </tr>
+			    </table>
+                <button type = 'submit' class = 'btn searchbutton' value='検索する' name = 'search'>検索</button>
             </form>
         </div>
     </div>

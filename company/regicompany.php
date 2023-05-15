@@ -50,22 +50,22 @@
 		}
 	}
 
-	$birthdaytext = '<p>設立日<select name="year">'. "\n";
-	if(isset($_POST['addcompany'])){$birthdaytext.='<option value = '.$_POST['year'].'>'.$_POST['year'].'</option>\n';}
+	$establishdaytext = '<p><select name="year">'. "\n";
+	if(isset($_POST['addcompany'])){$establishdaytext.='<option value = '.$_POST['year'].'>'.$_POST['year'].'</option>\n';}
 	for($i = date('Y'); $i >= 0; $i--) {
-		$birthdaytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
+		$establishdaytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
 	}
-	$birthdaytext.='</select>年' . "\n".'<select name="month">' . "\n";
-	if(isset($_POST['addcompany'])){$birthdaytext.='<option value = '.$_POST['month'].'>'.$_POST['month'].'</option>\n';}
+	$establishdaytext.='</select>年' . "\n".'<select name="month">' . "\n";
+	if(isset($_POST['addcompany'])){$establishdaytext.='<option value = '.$_POST['month'].'>'.$_POST['month'].'</option>\n';}
 	for ($i = 1; $i <= 12; $i++) {
-		$birthdaytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
+		$establishdaytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
 	}
-	$birthdaytext.='</select>月' . "\n".'<select name="day">' . "\n";
-	if(isset($_POST['addcompany'])){$birthdaytext.='<option value = '.$_POST['day'].'>'.$_POST['day'].'</option>\n';}
+	$establishdaytext.='</select>月' . "\n".'<select name="day">' . "\n";
+	if(isset($_POST['addcompany'])){$establishdaytext.='<option value = '.$_POST['day'].'>'.$_POST['day'].'</option>\n';}
 	for ($i = 1; $i <= 31; $i++) {
-		$birthdaytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
+		$establishdaytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
 	}
-	$birthdaytext.='</select>日</p>' . "\n";
+	$establishdaytext.='</select>日</p>' . "\n";
 
 	
 	require('html/regicompanyview.php');
@@ -73,22 +73,5 @@
 
 
 
-	/* echo '<p>設立日<select name="year">'. "\n";
-	if(isset($_POST['addcompany'])){echo '<option value = '.$_POST['year'].'>'.$_POST['year'].'</option>\n';}
-	for($i = date('Y'); $i >= 0; $i--) {
-		echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
-	}
-	echo '</select>年' . "\n";
-	echo '<select name="month">' . "\n";
-	if(isset($_POST['addcompany'])){echo '<option value = '.$_POST['month'].'>'.$_POST['month'].'</option>\n';}
-	for ($i = 1; $i <= 12; $i++) {
-		echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
-	}
-	echo '</select>月' . "\n";
-	echo '<select name="day">' . "\n";
-	if(isset($_POST['addcompany'])){echo '<option value = '.$_POST['day'].'>'.$_POST['day'].'</option>\n';}
-	for ($i = 1; $i <= 31; $i++) {
-		echo '<option value="' .$i . '">' . $i .'</option>'. "\n";
-	}
-	echo '</select>日</p>' . "\n"; */
+	
 ?>

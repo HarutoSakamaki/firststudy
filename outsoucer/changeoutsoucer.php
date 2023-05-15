@@ -17,6 +17,7 @@
         exit();
     }
 
+    $changesuccesstext = '';
     if(isset($_POST['change'])){
         $id = $_POST['id'];
         $changename = ' name = \'' . $_POST['name'].'\' ';
@@ -26,6 +27,8 @@
         $changeaddress = ' address = \'' .$_POST['address'].'\'';
         $changemailaddress = ' mailaddress = \'' .$_POST['mailaddress'].'\'';
         $changephonenumber = ' phonenumber = \'' .$_POST['phonenumber'].'\'';
+        $changeemployeeid = ' employeeid = \''.$_POST['employeeid'].'\' ';
+
         $licensestack = array();
         $count = 0;
         while(isset($_POST['license'.$count])){
@@ -50,34 +53,46 @@
         $changejoincompanyday = ' joincompanyday = \'' .$_POST['joinyear'].'-'.$_POST['joinmonth'].'-'.$_POST['joinday'].'\'';
         
         $changechangedate = ' update_at = \''.date("Y-m-d H:i:s").'\'';
-        $changequery = "UPDATE staffname SET ".$changefurigana. ','.$changebirthday. ','.$changeaddress. ','.$changeprefectures.','
+        $changequery = "UPDATE staffname SET ".$changefurigana. ','.$changeemployeeid.','.$changebirthday. ','.$changeaddress. ','.$changeprefectures.','
             .$changemailaddress. ','.$changephonenumber. ',' .$changeworkhistory. ','.$changelicense. ','.$changemotivation. ','.$changejoincompanyday. ','
             .$changechangedate.' WHERE id = '.$id;
-        /* echo $changequery; */
-        /* ここから入力規則を見ていく */
-        $furiganaflag = false;
-        if($_POST['furigana'] == '' or preg_match('/^[ァ-ヾ]+$/u', $_POST['furigana']) ){
-            $furiganaflag = true;
+        $changeemployeeidused = employeeidused($_POST['employeeid']);
+
+        //ここから入力規則を確認
+        $inputrule = true;
+        if($_POST['furigana'] != '' and !preg_match('/^[ァ-ヾ]+$/u', $_POST['furigana'])){
+            $inputrule =false;
+            $changesuccesstext .= 'フリガナはカタカナで入力してください<br>';
         }
-        $mailaddressflag = false;
-        if ($_POST['mailaddress'] == '' or preg_match('/^[a-z0-9._+^~-]+@[a-z0-9.-]+$/i', $_POST['mailaddress'])) {
-            $mailaddressflag = true;
+        if($_POST['mailaddress'] != '' and !preg_match('/^[a-z0-9._+^~-]+@[a-z0-9.-]+$/i', $_POST['mailaddress'])){
+            $inputrule = false;
+            $changesuccesstext .= 'メールアドレスが正しくありません<br>';
         }
-        $phonenumberflag = false;
-        if ($_POST['phonenumber'] == '' or preg_match("/^[0-9]+$/", $_POST['phonenumber'])) {
-            $phonenumberflag = true;
-        } 
-        if($furiganaflag and $mailaddressflag and $phonenumberflag){
+        if($_POST['phonenumber'] != '' and !preg_match("/^[0-9]{10,11}$/", $_POST['phonenumber'])){
+            $inputrule = false;
+            $changesuccesstext .= '電話番号はハイフン無しの数字で10、11桁で入力してください<br>';
+        }
+        if($changeemployeeidused == true){
+            $inputrule = false;
+            $changesuccesstext .= 'この社員番号は既に使われています<br>';
+        }
+        if(!preg_match('/^[0-9]{4,}$/',$_POST['employeeid'])){
+            $inputrule = false;
+            $changesuccesstext .= '社員番号は4桁以上の半角数字にしてください';
+        }
+        if($inputrule == true){
             try{
                 $database -> query($changequery);
-                /* echo '変更できました<br>'; */
-            }catch(Exception $e){
-                /* echo "エラー発生:" . $e->getMessage().'<br>';
-                echo "  更新できませんでした。"; */
+                $changesuccesstext .= '登録しました';
+            }catch (Exception $e){
+                /* echo "エラー発生:" . $e->getMessage().'/n';
+                echo "登録できませんでした"; */
+                $changesuccesstext .= '少し時間をおいてもう一度お試しください';
             }
-        }else{
-            echo '値が有効ではありません';
+
         }
+        
+
     }
     
     if(isset($_POST['changeform'])){
@@ -113,6 +128,7 @@
         $settextaddress = htmlentities($_POST['address']);
         $settextmailaddress = htmlentities($_POST['mailaddress']);
         $settextphonenumber = htmlentities($_POST['phonenumber']);
+        $settextemployeeid = htmlentities($_POST['employeeid']);
         $count = 0;
         while(true){
             if(isset($_POST['workhistory'.$count])){
@@ -146,6 +162,7 @@
         $settextaddress = htmlentities($row['address']);
         $settextmailaddress = htmlentities($row['mailaddress']);
         $settextphonenumber = htmlentities($row['phonenumber']);
+        $settextemployeeid = htmlentities($row['employeeid']);
         $settextworkhistory = $workhistory;
         $settextlicense = $license;
         $settextmotivation = htmlentities($row['motivation']);
@@ -154,6 +171,24 @@
         $settextjoinday = htmlentities($joinarray[2]);
         /* $settextcompany = $row['company']; */
     }
+
+    function changeemployeeidused($employeeid){
+		require_once '../link.php';
+    	$database = database('staff');
+		$employeequery = 'SELECT * FROM staffname 
+            WHERE employeeid = '.$employeeid.' AND staffname.del = false;';
+        $employeeresult = $database -> query($employeequery);
+		$row = mysqli_fetch_assoc($employeeresult);
+		if(isset($row['id'])){
+            if($row['employeeid'] == $employeeid){
+                return false;
+            }else{
+			    return true;
+            }
+		}else{
+			return false;
+		}
+	}
    
     
     $birthdaytext = '';
