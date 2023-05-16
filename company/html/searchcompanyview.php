@@ -35,6 +35,19 @@
                         <th>設立日</th>
                         <td><?php datein('','',['delete','search']); ?></td>
                     </tr>
+                    <tr>
+                        <th>表示</th>
+                        <td>
+                            <!-- <input type = 'radio' name = 'inorder' value = 'employeedesc' checked>従業員数降順  <input type = 'radio' name = 'inorder' value = 'employeeasc'>従業員数昇順
+                            <input type = 'radio' name = 'inorder' value = 'regidesc'>登録新着順  <input type = 'radio' name = 'inorder' value = 'regiasc'>登録投稿順 <br>
+
+                            <input type = 'radio' name = 'inorder' value = 'establishdesc' >設立日降順  <input type = 'radio' name = 'inorder' value = 'establishasc'>設立日昇順
+                            <input type = 'radio' name = 'inorder' value = 'companynamedesc' >会社名降順  <input type = 'radio' name = 'inorder' value = 'comapnynameasc'>会社名昇順 -->
+                            <?php echo $settextorder ?>
+                            
+                        
+                        </td>
+                    </tr>
 			    </table>
                 <button type = 'submit' class = 'btn searchbutton' value='検索する' name = 'search'>検索</button>
             </form>

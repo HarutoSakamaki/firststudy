@@ -6,6 +6,7 @@
 
 
 <?php
+
         require_once '../link.php';
         $database = database('staff');
 
@@ -24,10 +25,10 @@
             $query = "SELECT * FROM staffname WHERE del = false AND id = ".$id;
             $result = $database -> query($query);
             $row1 = mysqli_fetch_assoc($result);
-            /* echo '詳細を取得しました'; */
+            
         }catch(Exception $e){
-            /* echo "エラー発生:" . $e->getMessage().'<br>';
-            echo "  詳細を取得できませんでした。"; */
+            echo "エラー発生:" . $e->getMessage().'<br>';
+            exit();
         }
         
         $birtharray = explode('-', $row1['birthday']);
@@ -75,24 +76,77 @@
         }else{
             $staffid = $_SESSION['staffid'];
         }
+        $settextcompanyname = '未選択';
+        $settextcompanyid = '';
+        $settextstartdate = '';
+        $settextenddate = '';
 
+        $addcompanysuccesstext = '';
         if(isset($_POST['addcompany'])){
-            $settextcompanyid = $_POST['selectcompanyid'];
-            try{
-                $numberringquery = "UPDATE numbering SET numbering = LAST_INSERT_ID(numbering + 1) WHERE tablename = 'staffhistory'";
-                $database -> query($numberringquery);
-                $numberringquery = 'SELECT numbering FROM numbering where tablename = \'staffhistory\' ';
-                $numberring = mysqli_fetch_assoc($database -> query($numberringquery));
-                $numberringid = $numberring['numbering'];
-                $query = 'INSERT staffhistory (id , staffid , companyid, startdate, enddate) VALUES('.$numberringid.','.$staffid.','.$settextcompanyid.',\''.$_POST['startdate'].'\',\''.$_POST['enddate'].'\')';
-                
-                $result = $database -> query($query);
-                /* echo '成功'; */
-            }catch(e){
-                /* echo "エラー発生:" . $e->getMessage().'<br>';
-                echo "  外勤先を取得できませんでした"; */
+            $addcompanysuccess = false;
+            $companyid = $_POST['selectcompanyid'];
+            //入力規則(空欄があるかどうか)
+            $empty = true;
+            
+            if($_POST['selectcompanyid'] == '' or $_POST['startdate'] == '' or $_POST['enddate'] == ''){
+                $empty = true;
+                $addcompanysuccesstext .= '空欄があります';
+            }else{
+                $empty = false;
+            }
+
+            if($empty == false){
+                //重複チェック
+                $query = <<<EDO
+                    SELECT * FROM staffhistory WHERE staffid = {$staffid}
+                    EDO;
+                try{
+                    $result = $database -> query($query);
+                }catch(e){
+                    echo "エラー発生:" . $e->getMessage().'<br>';
+                    exit();
+                }
+                $overlapping = false;
+                while($row = mysqli_fetch_assoc($result)){
+                    $datastart = strtotime($row['startdate']);
+                    $dataend = strtotime($row['enddate']);
+                    $inputstart = strtotime($_POST['startdate']);
+                    $inputend = strtotime($_POST['enddate']);
+                    if($datastart<=$inputend && $dataend>=$inputstart){
+                        $overlapping = true;
+                    }else{
+
+                    }
+                }
+                if($overlapping == false){
+                    try{
+                        $numberringquery = "UPDATE numbering SET numbering = LAST_INSERT_ID(numbering + 1) WHERE tablename = 'staffhistory'";
+                        $database -> query($numberringquery);
+                        $numberringquery = 'SELECT numbering FROM numbering where tablename = \'staffhistory\' ';
+                        $numberring = mysqli_fetch_assoc($database -> query($numberringquery));
+                        $numberringid = $numberring['numbering'];
+                        $query = 'INSERT staffhistory (id , staffid , companyid, startdate, enddate) VALUES('.$numberringid.','.$staffid.','.$companyid.',\''.$_POST['startdate'].'\',\''.$_POST['enddate'].'\')';
+                        $result = $database -> query($query);
+                        $addcompanysuccess = true;
+                        /* echo '成功'; */
+                    }catch(e){
+                        /* echo "エラー発生:" . $e->getMessage().'<br>';
+                        echo "  外勤先を取得できませんでした"; */
+                    }
+
+                }else{
+                    $addcompanysuccesstext .= '外勤先の期間が重複してます';
+                }
+            }
+            if($addcompanysuccess == false){
+                $settextcompanyid = $_POST['selectcompanyid'];
+                $settextcompanyname = $_POST['selectcompanyname'];
+                $settextstartdate = $_POST['startdate'];
+                $settextenddate = $_POST['enddate'];
             }
         }
+
+
         if(isset($_POST['delete'])){
             try{
                 $update_at = date("Y-m-d H:i:s");
@@ -107,6 +161,7 @@
                 echo "  外勤先を取得できませんでした"; */
             }
         }
+        
     
         try{
             $query = 'SELECT  staffhistory.id as id, company.company as company, staffhistory.startdate as startdate, staffhistory.enddate as enddate, 
@@ -166,7 +221,6 @@
             $historycompanytext .= '</table></div>';
         }else{
             $historycompanytext .= '履歴がありません';
-    
         }
         
 

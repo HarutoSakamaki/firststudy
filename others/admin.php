@@ -6,8 +6,6 @@
 
 
 <?php
-
-
     require_once '../link.php';
 	$database = database('staff');
 	
@@ -31,7 +29,7 @@
     if(isset($_POST['addaccount'])){
         
         if($_POST['password'] == $_POST['passwordagain'] and preg_match('/^[a-zA-Z0-9_]{8,}$/',$_POST['password']) and preg_match("/^[a-zA-Z0-9]+$/",$_POST['username'])
-        and preg_match('/[0-9]/',$_POST['login']) and preg_match("/[a-zA-Z]/", $_POST['login'])){
+        and preg_match('/[0-9]/',$_POST['password']) and preg_match("/[a-zA-Z]/", $_POST['password'])){
 
             try{
                 $query = 'SELECT * FROM login WHERE username = \''.$_POST['username'].'\' AND del = 0 ORDER BY ID DESC';
@@ -53,8 +51,9 @@
                     $database -> query($numberingquery);
                     $numberingquery = 'SELECT numbering FROM numbering where tablename = \'login\' ';
                     $numberingid = mysqli_fetch_assoc($database -> query($numberingquery));
+                    $hashpassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
                     $query = <<<EDO
-                        INSERT INTO login (id,username,password,admin) VALUES ({$numberingid['numbering']},'{$_POST['username']}','{$_POST['password']}',{$admin}) 
+                        INSERT INTO login (id,username,password,admin) VALUES ({$numberingid['numbering']},'{$_POST['username']}','{$hashpassword}',{$admin}) 
                         EDO;
                     $result = $database -> query($query);
                     $addaccountsuccesstext .= '登録に成功しました';

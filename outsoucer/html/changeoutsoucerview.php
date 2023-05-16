@@ -9,12 +9,11 @@
      <title>アウトソーサーの詳細変更</title>
 </head>
 <body>
-<br><br><br><br><br>
-<!-- <h2>アウトソーサーの詳細変更</h2> -->
-
+<br><br><br><br><br><br>
 <?php
     include("../header.php");
 ?>
+
 <div class = "box formsize">
     <div class = "boxtitle">変更</div>
     <div class = "boxcontent">
@@ -67,7 +66,7 @@
                 
                 <tr>
                     <th>志望理由</th>
-                    <td><textarea name = "motivation" cols = '30' row = '5' class = 'smalltext textarea' ><?php echo $settextmotivation; ?></textarea></td>
+                    <td><textarea name = "motivation" cols = '30' row = '5' class = 'smalltext textarea'><?php echo $settextmotivation; ?></textarea></td>
                     <th>社員番号</th>
                     <td><input type = 'number' name = 'employeeid' value = <?php echo $settextemployeeid; ?>></td>
                 </tr>
@@ -133,14 +132,14 @@
 	window.open(url,"_blank", SubWinOpt);
     }
 
-    $(function(){
+    /* $(function(){
         //<form>タグのidを指定
         $("#changeform").validationEngine(
             'attach', {
                 promptPosition: "topRight"//エラーメッセージ位置の指定
             }
         );
-    });
+    }); */
 
 
 </script>

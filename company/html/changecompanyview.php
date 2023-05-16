@@ -12,13 +12,14 @@
 <?php
     include("../header.php");
 ?>
-<br><br><br><br><br>
+<br><br><br><br><br><br>
 
 
 <div class="box formsize">
     <div class='boxtitle'><h3>詳細と変更</h3></div>
     <div class = 'boxcontent'>
         <form action="changecompany.php" method="post" id = 'changeform'>
+            <a class = 'failfont'><?php echo $changesuccesstext; ?></a>
             <table class = 'changetable'>
                 <tr>
                     <th>会社名</th>

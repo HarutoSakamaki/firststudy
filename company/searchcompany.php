@@ -78,11 +78,29 @@
             $employeesterms = ' AND numberofemployees BETWEEN '.$minemployees.' and '.$maxemployees;
         }
         $establishterms = ' AND establishdate BETWEEN DATE(\''.$minestablish.'\') and DATE(\''.$maxestablish.'\') ';
+        $ordertext = '';
+        if($_POST['inorder'] == 'employeedesc'){
+            $ordertext .= ' ORDER BY numberofemployees DESC ';
+        }elseif($_POST['inorder'] == 'employeeasc'){
+            $ordertext .= ' ORDER BY numberofemployees ASC ';
+        }elseif($_POST['inorder'] == 'regidesc'){
+            $ordertext .= ' ORDER BY created_at DESC ';
+        }elseif($_POST['inorder'] == 'regiasc'){
+            $ordertext .= ' ORDER BY created_at ASC ';
+        }elseif($_POST['inorder'] == 'establishdesc'){
+            $ordertext .= ' ORDER BY establishdate DESC  ';
+        }elseif($_POST['inorder'] == 'establishasc'){
+            $ordertext .= ' ORDER BY establishdate ASC  ';
+        }elseif($_POST['inorder'] == 'comapnynamedesc'){
+            $ordertext .= ' ORDER BY company DESC  ';
+        }elseif($_POST['inorder'] == 'comapnynameasc'){
+            $ordertext .= ' ORDER BY company ASC  ';
+        }
         
         
         try{
             
-            $query = 'SELECT * FROM company WHERE '.$companyterms.$employeesterms.$establishterms.' AND del = false AND id != 1 ORDER BY numberofemployees DESC';
+            $query = 'SELECT * FROM company WHERE '.$companyterms.$employeesterms.$establishterms.' AND del = false AND id != 1 '.$ordertext;
             /* echo $query;  */
             $searchresult = $database -> query($query);
             $searchquery = $query;
@@ -131,8 +149,72 @@
                 EDO;
         }
         $tabletext.='</table>';
-
     }
+
+    //ラジオボタンの生成
+    $settextorder = '';
+    if(!isset($_POST['inorder'])){
+        $_POST['inorder'] = 'employeedesc';
+    }
+
+    $settextorder .= <<<EDO
+        <input type = 'radio' name = 'inorder' value = 'employeedesc' 
+        EDO;
+    if($_POST['inorder'] == 'employeedesc'){
+        $settextorder .= ' checked ';
+    }
+    $settextorder .= <<<EDO
+        >従業員数降順  <input type = 'radio' name = 'inorder' value = 'employeeasc'
+        EDO;
+
+    if($_POST['inorder'] == 'employeeasc'){
+        $settextorder .= ' checked ';
+    }
+    $settextorder .= <<<EDO
+        >従業員数昇順<input type = 'radio' name = 'inorder' value = 'regidesc'
+        EDO;
+    if($_POST['inorder'] == 'regidesc'){
+        $settextorder .= ' checked ';
+    }
+    $settextorder .= <<<EDO
+        >登録新着順  <input type = 'radio' name = 'inorder' value = 'regiasc'
+        EDO;
+    
+    if($_POST['inorder'] == 'regiasc'){
+        $settextorder .= ' checked ';
+    }
+    $settextorder .= <<<EDO
+        >登録投稿順 <br><input type = 'radio' name = 'inorder' value = 'establishdesc'
+        EDO;
+    if($_POST['inorder'] == 'establishdesc'){
+        $settextorder .= ' checked ';
+    }
+    $settextorder .= <<<EDO
+        >設立日降順  <input type = 'radio' name = 'inorder' value = 'establishasc'
+        EDO;
+
+    if($_POST['inorder'] == 'establishasc'){
+        $settextorder .= ' checked ';
+    }
+    $settextorder .= <<<EDO
+        >設立日昇順<input type = 'radio' name = 'inorder' value = 'companynamedesc'
+        EDO;
+
+    if($_POST['inorder'] == 'companynamedesc'){
+        $settextorder .= ' checked ';
+    }
+    $settextorder .= <<<EDO
+        >会社名降順  <input type = 'radio' name = 'inorder' value = 'companynameasc'
+        EDO;
+
+    if($_POST['inorder'] == 'companynameasc'){
+        $settextorder .= ' checked ';
+    }
+    $settextorder .= <<<EDO
+        >会社名昇順
+        EDO;
+    
+    
     require_once('html/searchcompanyview.php');
 ?>
 

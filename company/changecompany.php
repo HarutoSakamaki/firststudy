@@ -17,70 +17,82 @@
         header("Location: ../others/login.php");
         exit();
     }
+    $id = $_POST['id'];
 
+
+    $changesuccesstext = '';
     if(isset($_POST['change'])){
-        $id = $_POST['id'];
-        $company = $_POST['company'];
-        $changecompany = ' company = \'' . $_POST['company'].'\' ';
-        $changepresident = ' president = \'' .$_POST['president'].'\'';
-        $changesales = ' sales = \''.$_POST['sales']*$_POST['digit'].'\' ';
-        $changeprefectures = ' prefectures = \''.$_POST['prefectures'].'\' ';
-        $changelocation = ' location = \'' .$_POST['location'].'\'';
-        $changenumberofemployees = ' numberofemployees = \'' .$_POST['numberofemployees'].'\'';
-        $changeestablishdate = ' establishdate = \'' . $_POST['establishyear'].'-'.$_POST['establishmonth'].'-'.$_POST['establishday'].'\'';
-        $changecapital = ' capital = \''.$_POST['capital'].'\' ';
-        $changeclosingmonth = ' closingmonth = \''.$_POST['closingmonth'].'\' ';
-        $changeaverageage = ' averageage = \''.$_POST['averageage'].'\' ';
-        $changehomepage = ' homepage = \'' .$_POST['homepage'].'\' ';
-        
 
-        $businessdetailsstack = array();
-        
-        $count = 0;
-        while(isset($_POST['businessdetails'.$count])){
-            if($_POST['businessdetails'.$count]!=''){
-                $businessdetailsstack[] = htmlentities($_POST['businessdetails'.$count]);
-            }
-            $count++;
-        }
-        $businessdetailsjson = json_encode($businessdetailsstack, JSON_UNESCAPED_UNICODE);
-
-        $count = 0;
-        $bankstack = array();
-        while(isset($_POST['bank'.$count])){
-            if($_POST['bank'.$count]!=''){
-                $bankstack[] = htmlentities($_POST['bank'.$count]);
-            }
-            $count++;
-        }
-        $bankjson = json_encode($bankstack,JSON_UNESCAPED_UNICODE);
-        
-        $changebusinessdetails = ' businessdetails = \'' .$businessdetailsjson.'\'';
-        $changebank = ' bank = \''.$bankjson.'\' ';
-        $changechangedate = ' update_at = \''.date('Y-m-d H:i:s').'\'';
-        $changequery = "UPDATE company SET ".$changecompany. ','.$changepresident. ','.$changesales.','.$changeprefectures.','.$changelocation. ','
-            .$changenumberofemployees. ','.$changeestablishdate. ','.$changecapital.','.$changeaverageage.','.$changeclosingmonth.','.$changehomepage. ','
-            .$changebusinessdetails.','.$changebank.','.$changechangedate.
-            ' WHERE del = false AND id = \''.$id.'\'';
-
-        /* echo $changequery; */
         /* ここから入力規則のチェック */
-        $numberofemployeesflag = false;
-        if($_POST['numberofemployees'] == '' or preg_match("/^[0-9]+$/", $_POST['numberofemployees'])){
-            $numberofemployeesflag = true;
+        $inputrule = true;
+        if($_POST['company'] == '' ){
+            $inputrule = false;
+            $changesuccesstext .= '会社名が空欄になっています<br>' ;
         }
+        
+        if($_POST['numberofemployees'] != '' and !preg_match("/^[0-9]+$/", $_POST['numberofemployees'])){
+            $inputrule = false;
+            $changesuccesstext .= '従業員数は数字を入力して下さい<br>' ;
+        }
+        if($_POST['averageage'] != '' and !preg_match("/^[0-9.]+$/", $_POST['averageage'])){
+            $inputrule = false;
+            $changesuccesstext .= '平均年齢は数字を入力して下さい<br>' ;
+        }
+        if($_POST['sales'] != '' and !preg_match("/^[0-9.]+$/", $_POST['sales'])){
+            $inputrule = false;
+            $changesuccesstext .= '売上高は数字を入力して下さい<br>' ;
+        }
+        if($inputrule == true){
+            $id = $_POST['id'];
+            $company = $_POST['company'];
+            $changecompany = ' company = \'' . $_POST['company'].'\' ';
+            $changepresident = ' president = \'' .$_POST['president'].'\'';
+            $changesales = ' sales = \''.$_POST['sales']*$_POST['digit'].'\' ';
+            $changeprefectures = ' prefectures = \''.$_POST['prefectures'].'\' ';
+            $changelocation = ' location = \'' .$_POST['location'].'\'';
+            $changenumberofemployees = ' numberofemployees = \'' .$_POST['numberofemployees'].'\'';
+            $changeestablishdate = ' establishdate = \'' . $_POST['establishyear'].'-'.$_POST['establishmonth'].'-'.$_POST['establishday'].'\'';
+            $changecapital = ' capital = \''.$_POST['capital'].'\' ';
+            $changeclosingmonth = ' closingmonth = \''.$_POST['closingmonth'].'\' ';
+            $changeaverageage = ' averageage = \''.$_POST['averageage'].'\' ';
+            $changehomepage = ' homepage = \'' .$_POST['homepage'].'\' ';
+            $businessdetailsstack = array();
+            $count = 0;
+            while(isset($_POST['businessdetails'.$count])){
+                if($_POST['businessdetails'.$count]!=''){
+                    $businessdetailsstack[] = htmlentities($_POST['businessdetails'.$count]);
+                }
+                $count++;
+            }
+            $businessdetailsjson = json_encode($businessdetailsstack, JSON_UNESCAPED_UNICODE);
 
+            $count = 0;
+            $bankstack = array();
+            while(isset($_POST['bank'.$count])){
+                if($_POST['bank'.$count]!=''){
+                    $bankstack[] = htmlentities($_POST['bank'.$count]);
+                }
+                $count++;
+            }
+            $bankjson = json_encode($bankstack,JSON_UNESCAPED_UNICODE);
+            
+            $changebusinessdetails = ' businessdetails = \'' .$businessdetailsjson.'\'';
+            $changebank = ' bank = \''.$bankjson.'\' ';
+            $changechangedate = ' update_at = \''.date('Y-m-d H:i:s').'\'';
+            $changequery = "UPDATE company SET ".$changecompany. ','.$changepresident. ','.$changesales.','.$changeprefectures.','.$changelocation. ','
+                .$changenumberofemployees. ','.$changeestablishdate. ','.$changecapital.','.$changeaverageage.','.$changeclosingmonth.','.$changehomepage. ','
+                .$changebusinessdetails.','.$changebank.','.$changechangedate.
+                ' WHERE del = false AND id = \''.$id.'\'';
 
-        if($numberofemployeesflag){
+           
             try{
                 $database -> query($changequery);
-                /* echo '変更できました<br>'; */
+                $changesuccesstext = '変更しました';
             }catch(Exception $e){
-                /* echo "エラー発生:" . $e->getMessage().'<br>';
-                echo "  更新できませんでした。"; */
+                echo "エラー発生:" . $e->getMessage();
+                exit();
             }
-        }else{
-            /* echo '有効な値を入力してください'; */
+            
         }
     }
 

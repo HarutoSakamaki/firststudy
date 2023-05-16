@@ -60,6 +60,10 @@
 
         //ここから入力規則を確認
         $inputrule = true;
+        if($_POST['name'] == ''){
+            $inputrule = false;
+            $changesuccesstext .= '名前が空欄になっています<br>';
+        }
         if($_POST['furigana'] != '' and !preg_match('/^[ァ-ヾ]+$/u', $_POST['furigana'])){
             $inputrule =false;
             $changesuccesstext .= 'フリガナはカタカナで入力してください<br>';

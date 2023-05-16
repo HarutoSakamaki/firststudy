@@ -72,12 +72,30 @@
         
         $birthterms = ' AND birthday BETWEEN DATE(\''.$minbirth.'\') and DATE(\''.$maxbirth.'\') ';
         $jointerms = ' AND joincompanyday BETWEEN DATE(\''.$minjoin.'\') and DATE(\''.$maxjoin.'\') ';
-        
-        
+
+        $ordertext = '';
+        if($_POST['inorder'] == 'birthdesc'){
+            $ordertext .= ' ORDER BY birthday ASC ';
+        }elseif($_POST['inorder'] == 'birthasc'){
+            $ordertext .= ' ORDER BY birthday DESC ';
+        }elseif($_POST['inorder'] == 'joindesc'){
+            $ordertext .= ' ORDER BY joincompanyday DESC  ';
+        }elseif($_POST['inorder'] == 'joinasc'){
+            $ordertext .= ' ORDER BY joincompanyday ASC  ';
+        }elseif($_POST['inorder'] == 'regidesc'){
+            $ordertext .= ' ORDER BY created_at DESC ';
+        }elseif($_POST['inorder'] == 'regiasc'){
+            $ordertext .= ' ORDER BY created_at ASC ';
+        }elseif($_POST['inorder'] == 'namedesc'){
+            $ordertext .= ' ORDER BY name DESC  ';
+        }elseif($_POST['inorder'] == 'nameasc'){
+            $ordertext .= ' ORDER BY name ASC  ';
+        }
         
         try{
             $query = 'SELECT * FROM staffname 
-            WHERE '.$searchnameterms.$searchemployeeidterms.$birthterms.$jointerms.' AND staffname.del = false ORDER BY ID ASC';
+            WHERE '.$searchnameterms.$searchemployeeidterms.$birthterms.$jointerms.' AND staffname.del = false '.$ordertext;
+
             $searchresult = $database -> query($query);
             $searchquery = $query;
             
@@ -127,6 +145,69 @@
         }
         $tabletext.='</table>';
     }
+
+    //ラジオボタンの生成
+    $settextorder = '';
+    if(!isset($_POST['inorder'])){
+        $_POST['inorder'] = 'birthdesc';
+    }
+
+    $settextorder .= <<<EDO
+        <input type = 'radio' name = 'inorder' value = 'birthdesc' 
+        EDO;
+    if($_POST['inorder'] == 'birthdesc'){
+        $settextorder .= ' checked ';
+    }
+    $settextorder .= <<<EDO
+        >年齢降順  <input type = 'radio' name = 'inorder' value = 'birthasc'
+        EDO;
+
+    if($_POST['inorder'] == 'birthasc'){
+        $settextorder .= ' checked ';
+    }
+    $settextorder .= <<<EDO
+        >年齢昇順<input type = 'radio' name = 'inorder' value = 'joindesc'
+        EDO;
+    if($_POST['inorder'] == 'joindesc'){
+        $settextorder .= ' checked ';
+    }
+    $settextorder .= <<<EDO
+        >入社日降順  <input type = 'radio' name = 'inorder' value = 'joinasc'
+        EDO;
+    
+    if($_POST['inorder'] == 'joinasc'){
+        $settextorder .= ' checked ';
+    }
+    $settextorder .= <<<EDO
+        >入社日昇順 <br><input type = 'radio' name = 'inorder' value = 'regidesc'
+        EDO;
+    if($_POST['inorder'] == 'regidesc'){
+        $settextorder .= ' checked ';
+    }
+    $settextorder .= <<<EDO
+        >登録新着順  <input type = 'radio' name = 'inorder' value = 'regiasc'
+        EDO;
+
+    if($_POST['inorder'] == 'regiasc'){
+        $settextorder .= ' checked ';
+    }
+    $settextorder .= <<<EDO
+        >登録投稿順<input type = 'radio' name = 'inorder' value = 'namedesc'
+        EDO;
+
+    if($_POST['inorder'] == 'namedesc'){
+        $settextorder .= ' checked ';
+    }
+    $settextorder .= <<<EDO
+        >名前降順  <input type = 'radio' name = 'inorder' value = 'nameasc'
+        EDO;
+
+    if($_POST['inorder'] == 'nameasc'){
+        $settextorder .= ' checked ';
+    }
+    $settextorder .= <<<EDO
+        >名前昇順
+        EDO;
 
 
 

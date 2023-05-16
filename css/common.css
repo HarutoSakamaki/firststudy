@@ -26,7 +26,7 @@ input{
 
 
 .box {
-  margin: 2em 0;
+  margin: 0 auto;
   background: #f1f1f1;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.22);
 }
@@ -137,7 +137,7 @@ select{
   
   textarea{
     height : 150px;
-    width : 400px;
+    width : 300px;
 
   }
   .middletextsize{
@@ -243,3 +243,7 @@ select{
     width:100%;
     font-size:20px;
   }
+
+  .passwordplaceholder::placeholder{
+    font-size:11px;
+}

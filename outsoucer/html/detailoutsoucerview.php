@@ -74,21 +74,22 @@
 
                 <div class = 'regibox'>
                     <form action = 'detailoutsoucer.php' method = 'post' id = 'addcompanyform'>
+                        <a class = 'failfont'><?php echo $addcompanysuccesstext; ?></a>
                         <table class = 'regitable'>
                             <tr>
                                 <td>会社名</td>
                                 <td>
                                     <button type='button' id = 'subwindowbutton' class = 'selectcompany validate[required]' onClick = 'disp("../subwindow/selectcompany.php")' name = 'companyid' value =''>外勤先の選択</button>
-                                    <a id = 'selectcompanya'>未選択</a><input type = 'hidden' name = 'selectcompanyid' id = 'selectcompanyhidden' value = ''>
+                                    <a id = 'selectcompanya'><?php echo $settextcompanyname; ?></a><input type = 'hidden' name = 'selectcompanyid' id = 'selectcompanyidhidden' value = '<?php echo $settextcompanyid ?>'><input type = 'hidden' name = 'selectcompanyname' id = 'selectcompanyhidden' value = '<?php echo $settextcompanyname?>'>
                                 </td>
                             </tr>
                             <tr>
                                 <td>仕事開始日</td>
-                                <td><div><input type = 'date' name= 'startdate' class = "validate[required]" id = 'inputstartdate' onchange = 'settextstartenddate()'></div></td>
+                                <td><div><input type = 'date' name= 'startdate' class = "validate[required]" id = 'inputstartdate' onchange = 'settextstartenddate()' value = '<?php echo $settextstartdate; ?>'></div></td>
                             </tr>
                             <tr>
                                 <td>仕事終了日</td>
-                                <td><div><input type = 'date' name= 'enddate' class = "validate[required]" id = 'inputenddate' onchange = 'settextstartenddate()'></div></td>
+                                <td><div><input type = 'date' name= 'enddate' class = "validate[required]" id = 'inputenddate' onchange = 'settextstartenddate()' value = '<?php echo $settextenddate; ?>'></div></td>
                             </tr>
                         </table>
                         <input type = 'hidden' name = 'staffid' value = '<?php echo $id ?>' >
@@ -113,17 +114,18 @@
     function setcompany(companyname,companyid){
         document.getElementById('selectcompanya').textContent = companyname;
         document.getElementById('subwindowbutton').setAttribute('value',companyid);
-        document.getElementById('selectcompanyhidden').setAttribute('value',companyid);
+        document.getElementById('selectcompanyidhidden').setAttribute('value',companyid);
+        document.getElementById('selectcompanyhidden').setAttribute('value',companyname);
         return 'いけてるよ';
     }
-    $(function(){
+    /* $(function(){
         //<form>タグのidを指定
         $("#addcompanyform").validationEngine(
             'attach', {
                 promptPosition: "topRight"//エラーメッセージ位置の指定
             }
         );
-    });
+    }); */
     function settextstartenddate(){
         var startdateelement = document.getElementById('inputstartdate');
         var enddateelement = document.getElementById('inputenddate');

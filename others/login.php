@@ -9,10 +9,11 @@
   require_once '../link.php';
   $database = database('staff');
   session_start();
+  $loginsuccess = false;
   $logintext = '';
   if(isset($_POST['login'])){
     try{
-      $query = 'SELECT * FROM login WHERE username = \''.$_POST['username'].'\' AND password = \''.$_POST['password'].'\' AND del = false ';
+      $query = 'SELECT * FROM login WHERE username = \''.$_POST['username'].'\' AND del = false ';
       $result = $database -> query($query);
     }catch(Exception $e){
       echo "エラー発生:" . $e->getMessage().'<br>';
@@ -20,15 +21,20 @@
     }
     $row = mysqli_fetch_assoc($result);
     if(isset($row['id'])){
-      $_SESSION = array();
-      session_regenerate_id();
-      $_SESSION['login'] = 'success';
-      if($row['admin']==1){
-        $_SESSION['adminlogin'] = 'success';
+      if(password_verify($_POST['password'] , $row['password'])){
+        $_SESSION = array();
+        session_regenerate_id();
+        $_SESSION['login'] = 'success';
+        $_SESSION['loginid'] = $row['id'];
+        if($row['admin']==1){
+          $_SESSION['adminlogin'] = 'success';
+        }
+        $loginsuccess = true;
+        header("Location: ../outsoucer/searchoutsoucer.php");
+        exit();
       }
-      header("Location: ../outsoucer/searchoutsoucer.php");
-      exit();
-    }else{
+    }
+    if($loginsuccess == false){
       $logintext .= 'ログインに失敗しました。usernameとpasswordを確認してください。';
     }
   }

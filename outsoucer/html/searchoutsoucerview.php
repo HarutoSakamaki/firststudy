@@ -40,6 +40,12 @@
                         <th>入社日</th>
                         <td><?php datein('','join',['delete','search'],[0,1,1,2000,1,1],1900) ?></td>
                     </tr>
+                    <tr>
+                        <th>表示</th>
+                        <td>
+                            <?php echo $settextorder ?>
+                        </td>
+                    </tr>
                 </table>
                 <button type = 'submit' class = 'btn' name = 'search' value='検索'>検索</button>
             
