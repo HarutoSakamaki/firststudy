@@ -21,17 +21,22 @@
 <div id = 'regiemployees' class = 'formsize box'>
 	<div class = "boxtitle">アウトソーサーの登録</div>
 	<div class = "boxcontent">
+		<?php echo $regisuccesstext; ?>
 		<form action="regioutsoucer.php" method="post" id = "regiform">
-			<a class = 'failfont'><?php echo $regisuccesstext; ?></a>
+			
 
 			<table class = 'inputtable'>
 				<tr>
 					<th>名前</th>
-					<td><input type="text" name="name" class = "validate[required]" value ="<?php echo htmlentities($settextname);?>"></td>
+					<td><input type="text" name="name" class = "validate[required]" value ="<?php echo htmlentities($settextname);?>"><br>
+						<a class = 'failfont'><?php echo $namefailtext; ?></a>
+					</td>
 				</tr>
 				<tr>
 					<th>社員番号</th>
-					<td><input type = "number" name = "employeeid" class = "validate[required]" value = "<?php echo htmlentities($settextemployeeid) ?>"></td>
+					<td><input type = "number" name = "employeeid" class = "validate[required]" value = "<?php echo htmlentities($settextemployeeid) ?>" placeholder="半角数字4桁以上"><br>
+					<a class = 'failfont'><?php echo $employeeidfailtext; ?></a>
+				</td>
 				</tr>
 				<tr>
 					<th>生年月日</th>
@@ -49,29 +54,10 @@
 		</form>
 	</div>
 </div>
-<div>
-	<?php
-		if($regiflag){
-			echo <<<EOM
-			<p>登録できました</p>
-			<form action = 'changeoutsoucer.php' method = 'post'>
-				<input type = 'submit' name = 'changeform' value = '詳細を設定する'>
-				<input type = 'hidden' name = 'id' value = '{$newid}'>
-			</form>
-
-			EOM;
-		}
-	?>
 </div> 
 
 <p class = 'floatclear'></p>
-	
 
-	<?php
-		if (isset($_POST['displayoutsoucer'])) {
-			$result = "登録しました";
-		}
-	?>
 </body>
 </html>
 

@@ -15,19 +15,23 @@
             <div class = "boxtitle"><?php echo $settextusername ?>のパスワードの変更</div>
             <div class = "boxcontent">
                 <form action = 'changepassword.php' method = post class = 'formsize'>
+                    <?php echo $changesuccesstext; ?>
                     <table class = 'inputtable'>
-                        <a class = 'failfont'><?php echo $changesuccesstext; ?></a>
                         <tr>
                             <th>古いpassword</th>
-                            <td><input type = 'text' name = 'oldpassword' value = "<?php echo $settextoldpassword ?>"></td>
+                            <td><input type = 'text' name = 'oldpassword' value = "<?php echo $settextoldpassword ?>"><br>
+                            <a class = 'failfont'><?php echo $failoldpasswordtext; ?></a></td>
                         </tr>
                         <tr>
                             <th>新しいpassword</th>
-                            <td><input type = 'password' name = 'newpassword' value = "<?php echo $settextnewpassword ?>" placeholder="半角英数字をそれぞれ1種類以上含む8文字以上" class = 'passwordplaceholder'></td>
+                            <td><input type = 'password' name = 'newpassword' value = "<?php echo $settextnewpassword ?>" placeholder="半角英数字をそれぞれ1種類以上含む8文字以上" class = 'passwordplaceholder'>
+                            <br><a class = 'failfont'><?php echo $failnewpasswordtext; ?></a>
+                            </td>
                         </tr>
                         <tr>
                             <th>新しいpassword(again)</th>
-                            <td><input type = 'password' name = 'newpasswordagain' value = ""></td>
+                            <td><input type = 'passwordagain' name = 'newpasswordagain' value = ""><br>
+                            <a class = 'failfont'><?php echo $failnewpasswordagaintext; ?></a></td>
                         </tr>
                     </table>
                     <button type = 'submit' class = 'btn' name = 'change' value='変更'>変更</button>

@@ -16,14 +16,16 @@
 
 
 <div class="box formsize">
-    <div class='boxtitle'><h3>詳細と変更</h3></div>
+    <div class='boxtitle'>詳細と変更</div>
     <div class = 'boxcontent'>
         <form action="changecompany.php" method="post" id = 'changeform'>
             <a class = 'failfont'><?php echo $changesuccesstext; ?></a>
             <table class = 'changetable'>
                 <tr>
                     <th>会社名</th>
-                    <td><input type = 'text' name = 'company' class = 'validate[required]' value = <?php echo htmlentities($settextcompany); ?>></td>
+                    <td><input type = 'text' name = 'company' class = 'validate[required]' value = <?php echo htmlentities($settextcompany); ?>><br>
+                        <a class = 'failfont'><?php echo $companynamefailtext; ?></a>
+                    </td>
                     <th>社長名</th>
                     <td><input type = 'text' name = 'president' value = <?php echo htmlentities($settextpresident); ?>></td>
                 </tr>
@@ -41,24 +43,31 @@
                 
                 <tr>
                     <th>従業員数</th>
-                    <td><input type = 'text' class = "validate[optional,custom[integer]]" name = 'numberofemployees' value = <?php echo htmlentities($settextnumberofemployees); ?>></td>
+                    <td><input type = 'text' class = "validate[optional,custom[integer]]" name = 'numberofemployees' value = '<?php echo htmlentities($settextnumberofemployees); ?>' placeholder="半角数字4桁以上" ><br>
+                        <a class = 'failfont'><?php echo $numberofemployeesfailtext; ?></a>
+                    </td>
                     <th>平均年齢</th>
-                    <td><input type = 'text' name = 'averageage' class = 'validate[optional,custom[number]]' value = '<?php echo htmlentities($settextaverageage); ?>'>歳</td>
+                    <td><input type = 'text' name = 'averageage' class = 'validate[optional,custom[number]]' value = '<?php echo htmlentities($settextaverageage); ?>' placeholder="半角数字か.(小数も可)" >歳<br>
+                        <a class = 'failfont'><?php echo $averageagefailtext; ?></a>
+                    </td>
                 </tr>
                 
                 <tr>
                     <th>売上高</th>
                     <td>
-                        <input type = 'number' name = 'sales' class = 'validate[optional,custom[integer]]' value = '<?php echo $settextsales; ?>'><select name = 'digit'>
+                        <input type = 'number' name = 'sales' class = 'validate[optional,custom[integer]]' value = '<?php echo $settextsales; ?>' placeholder="半角数字" ><select name = 'digit'>
                             <option value = '<?php echo $settextdigit?>'><?php echo $settextdigit2 ?></option>
                             <option value = '1000'>千円</option>
                             <option value = '1000000'>百万円</option>
                             <option value = '1000000000'>十億円</option>
                             <option value = '1000000000000'>兆円</option>
-                        </select>
+                        </select><br>
+                        <a class = 'failfont'><?php echo $salesfailtext; ?></a>
                     </td>
                     <th>資本金</th>
-                    <td><input type = 'number' name = 'capital' class = 'validate[optional,custom[integer]]' value = '<?php echo $settextcapital; ?>' ></td>
+                    <td><input type = 'number' name = 'capital' class = 'validate[optional,custom[integer]]' value = '<?php echo $settextcapital; ?>' placeholder="半角数字">
+                        <a class = 'failfont' ><?php echo $capitalfailtext; ?></a>
+                    </td>
                     
                 </tr>
                 
@@ -113,14 +122,14 @@
 </body>
 
 <script>
-    $(function(){
+    /* $(function(){
         //<form>タグのidを指定
         $("#changeform").validationEngine(
             'attach', {
                 promptPosition: "topRight"//エラーメッセージ位置の指定
             }
         );
-    });
+    }); */
     let businessdetailsfunc = inputfield('businessdetails',<?php echo $businessdetailscount_json; ?>);
     let bankfunc = inputfield('bank',<?php echo $bankcount_json; ?>);
 </script>

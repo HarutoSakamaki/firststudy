@@ -17,6 +17,12 @@
         exit();
     }
 
+	$numberofemployeesfailtext = '';
+	$emptytext = '';
+	$regisuccesstext = '';
+	$regisuccess = false;
+	$settextcompanyname = '';
+	$settextnumberofemployees = '';
 	if(isset($_POST['addcompany'])){
 		/* 入力規則チェック */
 		$numberofemployeesflag = false;
@@ -25,7 +31,7 @@
 		}
 
 		if($_POST['companyname']==''or$_POST['year']==''or$_POST['month']==''or$_POST['day']==''or$_POST['numberofemployees']==''){
-			echo "必要事項に空欄があります<br>";
+			$emptytext .= "必要事項に空欄があります<br>";
 		}else{
 			$regidate = $_POST['year'].'-'.$_POST['month'].'-'.$_POST['day'];
 			$info = '\''.$_POST['companyname'].'\',\''.$regidate.'\',\''.$_POST['numberofemployees'].'\'';
@@ -39,14 +45,28 @@
 					$info = '\''.$numberingid['numbering'].'\',\''.$_POST['companyname'].'\',\''.$regidate.'\',\''.$_POST['numberofemployees'].'\'';
 					$query = "INSERT INTO company (id , company , establishdate, numberofemployees)VALUES(".$info.")";
 					$database -> query($query);
-					echo '会社を登録しました';
+					$newid = $numberingid['numbering'];
+					$regisuccesstext .= <<<EDO
+						<div class = 'successbox'>登録しました
+							<form action = 'changecompany.php' method = 'post'>
+								<input type = 'submit' class = 'commonbutton' name = 'changeform' value = '詳細を設定する'>
+								<input type = 'hidden' name = 'id' value = '{$newid}'>
+							</form>
+						</div>
+						EDO;
+					$regisuccess = true;
 				}catch (Exception $e){
 					echo "エラー発生:" . $e->getMessage().'<br>';
 					echo "登録できませんでした";
 				}
 			}else{
-				echo '有効な値を入力して下さい';
+				$numberofemployeesfailtext = '半角数字を入力して下さい';
 			}
+		}
+		if($regisuccess == false){
+			$settextcompanyname .= $_POST['companyname'];
+			$settextnumberofemployees .= $_POST['numberofemployees'];
+			$regisuccesstext .= '<div class = \'failbox\'>もう一度入力して下さい</div>';
 		}
 	}
 

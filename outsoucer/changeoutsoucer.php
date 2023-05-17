@@ -18,6 +18,11 @@
     }
 
     $changesuccesstext = '';
+    $namefailtext = '';
+    $furiganafailtext = '';
+    $phonenumberfailtext = '';
+    $mailaddressfailtext = '';
+    $employeeidfailtext = '';
     if(isset($_POST['change'])){
         $id = $_POST['id'];
         $changename = ' name = \'' . $_POST['name'].'\' ';
@@ -56,44 +61,46 @@
         $changequery = "UPDATE staffname SET ".$changefurigana. ','.$changeemployeeid.','.$changebirthday. ','.$changeaddress. ','.$changeprefectures.','
             .$changemailaddress. ','.$changephonenumber. ',' .$changeworkhistory. ','.$changelicense. ','.$changemotivation. ','.$changejoincompanyday. ','
             .$changechangedate.' WHERE id = '.$id;
-        $changeemployeeidused = employeeidused($_POST['employeeid']);
+        $changeemployeeidused = changeemployeeidused($_POST['employeeid']);
 
         //ここから入力規則を確認
         $inputrule = true;
         if($_POST['name'] == ''){
             $inputrule = false;
-            $changesuccesstext .= '名前が空欄になっています<br>';
+            $namefailtext .= '名前が空欄になっています<br>';
         }
         if($_POST['furigana'] != '' and !preg_match('/^[ァ-ヾ]+$/u', $_POST['furigana'])){
             $inputrule =false;
-            $changesuccesstext .= 'フリガナはカタカナで入力してください<br>';
+            $furiganafailtext .= 'フリガナはカタカナで入力してください<br>';
         }
         if($_POST['mailaddress'] != '' and !preg_match('/^[a-z0-9._+^~-]+@[a-z0-9.-]+$/i', $_POST['mailaddress'])){
             $inputrule = false;
-            $changesuccesstext .= 'メールアドレスが正しくありません<br>';
+            $mailaddressfailtext .= 'メールアドレスが正しくありません<br>';
         }
         if($_POST['phonenumber'] != '' and !preg_match("/^[0-9]{10,11}$/", $_POST['phonenumber'])){
             $inputrule = false;
-            $changesuccesstext .= '電話番号はハイフン無しの数字で10、11桁で入力してください<br>';
+            $phonenumberfailtext .= '電話番号はハイフン無しの数字で10、11桁で入力してください<br>';
         }
         if($changeemployeeidused == true){
             $inputrule = false;
-            $changesuccesstext .= 'この社員番号は既に使われています<br>';
+            $employeeidfailtext .= 'この社員番号は既に使われています<br>';
         }
         if(!preg_match('/^[0-9]{4,}$/',$_POST['employeeid'])){
             $inputrule = false;
-            $changesuccesstext .= '社員番号は4桁以上の半角数字にしてください';
+            $employeeidfailtext .= '社員番号は4桁以上の半角数字にしてください<br>';
         }
         if($inputrule == true){
             try{
                 $database -> query($changequery);
-                $changesuccesstext .= '登録しました';
+                $changesuccesstext .= '<div class = \'successbox\'>変更しました</div>';
             }catch (Exception $e){
                 /* echo "エラー発生:" . $e->getMessage().'/n';
                 echo "登録できませんでした"; */
-                $changesuccesstext .= '少し時間をおいてもう一度お試しください';
+                $changesuccesstext .= '<div class = \'failbox\'>少し時間をおいてもう一度お試しください</div>';
             }
-
+        }
+        else{
+            $changesuccesstext .= '<div class = \'failbox\'>もう一度入力して下さい</div>';
         }
         
 

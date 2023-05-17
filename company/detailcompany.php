@@ -183,7 +183,7 @@
         $historyoutsoucertext='';
         if($settextflag  == true){
             $nowdate = new DateTime(date('Y-m-d'));
-            $historyoutsoucertext .= '<div><table class = \'workplacetable\'><tr><th>アウトソーサー</th><th>仕事開始日</th><th>仕事終了日</th><th>状態</th><th>履歴の削除</th></tr>';
+            $historyoutsoucertext .= '<div><table class = \'workplacetable\'><tr><th>アウトソーサー</th><th>仕事開始日</th><th>仕事終了日</th><th>状態</th></tr>';
             foreach($settext as $settext){
                 $setcompany = htmlentities($settext['company']);
                 $setstaffname = htmlentities($settext['staffname']);
@@ -204,21 +204,20 @@
                         <td>{$setstartdate}</td>
                         <td>{$setenddate}</td>
                         <td>{$status}</td>
-                        <td><form action = 'detailoutsoucer.php' method = 'post' class = 'margin0' id = 'delete{$settext['id']}' onsubmit="return deleteform()">
-                            <input type = 'submit' name = 'delete' value = '削除' >
-                            <input type = 'hidden' name = 'historyid' value = '{$settext['id']}'>
-                            <input type = 'hidden' name = 'companyid' value = '{$companyid}'>
-                        </form></td>
+                        
                     </tr>
                 EOD;
             }
             $historyoutsoucertext .= '</table></div>';
         }else{
             $historyoutsoucertext .= '履歴がありません';
-    
         }
 
-
+   /*  <td><form action = 'detailoutsoucer.php' method = 'post' class = 'margin0' id = 'delete{$settext['id']}' onsubmit="return deleteform()">
+        <input type = 'submit' name = 'delete' value = '削除' >
+        <input type = 'hidden' name = 'historyid' value = '{$settext['id']}'>
+        <input type = 'hidden' name = 'companyid' value = '{$companyid}'>
+    </form></td> */
 
         require_once('html/detailcompanyview.php');
 

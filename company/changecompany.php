@@ -21,27 +21,36 @@
 
 
     $changesuccesstext = '';
+    $companynamefailtext = '';
+    $numberofemployeesfailtext = '';
+    $averageagefailtext = '';
+    $capitalfailtext = '';
+    $salesfailtext = '';
+    
     if(isset($_POST['change'])){
 
         /* ここから入力規則のチェック */
         $inputrule = true;
         if($_POST['company'] == '' ){
             $inputrule = false;
-            $changesuccesstext .= '会社名が空欄になっています<br>' ;
+            $companynamefailtext .= '空欄になっています<br>' ;
         }
-        
         if($_POST['numberofemployees'] != '' and !preg_match("/^[0-9]+$/", $_POST['numberofemployees'])){
             $inputrule = false;
-            $changesuccesstext .= '従業員数は数字を入力して下さい<br>' ;
+            $numberofemployeesfailtext .= '半角数字を入力して下さい<br>' ;
         }
         if($_POST['averageage'] != '' and !preg_match("/^[0-9.]+$/", $_POST['averageage'])){
             $inputrule = false;
-            $changesuccesstext .= '平均年齢は数字を入力して下さい<br>' ;
+            $averageagefailtext .= '半角数字(小数でも可)を入力して下さい<br>' ;
         }
         if($_POST['sales'] != '' and !preg_match("/^[0-9.]+$/", $_POST['sales'])){
             $inputrule = false;
-            $changesuccesstext .= '売上高は数字を入力して下さい<br>' ;
+            $salesfailtext .= '数字(小数でも可)を入力して下さい<br>' ;
+        }if($_POST['capital'] != '' and !preg_match("/^[0-9]+$/",$_POST['capital'])){
+            $inputrule = false;
+            $capitalfailtext .= '数字を入力して下さい<br>' ;
         }
+
         if($inputrule == true){
             $id = $_POST['id'];
             $company = $_POST['company'];
@@ -87,12 +96,15 @@
            
             try{
                 $database -> query($changequery);
-                $changesuccesstext = '変更しました';
+                $changesuccesstext .= '<div class = \'successbox\'>変更しました</div>';
+                $changesuccess = true;
             }catch(Exception $e){
                 echo "エラー発生:" . $e->getMessage();
                 exit();
             }
-            
+
+        }else{
+            $changesuccesstext .= '<div class = \'failbox\'>もう一度入力してください</div>';
         }
     }
 
@@ -138,14 +150,10 @@
                 break;
             }
         }
-        
 
         $settextprefectures = $_POST['prefectures'];
-        
         $settextsales = $_POST['sales'];
         $settextdigit = $_POST['digit'];
-        
-
         $settextlocation = $_POST['location'];
         $settextnumberofemployees = $_POST['numberofemployees'];
         $settextestablishyear = $_POST['establishyear'];
@@ -246,9 +254,6 @@
         $joindaytext.='<option value="' .$i . '">' . $i .'</option>'. "\n";
     }
     $joindaytext.='</select>日' . "\n";
-
-
-
 
     require_once('html/changecompanyview.php');
 ?>

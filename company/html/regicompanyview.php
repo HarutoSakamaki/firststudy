@@ -28,23 +28,22 @@
 <div id = "regicompany" class = 'formsize box'>
 	<div class = "boxtitle">会社の登録</div>
 	<div class = "boxcontent">
+		<?php echo $regisuccesstext; ?>
 		<form action="regicompany.php" method="post" id = "regicompanyform">
-			<!-- <p> 会社名: <input type="text" class = "validate[required]" name="companyname" value="<?php if(isset($_POST['addcompany'])){echo htmlentities($_POST['companyname']);}?>"></p>
-			<p> 従業員数: <input type="number" class = "validate[required,custom[integer]]" name="numberofemployees" value="<?php if(isset($_POST['addcompany'])){echo htmlentities($_POST['numberofemployees']);}?>"></p>
 			
-			<?php
-				echo $birthdaytext;
-			?> -->
-
-
+			<a class = 'failfont'><?php echo $emptytext; ?></a>
 			<table class = 'inputtable'>
 				<tr>
 					<th>会社名</th>
-					<td><input type="text" class = "validate[required]" name="companyname" value="<?php if(isset($_POST['addcompany'])){echo htmlentities($_POST['companyname']);}?>"></td>
+					<td><input type="text" class = "validate[required]" name="companyname" value = "<?php echo htmlentities($settextcompanyname); ?>"><br>
+						
+					</td>
 				</tr>
 				<tr>
 					<th>従業員数</th>
-					<td><input type="number" class = "validate[required,custom[integer]]" name="numberofemployees" value="<?php if(isset($_POST['addcompany'])){echo htmlentities($_POST['numberofemployees']);}?>"></td>
+					<td><input type="number" class = "validate[required,custom[integer]]" name="numberofemployees" value="<?php echo htmlentities($settextnumberofemployees);?>" placeholder="半角数字4桁以上"><br>
+					<a class = 'failfont'><?php echo $numberofemployeesfailtext; ?></a>
+					</td>
 				</tr>
 				<tr>
 					<th>設立日</th>
@@ -70,14 +69,14 @@
 <script>
 
 
-	$(function(){
+	/* $(function(){
         //<form>タグのidを指定
         $("#regicompanyform").validationEngine(
             'attach', {
                 promptPosition: "topRight"//エラーメッセージ位置の指定
             }
         );
-    });
+    }); */
 
 
 </script>

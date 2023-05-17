@@ -15,16 +15,20 @@
 ?>
 
 <div class = "box formsize">
-    <div class = "boxtitle">変更</div>
+    <div class = "boxtitle">詳細と変更</div>
     <div class = "boxcontent">
         <form action="changeoutsoucer.php" id = 'changeform' method="post">
-            <a class = 'failfont'><?php echo $changesuccesstext; ?></a>
+            <?php echo $changesuccesstext; ?>
             <table class = 'changetable'>
                 <tr>
                     <th>名前</th>
-                    <td><input type = 'text' name = 'name' class = 'validate[required]' value = <?php echo $settextname; ?>></td>
+                    <td><input type = 'text' name = 'name' class = 'validate[required]' value = <?php echo $settextname; ?>><br>
+                        <a class = 'failfont'><?php echo $namefailtext; ?></a>
+                    </td>
                     <th>フリガナ</th>
-                    <td><input type = 'text' name = 'furigana' class = 'validate[optional,custom[katakana]]' value = <?php echo $settextfurigana; ?>></td>
+                    <td><input type = 'text' name = 'furigana' placeholder="カタカナのみ" class = 'validate[optional,custom[katakana]]' value = <?php echo $settextfurigana; ?>><br>
+                        <a class = 'failfont'><?php echo $furiganafailtext; ?></a>
+                    </td>
                 </tr>
                 
                 <tr>
@@ -47,9 +51,13 @@
                 
                 <tr>
                     <th>電話番号(ハイフンなし)</th>
-                    <td><input type = 'number' name = 'phonenumber' class = 'validate[custom[phone]]' value = <?php echo $settextphonenumber; ?>></td>
+                    <td><input type = 'number' name = 'phonenumber' class = 'validate[custom[phone]]' value = '<?php echo $settextphonenumber; ?>' placeholder="09099998888"><br>
+                        <a class = 'failfont'><?php echo $phonenumberfailtext; ?></a>
+                    </td>
                     <th>メールアドレス</th>
-                    <td><input type = 'text' name = 'mailaddress' class = 'validate[custom[email]]' value = <?php echo $settextmailaddress; ?>></td>
+                    <td><input type = 'text' name = 'mailaddress' class = 'validate[custom[email]]' value = '<?php echo $settextmailaddress; ?>' placeholder="~@~"><br>
+                        <a class = 'failfont'><?php echo $mailaddressfailtext; ?></a>
+                    </td>
                 </tr>
                 <tr>
                     <th>職歴</th>
@@ -68,9 +76,10 @@
                     <th>志望理由</th>
                     <td><textarea name = "motivation" cols = '30' row = '5' class = 'smalltext textarea'><?php echo $settextmotivation; ?></textarea></td>
                     <th>社員番号</th>
-                    <td><input type = 'number' name = 'employeeid' value = <?php echo $settextemployeeid; ?>></td>
+                    <td><input type = 'number' name = 'employeeid' value = <?php echo $settextemployeeid; ?> placeholder="半角数字4桁以上" ><br>
+                        <a class = 'failfont'><?php echo $employeeidfailtext; ?></a>
+                    </td>
                 </tr>
-                
             </table>
             
             

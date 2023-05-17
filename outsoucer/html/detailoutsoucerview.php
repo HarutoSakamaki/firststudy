@@ -74,7 +74,8 @@
 
                 <div class = 'regibox'>
                     <form action = 'detailoutsoucer.php' method = 'post' id = 'addcompanyform'>
-                        <a class = 'failfont'><?php echo $addcompanysuccesstext; ?></a>
+                        <?php echo $addcompanysuccesstext; ?>
+                        <a class = 'failfont'><?php echo $addcompanyfailtext; ?></a>
                         <table class = 'regitable'>
                             <tr>
                                 <td>会社名</td>

@@ -17,24 +17,29 @@
 
             <div class = 'addbox'>
                 <h3>アカウントの追加</h3>
-                <a class = 'redfont'><?php echo $addaccountsuccesstext ?></a>
                 <form action = 'admin.php' method = 'post' id = 'regiform'>
+                    <?php echo $addaccountsuccesstext ;?>
                     <table class = 'addtable'>
+                        <div class = 'success'><div>
                         <tr>
                             <th>username</th>
-                            <td><input type = 'text' name = 'username' value = '<?php echo htmlspecialchars($settextaddusername) ?>' placeholder="半角英数字"><td>
+                            <td><input type = 'text' name = 'username' value = '<?php echo htmlspecialchars($settextaddusername) ?>' placeholder="半角英数字"><br>
+                                <a class = 'failfont'><?php echo $usernamefailtext; ?></a>
+                            <td>
                         </tr>
                         <tr>
                             <th>password</th>
-                            <td><input type = 'password' name = 'password' placeholder="半角英数字をそれぞれ1種類以上含む8文字以上" class = 'passwordplaceholder'><td>
+                            <td><input type = 'password' name = 'password' placeholder="半角英数字をそれぞれ1種類以上含む8文字以上" class = 'passwordplaceholder' value = '<?php echo $settextpassword ?>'><br>
+                                <a class = 'failfont'><?php echo $passwordfailtext; ?></a></td>
                         </tr>
                         <tr>
                             <th>password(again)</th>
-                            <td><input type = 'password' name = 'passwordagain'><td>
+                            <td><input type = 'password' name = 'passwordagain'><br>
+                                <a class = 'failfont'><?php echo $passwordagainfailtext; ?></a><td>
                         </tr>
                         <tr>
                             <th>管理者として登録する</th>
-                            <td><input type = 'radio' name = 'adminregi' value = 'はい'>はい  <input type = 'radio' name = 'adminregi' value = 'いいえ' checked>いいえ<td>
+                            <td><input type = 'radio' name = 'adminregi' value = 'はい'>はい  <input type = 'radio' name = 'adminregi' value = 'いいえ' checked>いいえ</td>
                         </tr>
                     </table>
                     <input type='submit' name = 'addaccount' value = '追加' class = 'commonbutton'>

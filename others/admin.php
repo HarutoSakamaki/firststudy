@@ -20,9 +20,13 @@
 
     $addaccountsuccesstext = '';
     $settextaddusername = '';
+    $settextpassword = '';
     $settextsearchusername = '';
     $searchfailtext = '';
     $searchtable = '';
+    $usernamefailtext = '';
+    $passwordfailtext ='';
+    $passwordagainfailtext = '';
 
     //アカウントの登録
     $addsuccess = false;
@@ -39,7 +43,7 @@
                 exit();
             }
             if(isset(mysqli_fetch_assoc($result)['id'])){
-                $addaccountsuccesstext .= htmlspecialchars($_POST['username']).'はすでに存在しています<br>';
+                $usernamefailtext .= htmlspecialchars($_POST['username']).'はすでに存在しています<br>';
             }else{
                 if($_POST['adminregi'] == 'はい'){
                     $admin = 1;
@@ -56,7 +60,9 @@
                         INSERT INTO login (id,username,password,admin) VALUES ({$numberingid['numbering']},'{$_POST['username']}','{$hashpassword}',{$admin}) 
                         EDO;
                     $result = $database -> query($query);
-                    $addaccountsuccesstext .= '登録に成功しました';
+                    $addaccountsuccesstext .= <<<EOD
+                        <div class = 'successbox'>登録に成功しました</div>
+                        EOD;
                     $addsuccess = true;
                 }catch(Exception $e){
                     echo "エラー発生:" . $e->getMessage().'<br>';
@@ -64,25 +70,25 @@
                 }
             }
         }else{
-            
             if(!preg_match("/^[a-zA-Z0-9]+$/",$_POST['username'])){
-                $addaccountsuccesstext .= 'usernameは半角英数字で入力してください<br>';
+                $usernamefailtext .= '半角英数字で入力してください<br>';
             }
             if(!preg_match('/^[a-zA-Z0-9_]{8,}$/',$_POST['password'])){
-                $addaccountsuccesstext .= 'passwordは半角数字8文字以上で入力してください<br>';
+                $passwordfailtext .= '半角数字8文字以上で入力してください<br>';
             }
             if($_POST['password'] != $_POST['passwordagain']){
-                $addaccountsuccesstext .= '二つのpasswordの値が違います<br>';
+                $passwordagainfailtext .= '二つのpasswordの値が違います<br>';
             }
             if(!preg_match('/[0-9]/',$_POST['password'])){
-                $addaccountsuccesstext .= 'passwordは半角数字を含んでください<br>';
+                $passwordfailtext .= '半角数字を含んでください<br>';
             }
             if(!preg_match('/[a-zA-Z]/',$_POST['password'])){
-                $addaccountsuccesstext .= 'passwordは半角英字を含んでください<br>';
+                $passwordfailtext .= '半角英字を含んでください<br>';
             }
         }
         if($addsuccess == false){
             $settextaddusername = $_POST['username'];
+            $settextpassword = $_POST['password'];
         }
     }
     
