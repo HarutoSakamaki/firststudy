@@ -26,11 +26,11 @@
                 <table class = 'inputtable'>
                     <tr>
                         <th>名前</th>
-                        <td><input type = 'text' id = 'inputsearchname' name = 'searchname' value = "<?php if($postflag){echo htmlentities($_POST['searchname']);}?>"></td>
+                        <td><input type = 'text' id = 'inputsearchname' name = 'searchname' value = "<?php echo htmlentities($settextname);?>"></td>
                     </tr>
                     <tr>
                         <th>社員番号</th>
-                        <td><input type = 'number' id = 'inputemployeeid' name = 'employeeid' value = "<?php if($postflag){echo htmlentities($_POST['employeeid']);}?>"></td>
+                        <td><input type = 'number' id = 'inputemployeeid' name = 'employeeid' value = "<?php echo htmlentities($settextemployeeid);?>"></td>
                     </tr>
                     <tr>
                         <th>生年月日</th>
@@ -40,12 +40,7 @@
                         <th>入社日</th>
                         <td><?php datein('','join',['delete','search'],[0,1,1,2000,1,1],1900) ?></td>
                     </tr>
-                    <tr>
-                        <th>表示</th>
-                        <td>
-                            <?php echo $settextorder ?>
-                        </td>
-                    </tr>
+                    
                 </table>
                 <button type = 'submit' class = 'btn' name = 'search' value='検索'>検索</button>
             
@@ -53,6 +48,7 @@
         </div>
     </div >
     <?php
+        echo $tablecounttext;
         echo $tabletext;
     ?>
          

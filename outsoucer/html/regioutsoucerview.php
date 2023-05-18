@@ -33,12 +33,6 @@
 					</td>
 				</tr>
 				<tr>
-					<th>社員番号</th>
-					<td><input type = "number" name = "employeeid" class = "validate[required]" value = "<?php echo htmlentities($settextemployeeid) ?>" placeholder="半角数字4桁以上"><br>
-					<a class = 'failfont'><?php echo $employeeidfailtext; ?></a>
-				</td>
-				</tr>
-				<tr>
 					<th>生年月日</th>
 					<td><?php echo $daytext ?></td>
 				</tr>

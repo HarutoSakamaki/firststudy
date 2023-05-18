@@ -4,6 +4,7 @@
         $database = database('staff');
 
         session_start();
+        session_regenerate_id(true);
         if(isset($_SESSION['login'])){
             
         }else{
@@ -79,6 +80,24 @@
                 $settextsales = $settextsales.'億円';
             }elseif($digit == 1000000000000){
                 $settextsales = $settextsales.'兆円';
+            }
+        }
+
+        $settextcapital = $row1['capital'];
+        $settextdigit = '';
+        if($settextcapital != ''){
+            $digit =  1;
+            while($settextcapital%10000 == 0 and $settextcapital !=0){
+                $settextcapital = $settextcapital/10000;
+                $digit = $digit*10000;
+            }if($digit == 1){
+                $settextcapital = $settextcapital.'円';
+            }elseif($digit == 10000){
+                $settextcapital = $settextcapital.'万円';
+            }elseif($digit == 100000000){
+                $settextcapital = $settextcapital.'億円';
+            }elseif($digit == 1000000000000){
+                $settextcapital = $settextcapital.'兆円';
             }
         }
 

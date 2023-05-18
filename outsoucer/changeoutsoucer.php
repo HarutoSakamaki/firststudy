@@ -9,6 +9,7 @@
     $database = database('staff');
 
     session_start();
+    session_regenerate_id(true);
     if(isset($_SESSION['login'])){
         
     }else{
@@ -22,7 +23,7 @@
     $furiganafailtext = '';
     $phonenumberfailtext = '';
     $mailaddressfailtext = '';
-    $employeeidfailtext = '';
+    
     if(isset($_POST['change'])){
         $id = $_POST['id'];
         $changename = ' name = \'' . $_POST['name'].'\' ';
@@ -32,7 +33,7 @@
         $changeaddress = ' address = \'' .$_POST['address'].'\'';
         $changemailaddress = ' mailaddress = \'' .$_POST['mailaddress'].'\'';
         $changephonenumber = ' phonenumber = \'' .$_POST['phonenumber'].'\'';
-        $changeemployeeid = ' employeeid = \''.$_POST['employeeid'].'\' ';
+        
 
         $licensestack = array();
         $count = 0;
@@ -58,7 +59,7 @@
         $changejoincompanyday = ' joincompanyday = \'' .$_POST['joinyear'].'-'.$_POST['joinmonth'].'-'.$_POST['joinday'].'\'';
         
         $changechangedate = ' update_at = \''.date("Y-m-d H:i:s").'\'';
-        $changequery = "UPDATE staffname SET ".$changefurigana. ','.$changeemployeeid.','.$changebirthday. ','.$changeaddress. ','.$changeprefectures.','
+        $changequery = "UPDATE staffname SET ".$changename.','.$changefurigana. ','.$changebirthday. ','.$changeaddress. ','.$changeprefectures.','
             .$changemailaddress. ','.$changephonenumber. ',' .$changeworkhistory. ','.$changelicense. ','.$changemotivation. ','.$changejoincompanyday. ','
             .$changechangedate.' WHERE id = '.$id;
         $changeemployeeidused = changeemployeeidused($_POST['employeeid']);
@@ -81,14 +82,8 @@
             $inputrule = false;
             $phonenumberfailtext .= '電話番号はハイフン無しの数字で10、11桁で入力してください<br>';
         }
-        if($changeemployeeidused == true){
-            $inputrule = false;
-            $employeeidfailtext .= 'この社員番号は既に使われています<br>';
-        }
-        if(!preg_match('/^[0-9]{4,}$/',$_POST['employeeid'])){
-            $inputrule = false;
-            $employeeidfailtext .= '社員番号は4桁以上の半角数字にしてください<br>';
-        }
+        
+        
         if($inputrule == true){
             try{
                 $database -> query($changequery);

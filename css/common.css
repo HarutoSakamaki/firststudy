@@ -22,6 +22,13 @@ input{
   display: inline-block; 
   _display: inline;
 }
+.center{
+  display:block;
+  margin: 40px auto;
+  margin-bottom : 0px;
+  width:fit-content;
+  display : flex;
+}
 
 
 
@@ -87,7 +94,8 @@ select{
     width: 80%; 
     border-collapse:separate;
     border-spacing: 0;
-    margin: 40px auto;
+    margin: 10px auto;
+    margin-bottom : 300px;
   }
   .table1 th:first-child{
     border-radius: 5px 0 0 0;
@@ -98,14 +106,17 @@ select{
   }
   .table1 th{
     text-align: center;
+    vertical-align: middle;
     color:white;
     background: linear-gradient(#829ebc,#225588);
     border-left: 1px solid #3c6690;
     border-top: 1px solid #3c6690;
     border-bottom: 1px solid #3c6690;
     box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;
-    
     padding: 10px 0;
+  }
+  .table1 th button{
+    vertical-align:middle;
   }
   .table1 td form{
     margin-bottom:0px;
@@ -248,7 +259,7 @@ select{
 
   .passwordplaceholder::placeholder{
     font-size:11px;
-}
+  }
 
 .successbox{
   font-size:35px;

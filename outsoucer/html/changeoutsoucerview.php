@@ -9,13 +9,17 @@
      <title>アウトソーサーの詳細変更</title>
 </head>
 <body>
-<br><br><br><br><br><br>
 <?php
     include("../header.php");
 ?>
-
+<br><br><br><br><br>
+<div class = 'backbox'><form action = detailoutsoucer.php method = 'post'>
+        <button type = submit name = 'staffid' value = <?php echo $id; ?> class = 'commonbutton'><img src="../img/backbutton.png" alt=""/>詳細画面に戻る</button>
+    </form>
+</div>
 <div class = "box formsize">
-    <div class = "boxtitle">詳細と変更</div>
+    <div class = "boxtitle">
+        詳細と変更</div>
     <div class = "boxcontent">
         <form action="changeoutsoucer.php" id = 'changeform' method="post">
             <?php echo $changesuccesstext; ?>
@@ -38,15 +42,15 @@
                     <td><?php echo $joindaytext;?></td>
                 </tr>
                 <tr>
-                    <th>現住所(都道府県)</th>
-                    <td>
-                        <select name = 'prefectures'>
+                    <th>現住所</th>
+                        <td colspan = '3'>
+                        (都道府県)<select name = 'prefectures'>
                             <?php if($settextprefectures != ''){echo '<option value = '.$settextprefectures.'>'.getpref($settextprefectures).'</option>';}?>
                             <?php selectpref();?>
                         </select>
-                    </td>
-                    <th>現住所(市区町村以下)</th>
-                    <td><input type = 'text' name = 'address' value = <?php echo $settextaddress; ?>></td>
+                    
+                    <div>(市区町村以下)
+                    <input type = 'text' style = 'width:600px;' name = 'address' value = <?php echo $settextaddress; ?>></div></td>
                 </tr>
                 
                 <tr>
@@ -62,12 +66,12 @@
                 <tr>
                     <th>職歴</th>
                     <td class = 'arrayitem'>
-                        <input type = "button" class = 'commonbutton' value ='入力欄を増やす' id = 'workhistoryincreasetext'><input type = "button" class = 'commonbutton'value ='入力欄を減らす' id = 'workhistorydecreasetext'>
+                        <input type = "button" class = 'commonbutton' value ='追加' id = 'workhistoryincreasetext'><input type = "button" class = 'commonbutton'value ='削除' id = 'workhistorydecreasetext'>
                         <?php echo $workhistorytext;?>
                     </td>
                     <th>免許や資格</th>
                     <td class = 'arrayitem'>
-                        <input type = "button" class = 'commonbutton' value ='入力欄を増やす' id = 'licenseincreasetext'><input type = "button" class = 'commonbutton' value ='入力欄を減らす' id = 'licensedecreasetext'>
+                        <input type = "button" class = 'commonbutton' value ='追加' id = 'licenseincreasetext'><input type = "button" class = 'commonbutton' value ='削除' id = 'licensedecreasetext'>
                         <?php echo $licensetext;?>
                     </td>
                 </tr>
@@ -76,8 +80,10 @@
                     <th>志望理由</th>
                     <td><textarea name = "motivation" cols = '30' row = '5' class = 'smalltext textarea'><?php echo $settextmotivation; ?></textarea></td>
                     <th>社員番号</th>
-                    <td><input type = 'number' name = 'employeeid' value = <?php echo $settextemployeeid; ?> placeholder="半角数字4桁以上" ><br>
-                        <a class = 'failfont'><?php echo $employeeidfailtext; ?></a>
+                    <td>
+                        <a><?php echo $settextemployeeid; ?></a>
+                        <input type = 'hidden' name = 'employeeid' value = <?php echo $settextemployeeid; ?> placeholder="半角数字4桁以上" ><br>
+                        
                     </td>
                 </tr>
             </table>

@@ -44,7 +44,7 @@
                         </tr>
                         <tr>
                             <th>従業員数</th>
-                            <td><?php echo htmlentities($row1['numberofemployees']); ?></td>
+                            <td><?php echo htmlentities($row1['numberofemployees']); ?>人</td>
                         </tr>
                         <tr>
                             <th>設立日</th>
@@ -52,7 +52,7 @@
                         </tr>
                         <tr>
                             <th>資本金</th>
-                            <td><?php echo htmlentities($row1['capital']); ?></td>
+                            <td><?php echo htmlentities($settextcapital); ?></td>
                         </tr>
                         <tr>
                             <th>平均年齢</th>

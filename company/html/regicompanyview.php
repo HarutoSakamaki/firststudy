@@ -41,7 +41,7 @@
 				</tr>
 				<tr>
 					<th>従業員数</th>
-					<td><input type="number" class = "validate[required,custom[integer]]" name="numberofemployees" value="<?php echo htmlentities($settextnumberofemployees);?>" placeholder="半角数字4桁以上"><br>
+					<td><input type="number" class = "validate[required,custom[integer]]" name="numberofemployees" value="<?php echo htmlentities($settextnumberofemployees);?>" placeholder="半角数字"><br>
 					<a class = 'failfont'><?php echo $numberofemployeesfailtext; ?></a>
 					</td>
 				</tr>

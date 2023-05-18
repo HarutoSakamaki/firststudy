@@ -20,40 +20,28 @@
         <div class = "boxtitle">登録会社の検索</div>
         <div class = "boxcontent">
             <form action = 'searchcompany.php' id = 'formCheck' method = post class = 'formsize'>
-
                 <table class = 'inputtable'>
                     <tr>
                         <th>会社名</th>
-                        <td><input type = 'text' id = 'inputsearchcompany' name = 'searchcompany' value = "<?php if($postflag){echo htmlentities($_POST['searchcompany']);}?>"></td>
+                        <td><input type = 'text' id = 'inputsearchcompany' name = 'searchcompany' value = "<?php echo $settextsearchcompany?>"></td>
                     </tr>
                     <tr>
                         <th>従業員数</th>
-                        <td><input type = 'number' id  = 'inputminemployees' class = 'validate[optional,custom[integer]]'name = 'minemployees' value = "<?php if($postflag){echo htmlentities($_POST['minemployees']); }else{echo '0';}?>" onselect = 'numbercheck(this)'>
-                            ~<input type = 'number' id = 'inputmaxemployees' class = 'validate[optional,custom[integer]]' name = 'maxemployees' value = "<?php if($postflag){echo htmlentities($_POST['maxemployees']);}?>" onselect = 'numbercheck(this)' > </td>
+                        <td><input type = 'number' id  = 'inputminemployees' class = 'validate[optional,custom[integer]]'name = 'minemployees' value = "<?php echo $settextminemployees; ?>" onselect = 'numbercheck(this)'>
+                            ~<input type = 'number' id = 'inputmaxemployees' class = 'validate[optional,custom[integer]]' name = 'maxemployees' value = "<?php echo $settextmaxemployees;?>" onselect = 'numbercheck(this)' > </td>
                     </tr>
                     <tr>
                         <th>設立日</th>
                         <td><?php datein('','',['delete','search']); ?></td>
                     </tr>
-                    <tr>
-                        <th>表示</th>
-                        <td>
-                            <!-- <input type = 'radio' name = 'inorder' value = 'employeedesc' checked>従業員数降順  <input type = 'radio' name = 'inorder' value = 'employeeasc'>従業員数昇順
-                            <input type = 'radio' name = 'inorder' value = 'regidesc'>登録新着順  <input type = 'radio' name = 'inorder' value = 'regiasc'>登録投稿順 <br>
-
-                            <input type = 'radio' name = 'inorder' value = 'establishdesc' >設立日降順  <input type = 'radio' name = 'inorder' value = 'establishasc'>設立日昇順
-                            <input type = 'radio' name = 'inorder' value = 'companynamedesc' >会社名降順  <input type = 'radio' name = 'inorder' value = 'comapnynameasc'>会社名昇順 -->
-                            <?php echo $settextorder ?>
-                            
-                        
-                        </td>
-                    </tr>
+                    
 			    </table>
                 <button type = 'submit' class = 'btn searchbutton' value='検索する' name = 'search'>検索</button>
             </form>
         </div>
     </div>
         <?php
+            echo $tablecounttext;
             echo $tabletext;
         ?>
     

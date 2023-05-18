@@ -10,6 +10,7 @@
     $database = database('staff');
 
 	session_start();
+	session_regenerate_id(true);
     if(isset($_SESSION['login'])){
         
     }else{
@@ -27,65 +28,46 @@
 	$settextemployeeid = '';
 	$employeeidfailtext = '';
 	if(isset($_POST['addoutsoucer'])){
-		if($_POST['name']==''or $_POST['employeeid']=='' or$_POST['birthyear']==''or$_POST['birthmonth']==''or$_POST['birthday']==''or$_POST['joinyear']==''or$_POST['joinmonth']==''or$_POST['joinday']==''){
+		if($_POST['name']==''or$_POST['birthyear']==''or$_POST['birthmonth']==''or$_POST['birthday']==''or$_POST['joinyear']==''or$_POST['joinmonth']==''or$_POST['joinday']==''){
 			if($_POST['name'] == ''){
 				$namefailtext .= '空欄になっています<br>';
 			}
-			if($_POST['employeeid'] == ''){
-				$employeeidfailtext .= '空欄になっています<br>';
-			}
 			$inputrule = false;
-		}else{
-			if(preg_match('/^[0-9]{4,}$/',$_POST['employeeid'])){
-				$inputrule = true;
-			}else{
-				$employeeidfailtext .= "社員番号は半角数字4文字以上にしてください<br>";
-				$inputrule = false;
-			}
 		}
 		if($inputrule == true){
-
-			$used = employeeidused($_POST['employeeid']);
-
-			if($used == true){
-				$employeeidfailtext .= 'すでにその社員番号は使われています';
-			}
-			elseif($used == false){
-				$regibirth = $_POST['birthyear'].'-'.$_POST['birthmonth'].'-'.$_POST['birthday'];
-				$regijoin = $_POST['joinyear'].'-'.$_POST['joinmonth'].'-'.$_POST['joinday'];
-				try{
-					$numberingquery = "UPDATE numbering SET numbering = LAST_INSERT_ID(numbering + 1) WHERE tablename = 'staffname'";
-					$database -> query($numberingquery);
-					$numberingquery = 'SELECT numbering FROM numbering where tablename = \'staffname\' ';
-					$numberingid = mysqli_fetch_assoc($database -> query($numberingquery));
-					$info = '\''.$numberingid['numbering'].'\',\''.$_POST['name'].'\',\''.$_POST['employeeid'].'\',\''.$regibirth.'\',\''.$regijoin.'\'';
-					$query = "INSERT INTO staffname (id,name,employeeid,birthday,joincompanyday)VALUES(".$info.")";
-					$database -> query($query);
-					$regiflag = true;
-					$newid =  $numberingid['numbering'];
-					$regisuccesstext .= <<<EDO
-						<div class = 'successbox' >登録しました
+			
+			$regibirth = $_POST['birthyear'].'-'.$_POST['birthmonth'].'-'.$_POST['birthday'];
+			$regijoin = $_POST['joinyear'].'-'.$_POST['joinmonth'].'-'.$_POST['joinday'];
+			try{
+				$numberingquery = "UPDATE numbering SET numbering = LAST_INSERT_ID(numbering + 1) WHERE tablename = 'staffname'";
+				$database -> query($numberingquery);
+				$numberingquery = 'SELECT numbering FROM numbering where tablename = \'staffname\' ';
+				$numberingid = mysqli_fetch_assoc($database -> query($numberingquery));
+				$setemployeeid = $numberingid['numbering']+10000;
+				$info = '\''.$numberingid['numbering'].'\',\''.$_POST['name'].'\',\''.$setemployeeid.'\',\''.$regibirth.'\',\''.$regijoin.'\'';
+				$query = "INSERT INTO staffname (id,name,employeeid,birthday,joincompanyday)VALUES(".$info.")";
+				$database -> query($query);
+				$regiflag = true;
+				$newid =  $numberingid['numbering'];
+				$regisuccesstext .= <<<EDO
+					<div class = 'successbox' >登録しました
 						<form action = 'changeoutsoucer.php' method = 'post'>
 							<input type = 'submit' class = 'commonbutton' name = 'changeform' value = '詳細を設定する'>
 							<input type = 'hidden' name = 'id' value = '{$newid}'>
 						</form>
-						</div>
-					
-						EDO;
-					
-					
-				}catch (Exception $e){
-					/* echo "エラー発生:" . $e->getMessage().'/n';
-					echo "登録できませんでした"; */
-					$regisuccesstext .= '<div class = \'failbox\'>少し時間をおいてもう一度お試しください</div>';
-				}
+					</div>
+					EDO;
+			}catch (Exception $e){
+				/* echo "エラー発生:" . $e->getMessage().'/n';
+				echo "登録できませんでした"; */
+				$regisuccesstext .= '<div class = \'failbox\'>少し時間をおいてもう一度お試しください</div>';
 			}
+			
 		}elseif($inputrule == false){
 			$regisuccesstext .= '<div class = \'failbox\'>もう一度入力して下さい</div>';
 		}
 		if($regiflag == false){
 			$settextname = $_POST['name'];
-			$settextemployeeid = $_POST['employeeid'];
 		}
 	}
 

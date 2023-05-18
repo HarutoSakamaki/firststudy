@@ -6,6 +6,7 @@
     padding-bottom:18px;
     padding-left:20px;
     position: relative;
+    vertical-align : middle;
   }
   .changetable tr th{
     background-color : rgb(212, 245, 250);
@@ -16,7 +17,6 @@
   .changetable tr .arrayitem input{
     margin-top:5px;
   }
-  
   .changetable{
     border-collapse : collapse;
     width:100%;
@@ -39,3 +39,34 @@
     margin-bottom:60px;
     margin-left : 60px;
   }
+  form img{
+    width: 30px;
+    height: auto;
+    display: block;
+  }
+  .backbox{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color : rgba(0,0,0,0);
+    width:fit-content;
+    margin-left : 5%;
+    margin-bottom : 5px;
+  }
+  .backbox button{
+    
+    
+    cursor: pointer;
+    font-size : 20px;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+  }
+  .backbox form{
+    
+    margin : 0 0;
+    
+  }
+  

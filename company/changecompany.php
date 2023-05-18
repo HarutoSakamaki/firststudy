@@ -10,6 +10,7 @@
     $database = database('staff');
 
     session_start();
+    session_regenerate_id(true);
     if(isset($_SESSION['login'])){
         
     }else{
@@ -52,16 +53,18 @@
         }
 
         if($inputrule == true){
+            $setcapital = $_POST['capital']*$_POST['capitaldigit'];
+            $setsales = $_POST['sales']*$_POST['digit'];
             $id = $_POST['id'];
             $company = $_POST['company'];
             $changecompany = ' company = \'' . $_POST['company'].'\' ';
             $changepresident = ' president = \'' .$_POST['president'].'\'';
-            $changesales = ' sales = \''.$_POST['sales']*$_POST['digit'].'\' ';
+            $changesales = ' sales = \''.$setsales.'\' ';
             $changeprefectures = ' prefectures = \''.$_POST['prefectures'].'\' ';
             $changelocation = ' location = \'' .$_POST['location'].'\'';
             $changenumberofemployees = ' numberofemployees = \'' .$_POST['numberofemployees'].'\'';
             $changeestablishdate = ' establishdate = \'' . $_POST['establishyear'].'-'.$_POST['establishmonth'].'-'.$_POST['establishday'].'\'';
-            $changecapital = ' capital = \''.$_POST['capital'].'\' ';
+            $changecapital = ' capital = \''.$setcapital.'\' ';
             $changeclosingmonth = ' closingmonth = \''.$_POST['closingmonth'].'\' ';
             $changeaverageage = ' averageage = \''.$_POST['averageage'].'\' ';
             $changehomepage = ' homepage = \'' .$_POST['homepage'].'\' ';
@@ -159,6 +162,7 @@
         $settextestablishyear = $_POST['establishyear'];
         $settextestablishmonth = $_POST['establishmonth'];
         $settextestablishday = $_POST['establishday'];
+        $settextcapitaldigit = $_POST['capitaldigit'];
         $settextcapital = $_POST['capital'];
         $settextaverageage = $_POST['averageage'];
         $settextclosingmonth = $_POST['closingmonth'];
@@ -167,7 +171,6 @@
     }else{
         $settextcompany = $row['company'];
         $settextpresident = $row['president'];
-        /* $settextsales = $row['sales']; */
         $settextbusinessdetails = $businessdetails;
         $settextbank = $bank;
         $settextprefectures = $row['prefectures'];
@@ -179,18 +182,24 @@
         $settextcapital = $row['capital'];
         $settextaverageage = $row['averageage'];
         $settextclosingmonth = $row['closingmonth'];
-        /* $settextbank = $row['bank']; */
         $settexthomepage = $row['homepage'];
 
-        $settextdigit = 1000;
-        $settextsales = $row['sales']/1000;
+        $settextdigit = 1;
+        $settextsales = $row['sales']/1;
         while($settextsales % 1000 == 0 and $settextsales != 0){
             $settextsales = $settextsales/1000;
             $settextdigit = $settextdigit*1000;
         }
+        $settextcapitaldigit = 1;
+        $settextcapital = $row['capital']/1;
+        while($settextcapital % 1000 == 0 and $settextcapital != 0){
+            $settextcapital = $settextcapital/1000;
+            $settextcapitaldigit = $settextcapitaldigit*1000;
+        }
     }
-
-    if($settextdigit == '1000'){
+    if($settextdigit == '1'){
+        $settextdigit2 = '円';
+    }elseif($settextdigit == '1000'){
         $settextdigit2 = '千円';
     }elseif($settextdigit == '1000000'){
         $settextdigit2 = '百万円';
@@ -198,6 +207,17 @@
         $settextdigit2 = '十億円';
     }elseif($settextdigit == '1000000000000'){
         $settextdigit2 = '兆円';
+    }
+    if($settextcapitaldigit == '1'){
+        $settextcapitaldigit2 = '円';
+    }elseif($settextcapitaldigit == '1000'){
+        $settextcapitaldigit2 = '千円';
+    }elseif($settextcapitaldigit == '1000000'){
+        $settextcapitaldigit2 = '百万円';
+    }elseif($settextcapitaldigit == '1000000000'){
+        $settextcapitaldigit2 = '十億円';
+    }elseif($settextcapitaldigit == '1000000000000'){
+        $settextcapitaldigit2 = '兆円';
     }
 
 
