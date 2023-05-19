@@ -29,17 +29,17 @@
         $maxemployees = $_POST['maxemployees'];
 
         if($company != ""){
-            $companyterms = ' company LIKE \'%'.$company.'%\' ';
+            $companyterms = ' nm_company LIKE \'%'.$company.'%\' ';
         }else{
-            $companyterms = ' company LIKE \'%\' ';
+            $companyterms = ' nm_company LIKE \'%\' ';
         }
         if($maxemployees == ''){
-            $employeesterms = ' AND numberofemployees >= '.$minemployees.' ';
+            $employeesterms = ' AND su_numberofemployees >= '.$minemployees.' ';
         }else{
-            $employeesterms = ' AND numberofemployees BETWEEN '.$minemployees.' and '.$maxemployees;
+            $employeesterms = ' AND su_numberofemployees BETWEEN '.$minemployees.' and '.$maxemployees;
         }
         try{
-            $query = 'SELECT * FROM company WHERE '.$companyterms.$employeesterms.' AND del = false ORDER BY numberofemployees DESC';
+            $query = 'SELECT * FROM nm_company WHERE '.$companyterms.$employeesterms.' AND flg_del = false ORDER BY su_numberofemployees DESC';
             /* echo $query; */
             $searchresult = $database -> query($query);
             $searchquery = $query;
@@ -75,13 +75,13 @@
         EDO;
         $searchquery = formquery($searchquery);
         while($row = mysqli_fetch_assoc($searchresult)){
-            $setcompany = htmlentities($row['company']);
-            $setnumberofemployees = htmlentities($row['numberofemployees']);
+            $setcompany = htmlentities($row['nm_company']);
+            $setnumberofemployees = htmlentities($row['su_numberofemployees']);
             $tabletext.=<<<EDO
                 <tr>
                 <td>{$setcompany}</td><td>{$setnumberofemployees}</td>
                 <td><form action = 'selectcompany.php' method=post><input type = 'submit'name='selectcompany'value='選択' >
-                <input type= 'hidden' name=  'companyid' value =  '{$row['id']}'>
+                <input type= 'hidden' name=  'companyid' value =  '{$row['pk_id_company']}'>
                 <input type= 'hidden' name=  'searchcompany' value =  '{$setcompany}'>
                 <input id = 'inputsearchquery' type='hidden' name=  'searchquery' value =  '{$searchquery}'>
                 </form></td>

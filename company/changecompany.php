@@ -57,17 +57,17 @@
             $setsales = $_POST['sales']*$_POST['digit'];
             $id = $_POST['id'];
             $company = $_POST['company'];
-            $changecompany = ' company = \'' . $_POST['company'].'\' ';
-            $changepresident = ' president = \'' .$_POST['president'].'\'';
-            $changesales = ' sales = \''.$setsales.'\' ';
-            $changeprefectures = ' prefectures = \''.$_POST['prefectures'].'\' ';
-            $changelocation = ' location = \'' .$_POST['location'].'\'';
-            $changenumberofemployees = ' numberofemployees = \'' .$_POST['numberofemployees'].'\'';
-            $changeestablishdate = ' establishdate = \'' . $_POST['establishyear'].'-'.$_POST['establishmonth'].'-'.$_POST['establishday'].'\'';
-            $changecapital = ' capital = \''.$setcapital.'\' ';
-            $changeclosingmonth = ' closingmonth = \''.$_POST['closingmonth'].'\' ';
-            $changeaverageage = ' averageage = \''.$_POST['averageage'].'\' ';
-            $changehomepage = ' homepage = \'' .$_POST['homepage'].'\' ';
+            $changecompany = ' nm_company = \'' . $_POST['company'].'\' ';
+            $changepresident = ' nm_president = \'' .$_POST['president'].'\'';
+            $changesales = ' su_sales = \''.$setsales.'\' ';
+            $changeprefectures = ' kbn_prefectures = \''.$_POST['prefectures'].'\' ';
+            $changelocation = ' nm_location = \'' .$_POST['location'].'\'';
+            $changenumberofemployees = ' su_numberofemployees = \'' .$_POST['numberofemployees'].'\'';
+            $changeestablishdate = ' dt_establishdate = \'' . $_POST['establishyear'].'-'.$_POST['establishmonth'].'-'.$_POST['establishday'].'\'';
+            $changecapital = ' su_capital = \''.$setcapital.'\' ';
+            $changeclosingmonth = ' kbn_closingmonth = \''.$_POST['closingmonth'].'\' ';
+            $changeaverageage = ' su_averageage = \''.$_POST['averageage'].'\' ';
+            $changehomepage = ' nm_homepage = \'' .$_POST['homepage'].'\' ';
             $businessdetailsstack = array();
             $count = 0;
             while(isset($_POST['businessdetails'.$count])){
@@ -88,13 +88,13 @@
             }
             $bankjson = json_encode($bankstack,JSON_UNESCAPED_UNICODE);
             
-            $changebusinessdetails = ' businessdetails = \'' .$businessdetailsjson.'\'';
-            $changebank = ' bank = \''.$bankjson.'\' ';
-            $changechangedate = ' update_at = \''.date('Y-m-d H:i:s').'\'';
-            $changequery = "UPDATE company SET ".$changecompany. ','.$changepresident. ','.$changesales.','.$changeprefectures.','.$changelocation. ','
+            $changebusinessdetails = ' nm_businessdetails = \'' .$businessdetailsjson.'\'';
+            $changebank = ' nm_bank = \''.$bankjson.'\' ';
+            $changechangedate = ' upd_date = \''.date('Y-m-d H:i:s').'\'';
+            $changequery = "UPDATE tbm_company SET ".$changecompany. ','.$changepresident. ','.$changesales.','.$changeprefectures.','.$changelocation. ','
                 .$changenumberofemployees. ','.$changeestablishdate. ','.$changecapital.','.$changeaverageage.','.$changeclosingmonth.','.$changehomepage. ','
                 .$changebusinessdetails.','.$changebank.','.$changechangedate.
-                ' WHERE del = false AND id = \''.$id.'\'';
+                ' WHERE flg_del = false AND pk_id_company = \''.$id.'\'';
 
            
             try{
@@ -114,7 +114,7 @@
     if(isset($_POST['changeform'])){
         $id = $_POST['id'];
         try{
-            $query = "SELECT * FROM company WHERE del = false AND id = '".$id."'";
+            $query = "SELECT * FROM tbm_company WHERE flg_del = false AND pk_id_company = '".$id."'";
             $result = $database -> query($query);
             $row = mysqli_fetch_assoc($result);
             /* echo '詳細を取得しました'; */
@@ -123,12 +123,12 @@
             echo "  詳細を取得できませんでした。"; */
         }
     
-        $establishdatearray = explode('-', $row['establishdate']);
+        $establishdatearray = explode('-', $row['dt_establishdate']);
         $establishyear = $establishdatearray[0];
         $establishmonth = $establishdatearray[1];
         $establishday = $establishdatearray[2];
-        $businessdetails = json_decode($row['businessdetails'],true);
-        $bank = json_decode($row['bank'],true);
+        $businessdetails = json_decode($row['nm_businessdetails'],true);
+        $bank = json_decode($row['nm_bank'],true);
         $postflag = false;
     }
     if(isset($_POST['change'])){
@@ -169,32 +169,37 @@
         /* $settextbank = $_POST['bank']; */
         $settexthomepage = $_POST['homepage'];
     }else{
-        $settextcompany = $row['company'];
-        $settextpresident = $row['president'];
+        $settextcompany = $row['nm_company'];
+        $settextpresident = $row['nm_president'];
         $settextbusinessdetails = $businessdetails;
         $settextbank = $bank;
-        $settextprefectures = $row['prefectures'];
-        $settextlocation = $row['location'];
-        $settextnumberofemployees = $row['numberofemployees'];
+        $settextprefectures = $row['kbn_prefectures'];
+        $settextlocation = $row['nm_location'];
+        $settextnumberofemployees = $row['su_numberofemployees'];
         $settextestablishyear = $establishdatearray[0];
         $settextestablishmonth = $establishdatearray[1];
         $settextestablishday = $establishdatearray[2];
-        $settextcapital = $row['capital'];
-        $settextaverageage = $row['averageage'];
-        $settextclosingmonth = $row['closingmonth'];
-        $settexthomepage = $row['homepage'];
+        $settextcapital = $row['su_capital'];
+        $settextaverageage = $row['su_averageage'];
+        $settextclosingmonth = $row['kbn_closingmonth'];
+        $settexthomepage = $row['nm_homepage'];
 
         $settextdigit = 1;
-        $settextsales = $row['sales']/1;
-        while($settextsales % 1000 == 0 and $settextsales != 0){
-            $settextsales = $settextsales/1000;
-            $settextdigit = $settextdigit*1000;
+        $settextsales = $row['su_sales'];
+        if($settextsales != ''){
+            $settextsales = $settextsales/1;
+            while($settextsales % 1000 == 0 and $settextsales != 0){
+                $settextsales = $settextsales/1000;
+                $settextdigit = $settextdigit*1000;
+            }
         }
         $settextcapitaldigit = 1;
-        $settextcapital = $row['capital']/1;
-        while($settextcapital % 1000 == 0 and $settextcapital != 0){
-            $settextcapital = $settextcapital/1000;
-            $settextcapitaldigit = $settextcapitaldigit*1000;
+        if($settextcapital != ''){
+            $settextcapital = $row['su_capital']/1;
+            while($settextcapital % 1000 == 0 and $settextcapital != 0){
+                $settextcapital = $settextcapital/1000;
+                $settextcapitaldigit = $settextcapitaldigit*1000;
+            }
         }
     }
     if($settextdigit == '1'){

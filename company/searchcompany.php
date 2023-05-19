@@ -63,25 +63,25 @@
         $minestablish = $_POST['minyear'].'-'.$_POST['minmonth'].'-1 ';
         $maxestablish = $_POST['maxyear'].'-'.$_POST['maxmonth'].'-31 ';
         if($company != ""){
-            $companyterms = ' company LIKE \'%'.$company.'%\' ';
+            $companyterms = ' nm_company LIKE \'%'.$company.'%\' ';
         }else{
-            $companyterms = ' company LIKE \'%\' ';
+            $companyterms = ' nm_company LIKE \'%\' ';
         }
         if($maxemployees == ''){
-            $employeesterms = '  numberofemployees >= '.$minemployees.' ';
+            $employeesterms = '  su_numberofemployees >= '.$minemployees.' ';
         }else{
-            $employeesterms = '  numberofemployees BETWEEN '.$minemployees.' and '.$maxemployees;
+            $employeesterms = '  su_numberofemployees BETWEEN '.$minemployees.' and '.$maxemployees;
         }
-        $establishterms = '  establishdate BETWEEN DATE(\''.$minestablish.'\') and DATE(\''.$maxestablish.'\') ';
+        $establishterms = '  dt_establishdate BETWEEN DATE(\''.$minestablish.'\') and DATE(\''.$maxestablish.'\') ';
         
         
         try{
-            $query = 'SELECT * FROM company WHERE '.$companyterms.' AND '.$employeesterms.' AND '.$establishterms.' AND del = false ORDER BY numberofemployees DESC';
+            $query = 'SELECT * FROM tbm_company WHERE '.$companyterms.' AND '.$employeesterms.' AND '.$establishterms.' AND flg_del = false ORDER BY su_numberofemployees DESC';
             
             $searchresult = $database -> query($query);
             $searchquery = $query;
             while($row = mysqli_fetch_assoc($searchresult)){
-                $tablearray[] = ['id' =>$row['id'],'company' =>$row['company'],'numberofemployees'=>$row['numberofemployees'],'establishdate'=>$row['establishdate']];
+                $tablearray[] = ['id' =>$row['pk_id_company'],'company' =>$row['nm_company'],'numberofemployees'=>$row['su_numberofemployees'],'establishdate'=>$row['dt_establishdate']];
             }
             $_SESSION['table'] = $tablearray;
         }catch(Exception $e){

@@ -13,20 +13,20 @@
   $logintext = '';
   if(isset($_POST['login'])){
     try{
-      $query = 'SELECT * FROM login WHERE username = \''.$_POST['username'].'\' AND del = false ';
+      $query = 'SELECT * FROM tbm_login WHERE nm_username = \''.$_POST['username'].'\' AND flg_del = false ';
       $result = $database -> query($query);
     }catch(Exception $e){
       echo "エラー発生:" . $e->getMessage().'<br>';
       exit();
     }
     $row = mysqli_fetch_assoc($result);
-    if(isset($row['id'])){
-      if(password_verify($_POST['password'] , $row['password'])){
+    if(isset($row['pk_id_login'])){
+      if(password_verify($_POST['password'] , $row['nm_password'])){
         $_SESSION = array();
         session_regenerate_id();
         $_SESSION['login'] = 'success';
-        $_SESSION['loginid'] = $row['id'];
-        if($row['admin']==1){
+        $_SESSION['loginid'] = $row['pk_id_login'];
+        if($row['flg_admin']==1){
           $_SESSION['adminlogin'] = 'success';
         }
         $loginsuccess = true;

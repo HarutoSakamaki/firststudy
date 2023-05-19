@@ -14,7 +14,7 @@
 <br><br><br><br><br>
 <!-- <h2>アウトソーサーの詳細</h2> -->
     <div class = 'alldetail'>
-        <h3>名前:<?php echo htmlentities($row1['name']); ?></h3>
+        <h3>名前:<?php echo htmlentities($row1['nm_name']); ?></h3>
         <div class = "alldetailcontent">
             
             <div class = 'floatclear'></div>
@@ -23,11 +23,11 @@
                 <table class = 'detailtable'>
                     <tr>
                         <th>名前</th>
-                        <td><?php echo htmlentities($row1['name']); ?></td>
+                        <td><?php echo htmlentities($row1['nm_name']); ?></td>
                     </tr>
                     <tr>
                         <th>フリガナ</th>
-                        <td><?php echo htmlentities($row1['furigana']); ?></td>
+                        <td><?php echo htmlentities($row1['nm_furigana']); ?></td>
                     </tr>
                     <tr>
                         <th>生年月日</th>
@@ -39,11 +39,11 @@
                     </tr>
                     <tr>
                         <th>メールアドレス</th>
-                        <td><?php echo htmlentities($row1['mailaddress']); ?></td>
+                        <td><?php echo htmlentities($row1['nm_mailaddress']); ?></td>
                     </tr>
                     <tr>
                         <th>電話番号</th>
-                        <td><?php echo htmlentities($row1['phonenumber']); ?></td>
+                        <td><?php echo htmlentities($row1['su_phonenumber']); ?></td>
                     </tr>
                     <tr>
                         <th>職歴</th>
@@ -55,7 +55,7 @@
                     </tr>
                     <tr>
                         <th>志望理由</th>
-                        <td><span class = 'smalltext'><?php echo htmlentities($row1['motivation']); ?></span></td>
+                        <td><span class = 'smalltext'><?php echo htmlentities($row1['nm_motivation']); ?></span></td>
                     </tr>
                     <tr>
                         <th>入社日</th>

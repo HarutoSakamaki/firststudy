@@ -15,7 +15,7 @@
 
 
     <div class = "alldetail">
-        <h3>会社名:<?php echo htmlentities($row1['company']); ?></h3>
+        <h3>会社名:<?php echo htmlentities($row1['nm_company']); ?></h3>
         <div class = "alldetailcontent">
             <div class = 'floatclear'></div>
             <div class = "middletextsize detailbox">
@@ -24,11 +24,11 @@
                     <table class = 'detailtable'>
                         <tr>
                             <th>会社名</th>
-                            <td><?php echo htmlentities($row1['company']); ?></td>
+                            <td><?php echo htmlentities($row1['nm_company']); ?></td>
                         </tr>
                         <tr>
                             <th>社長名</th>
-                            <td><?php echo htmlentities($row1['president']); ?></td>
+                            <td><?php echo htmlentities($row1['nm_president']); ?></td>
                         </tr>
                         <tr>
                             <th>事業内容</th>
@@ -44,7 +44,7 @@
                         </tr>
                         <tr>
                             <th>従業員数</th>
-                            <td><?php echo htmlentities($row1['numberofemployees']); ?>人</td>
+                            <td><?php echo htmlentities($row1['su_numberofemployees']); ?>人</td>
                         </tr>
                         <tr>
                             <th>設立日</th>
@@ -68,7 +68,7 @@
                         </tr>
                         <tr>
                             <th>ホームページ</th>
-                            <td><?php echo '<a href = '.htmlentities($row1['homepage']).'>'.htmlentities($row1['company']).'</a>';?></td>
+                            <td><?php echo '<a href = '.htmlentities($row1['nm_homepage']).'>'.htmlentities($row1['nm_company']).'</a>';?></td>
                         </tr>
 
                     </table>

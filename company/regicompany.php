@@ -39,14 +39,14 @@
 			
 			if($numberofemployeesflag == true){
 				try{
-					$numberingquery = "UPDATE numbering SET numbering = LAST_INSERT_ID(numbering + 1) WHERE tablename = 'company'";
+					$numberingquery = "UPDATE tbs_numbering SET no_numbering = LAST_INSERT_ID(no_numbering + 1) WHERE nm_tablename = 'company'";
 					$database -> query($numberingquery);
-					$numberingquery = 'SELECT numbering FROM numbering where tablename = \'company\' ';
+					$numberingquery = 'SELECT no_numbering FROM tbs_numbering where nm_tablename = \'company\' ';
 					$numberingid = mysqli_fetch_assoc($database -> query($numberingquery));
-					$info = '\''.$numberingid['numbering'].'\',\''.$_POST['companyname'].'\',\''.$regidate.'\',\''.$_POST['numberofemployees'].'\'';
-					$query = "INSERT INTO company (id , company , establishdate, numberofemployees)VALUES(".$info.")";
+					$info = '\''.$numberingid['no_numbering'].'\',\''.$_POST['companyname'].'\',\''.$regidate.'\',\''.$_POST['numberofemployees'].'\'';
+					$query = "INSERT INTO tbm_company (pk_id_numbering , nm_company , dt_establishdate, su_numberofemployees)VALUES(".$info.")";
 					$database -> query($query);
-					$newid = $numberingid['numbering'];
+					$newid = $numberingid['no_numbering'];
 					$regisuccesstext .= <<<EDO
 						<div class = 'successbox'>登録しました
 							<form action = 'changecompany.php' method = 'post'>

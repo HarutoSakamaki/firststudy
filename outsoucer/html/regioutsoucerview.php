@@ -37,7 +37,7 @@
 					<td><?php echo $daytext ?></td>
 				</tr>
 				<tr>
-					<th>入社日(アスパーク)</th>
+					<th>入社日</th>
 					<td><?php echo $joindaytext ?></td>
 				</tr>
 			</table>

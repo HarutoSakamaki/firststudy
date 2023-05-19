@@ -7,7 +7,7 @@
 <?php
     require_once '../link.php';
     $database = database('staff');
-    $rangelimit = 20;
+    $rangelimit = 2;
 
     session_start();
     session_regenerate_id(true);
@@ -23,14 +23,14 @@
     $deletesuccesstext = '';
     $rangelimit = $rangelimit-1;
     $settextname = '';
-    $settextemployeeid= 0;
+    $settextemployeeid= '';
     
 
     if(isset($_POST['delete'])){
         $id = $_POST['staffid'];
-        $changeup_date = ' update_at = \''.date("Y-m-d H:i:s").'\' ';
+        $changeup_date = ' upd_date = \''.date("Y-m-d H:i:s").'\' ';
         try{
-            $query = "UPDATE staffname SET del = 'true' , ".$changeup_date." WHERE id = '{$id}' ";
+            $query = "UPDATE tbm_staffname SET flg_del = 'true' , ".$changeup_date." WHERE pk_id_staffname = '{$id}' ";
             $database -> query($query);
             /* echo $query;
             echo '削除しました'; */
@@ -64,27 +64,27 @@
         $maxjoin = $_POST['joinmaxyear'].'-'.$_POST['joinmaxmonth'].'-31 ';
        
         if($searchname != ""){
-            $searchnameterms = ' name LIKE \'%'.$searchname.'%\' ';
+            $searchnameterms = ' nm_name LIKE \'%'.$searchname.'%\' ';
         }else{
-            $searchnameterms = ' name LIKE \'%\' ';
+            $searchnameterms = ' nm_name LIKE \'%\' ';
         }
         if($searchemployeeid != ''){
-            $searchemployeeidterms = ' AND employeeid LIKE \'%'.$searchemployeeid.'%\' ';
+            $searchemployeeidterms = ' AND no_employeeid LIKE \'%'.$searchemployeeid.'%\' ';
         }else{
-            $searchemployeeidterms = ' AND employeeid LIKE \'%\' ';
+            $searchemployeeidterms = ' AND no_employeeid LIKE \'%\' ';
         }
         
-        $birthterms = ' AND birthday BETWEEN DATE(\''.$minbirth.'\') and DATE(\''.$maxbirth.'\') ';
-        $jointerms = ' AND joincompanyday BETWEEN DATE(\''.$minjoin.'\') and DATE(\''.$maxjoin.'\') ';
+        $birthterms = ' AND dt_birthday BETWEEN DATE(\''.$minbirth.'\') and DATE(\''.$maxbirth.'\') ';
+        $jointerms = ' AND dt_joincompanyday BETWEEN DATE(\''.$minjoin.'\') and DATE(\''.$maxjoin.'\') ';
         
         try{
-            $query = 'SELECT * FROM staffname 
-            WHERE '.$searchnameterms.$searchemployeeidterms.$birthterms.$jointerms.' AND staffname.del = false ORDER BY birthday ASC';
+            $query = 'SELECT * FROM tbm_staffname 
+            WHERE '.$searchnameterms.$searchemployeeidterms.$birthterms.$jointerms.' AND tbm_staffname.flg_del = false ORDER BY dt_birthday ASC';
 
             $searchresult = $database -> query($query);
             $searchquery = $query;
             while($row = mysqli_fetch_assoc($searchresult)){
-                $tablearray[] = ['id' =>$row['id'],'name' =>$row['name'],'employeeid'=>$row['employeeid'],'birthday'=>$row['birthday'],'joincompanyday'=>$row['joincompanyday']];
+                $tablearray[] = ['id' =>$row['pk_id_staffname'],'name' =>$row['nm_name'],'employeeid'=>$row['no_employeeid'],'birthday'=>$row['dt_birthday'],'joincompanyday'=>$row['dt_joincompanyday']];
             }
             $_SESSION['table'] = $tablearray;
         }catch(Exception $e){

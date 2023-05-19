@@ -23,7 +23,7 @@
     $id = $_POST['staffid'];
     $_SESSION['staffid'] = $id;
     try{
-        $query = "SELECT * FROM staffname WHERE del = false AND id = ".$id;
+        $query = "SELECT * FROM tbm_staffname WHERE flg_del = false AND pk_id_staffname = ".$id;
         $result = $database -> query($query);
         $row1 = mysqli_fetch_assoc($result);
         
@@ -32,25 +32,25 @@
         exit();
     }
     
-    $birtharray = explode('-', $row1['birthday']);
+    $birtharray = explode('-', $row1['dt_birthday']);
     $birthyear = $birtharray[0];
     $birthmonth = $birtharray[1];
     $birthday = $birtharray[2];
-    $joinarray = explode('-', $row1['joincompanyday']);
+    $joinarray = explode('-', $row1['dt_joincompanyday']);
     $joinyear = $joinarray[0];
     $joinmonth = $joinarray[1];
     $joinday = $joinarray[2];
-    $licensearray = json_decode($row1['license'],true);
-    $workhistoryarray = json_decode($row1['workhistory'],true);
+    $licensearray = json_decode($row1['nm_license'],true);
+    $workhistoryarray = json_decode($row1['nm_workhistory'],true);
     if(json_last_error() !== JSON_ERROR_NONE){
         // エラーが発生
         print json_last_error_msg(); // エラーメッセージを出力
     }
     $workhistorytext = '';
-    if( $row1['prefectures'] == ''){
-        $settextaddress = $row1['address'];
+    if( $row1['kbn_prefectures'] == ''){
+        $settextaddress = $row1['nm_address'];
     }else{
-        $settextaddress = getpref($row1['prefectures']).' '.$row1['address'];
+        $settextaddress = getpref($row1['kbn_prefectures']).' '.$row1['nm_address'];
     }
     $count = 0;
     while(isset($workhistoryarray[$count])){
@@ -97,7 +97,7 @@
         if($empty == false){
             //重複チェック
             $query = <<<EDO
-                SELECT * FROM staffhistory WHERE staffid = {$staffid}
+                SELECT * FROM tbm_staffhistory WHERE no_staffid = {$staffid}
                 EDO;
             try{
                 $result = $database -> query($query);
@@ -107,8 +107,8 @@
             }
             $overlapping = false;
             while($row = mysqli_fetch_assoc($result)){
-                $datastart = strtotime($row['startdate']);
-                $dataend = strtotime($row['enddate']);
+                $datastart = strtotime($row['dt_startdate']);
+                $dataend = strtotime($row['dt_enddate']);
                 $inputstart = strtotime($_POST['startdate']);
                 $inputend = strtotime($_POST['enddate']);
                 if($datastart<=$inputend && $dataend>=$inputstart){
@@ -119,12 +119,12 @@
             }
             if($overlapping == false){
                 try{
-                    $numberringquery = "UPDATE numbering SET numbering = LAST_INSERT_ID(numbering + 1) WHERE tablename = 'staffhistory'";
+                    $numberringquery = "UPDATE tbs_numbering SET no_numbering = LAST_INSERT_ID(no_numbering + 1) WHERE nm_tablename = 'staffhistory'";
                     $database -> query($numberringquery);
-                    $numberringquery = 'SELECT numbering FROM numbering where tablename = \'staffhistory\' ';
+                    $numberringquery = 'SELECT no_numbering FROM tbs_numbering where nm_tablename = \'staffhistory\' ';
                     $numberring = mysqli_fetch_assoc($database -> query($numberringquery));
-                    $numberringid = $numberring['numbering'];
-                    $query = 'INSERT staffhistory (id , staffid , companyid, startdate, enddate) VALUES('.$numberringid.','.$staffid.','.$companyid.',\''.$_POST['startdate'].'\',\''.$_POST['enddate'].'\')';
+                    $numberringid = $numberring['no_numbering'];
+                    $query = 'INSERT tbm_staffhistory (pk_id_staffhistory , no_staffid , no_companyid, dt_startdate, dt_enddate) VALUES('.$numberringid.','.$staffid.','.$companyid.',\''.$_POST['startdate'].'\',\''.$_POST['enddate'].'\')';
                     $result = $database -> query($query);
                     $addcompanysuccess = true;
                     $addcompanysuccesstext .= '<div class = \'successbox\'>登録しました</div>';
@@ -152,9 +152,9 @@
         try{
             $update_at = date("Y-m-d H:i:s");
             $query = <<<EDO
-                UPDATE staffhistory SET 
-                del =  1, update_at = '{$update_at}' 
-                WHERE id = {$_POST['historyid']};
+                UPDATE tbm_staffhistory SET 
+                flg_del =  1, upd_date = '{$update_at}' 
+                WHERE pk_id_staffhistory = {$_POST['historyid']};
             EDO;
             $result = $database -> query($query);
         }catch(Exception $e){
@@ -165,11 +165,11 @@
     
 
     try{
-        $query = 'SELECT  staffhistory.id as id, company.company as company, staffhistory.startdate as startdate, staffhistory.enddate as enddate, 
-        staffname.name as name  
-        FROM staffhistory LEFT JOIN company ON staffhistory.companyid = company.id LEFT JOIN staffname ON staffname.id = staffhistory.staffid 
-        WHERE staffhistory.staffid = '.$staffid.' AND staffhistory.del = 0 
-        ORDER BY enddate DESC';
+        $query = 'SELECT  tbm_staffhistory.pk_id_staffhistory as id, tbm_company.nm_company as company, tbm_staffhistory.dt_startdate as startdate, tbm_staffhistory.dt_enddate as enddate, 
+        tbm_staffname.nm_name as name  
+        FROM tbm_staffhistory LEFT JOIN tbm_company ON tbm_staffhistory.no_companyid = tbm_company.pk_id_company LEFT JOIN tbm_staffname ON tbm_staffname.pk_id_staffname = tbm_staffhistory.no_staffid 
+        WHERE tbm_staffhistory.no_staffid = '.$staffid.' AND tbm_staffhistory.flg_del = 0 
+        ORDER BY dt_enddate DESC';
         /* echo $query.'</br>'; */
         $result = $database -> query($query);
         /* $row = mysqli_fetch_assoc($result); */

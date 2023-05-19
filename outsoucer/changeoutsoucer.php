@@ -26,13 +26,13 @@
     
     if(isset($_POST['change'])){
         $id = $_POST['id'];
-        $changename = ' name = \'' . $_POST['name'].'\' ';
-        $changefurigana = ' furigana = \'' .$_POST['furigana'].'\'';
-        $changeprefectures = 'prefectures = \''.$_POST['prefectures'].'\'';
-        $changebirthday = ' birthday = \'' . $_POST['birthyear'].'-'.$_POST['birthmonth'].'-'.$_POST['birthday'].'\'';
-        $changeaddress = ' address = \'' .$_POST['address'].'\'';
-        $changemailaddress = ' mailaddress = \'' .$_POST['mailaddress'].'\'';
-        $changephonenumber = ' phonenumber = \'' .$_POST['phonenumber'].'\'';
+        $changename = ' nm_name = \'' . $_POST['name'].'\' ';
+        $changefurigana = ' nm_furigana = \'' .$_POST['furigana'].'\'';
+        $changeprefectures = ' kbn_prefectures = \''.$_POST['prefectures'].'\'';
+        $changebirthday = ' dt_birthday = \'' . $_POST['birthyear'].'-'.$_POST['birthmonth'].'-'.$_POST['birthday'].'\'';
+        $changeaddress = ' nm_address = \'' .$_POST['address'].'\'';
+        $changemailaddress = ' nm_mailaddress = \'' .$_POST['mailaddress'].'\'';
+        $changephonenumber = ' su_phonenumber = \'' .$_POST['phonenumber'].'\'';
         
 
         $licensestack = array();
@@ -53,15 +53,15 @@
             $count++;
         }
         $workhistoryjson = json_encode($workhistorystack, JSON_UNESCAPED_UNICODE);
-        $changelicense = ' license = \'' .$licensejson.'\'';
-        $changeworkhistory = ' workhistory = \'' .$workhistoryjson.'\'';
-        $changemotivation = ' motivation = \'' .$_POST['motivation'].'\'';
-        $changejoincompanyday = ' joincompanyday = \'' .$_POST['joinyear'].'-'.$_POST['joinmonth'].'-'.$_POST['joinday'].'\'';
+        $changelicense = ' nm_license = \'' .$licensejson.'\'';
+        $changeworkhistory = ' nm_workhistory = \'' .$workhistoryjson.'\'';
+        $changemotivation = ' nm_motivation = \'' .$_POST['motivation'].'\'';
+        $changejoincompanyday = ' dt_joincompanyday = \'' .$_POST['joinyear'].'-'.$_POST['joinmonth'].'-'.$_POST['joinday'].'\'';
         
-        $changechangedate = ' update_at = \''.date("Y-m-d H:i:s").'\'';
-        $changequery = "UPDATE staffname SET ".$changename.','.$changefurigana. ','.$changebirthday. ','.$changeaddress. ','.$changeprefectures.','
+        $changechangedate = ' upd_date = \''.date("Y-m-d H:i:s").'\'';
+        $changequery = "UPDATE tbm_staffname SET ".$changename.','.$changefurigana. ','.$changebirthday. ','.$changeaddress. ','.$changeprefectures.','
             .$changemailaddress. ','.$changephonenumber. ',' .$changeworkhistory. ','.$changelicense. ','.$changemotivation. ','.$changejoincompanyday. ','
-            .$changechangedate.' WHERE id = '.$id;
+            .$changechangedate.' WHERE pk_id_staffname = '.$id;
         $changeemployeeidused = changeemployeeidused($_POST['employeeid']);
 
         //ここから入力規則を確認
@@ -105,7 +105,7 @@
         
         $id = $_POST['id'];
         try{
-            $query = "SELECT * FROM staffname WHERE del = false AND id = ".$id;
+            $query = "SELECT * FROM tbm_staffname WHERE flg_del = false AND pk_id_staffname = ".$id;
             $result = $database -> query($query);
             $row = mysqli_fetch_assoc($result);
             /* echo '詳細を取得しました'; */
@@ -113,16 +113,16 @@
            /*  echo "エラー発生:" . $e->getMessage().'<br>';
             echo "  詳細を取得できませんでした。"; */
         }
-        $birtharray = explode('-', $row['birthday']);
+        $birtharray = explode('-', $row['dt_birthday']);
         $birthyear = $birtharray[0];
         $birthmonth = $birtharray[1];
         $birthday = $birtharray[2];
-        $joinarray = explode('-', $row['joincompanyday']);
+        $joinarray = explode('-', $row['dt_joincompanyday']);
         $joinyear = $joinarray[0];
         $joinmonth = $joinarray[1];
         $joinday = $joinarray[2];
-        $license = json_decode($row['license'],true);
-        $workhistory = json_decode($row['workhistory'],true);
+        $license = json_decode($row['nm_license'],true);
+        $workhistory = json_decode($row['nm_workhistory'],true);
     }
     if(isset($_POST['change'])){
         $settextname = htmlentities($_POST['name']);
@@ -159,34 +159,34 @@
         $settextjoinday = htmlentities($_POST['joinday']);
         /* $settextcompany = $_POST['company']; */
     }else{
-        $settextname = htmlentities($row['name']);
-        $settextfurigana = htmlentities($row['furigana']);
+        $settextname = htmlentities($row['nm_name']);
+        $settextfurigana = htmlentities($row['nm_furigana']);
         $settextbirthyear = htmlentities($birtharray[0]);
         $settextbirthmonth = htmlentities($birtharray[1]);
         $settextbirthday = htmlentities($birtharray[2]);
-        $settextprefectures = htmlentities($row['prefectures']);
-        $settextaddress = htmlentities($row['address']);
-        $settextmailaddress = htmlentities($row['mailaddress']);
-        $settextphonenumber = htmlentities($row['phonenumber']);
-        $settextemployeeid = htmlentities($row['employeeid']);
+        $settextprefectures = htmlentities($row['kbn_prefectures']);
+        $settextaddress = htmlentities($row['nm_address']);
+        $settextmailaddress = htmlentities($row['nm_mailaddress']);
+        $settextphonenumber = htmlentities($row['su_phonenumber']);
+        $settextemployeeid = htmlentities($row['no_employeeid']);
         $settextworkhistory = $workhistory;
         $settextlicense = $license;
-        $settextmotivation = htmlentities($row['motivation']);
+        $settextmotivation = htmlentities($row['nm_motivation']);
         $settextjoinyear = htmlentities($joinarray[0]);
         $settextjoinmonth = htmlentities($joinarray[1]);
         $settextjoinday = htmlentities($joinarray[2]);
-        /* $settextcompany = $row['company']; */
+        
     }
 
     function changeemployeeidused($employeeid){
 		require_once '../link.php';
     	$database = database('staff');
-		$employeequery = 'SELECT * FROM staffname 
-            WHERE employeeid = '.$employeeid.' AND staffname.del = false;';
+		$employeequery = 'SELECT * FROM tbm_staffname 
+            WHERE no_employeeid = '.$employeeid.' AND tbm_staffname.flg_del = false;';
         $employeeresult = $database -> query($employeequery);
 		$row = mysqli_fetch_assoc($employeeresult);
-		if(isset($row['id'])){
-            if($row['employeeid'] == $employeeid){
+		if(isset($row['pk_id_staffname'])){
+            if($row['no_employeeid'] == $employeeid){
                 return false;
             }else{
 			    return true;

@@ -18,7 +18,7 @@
         $companyid = $id;
         $_SESSION['companyid'] = $id;
         try{
-            $query = "SELECT * FROM company WHERE del = false AND id = ".$id;
+            $query = "SELECT * FROM tbm_company WHERE flg_del = false AND pk_id_company = ".$id;
             $result = $database -> query($query);
             $row1 = mysqli_fetch_assoc($result);
             /* echo '詳細を取得しました'; */
@@ -27,17 +27,17 @@
             echo "  詳細を取得できませんでした。"; */
         }
         
-        $establishdatearray = explode('-', $row1['establishdate']);
+        $establishdatearray = explode('-', $row1['dt_establishdate']);
         $eastablishyear = $establishdatearray[0];
         $establishmonth = $establishdatearray[1];
         $establishday = $establishdatearray[2];
-        if( $row1['prefectures'] == ''){
-            $settextlocation = $row1['location'];
+        if( $row1['kbn_prefectures'] == ''){
+            $settextlocation = $row1['nm_location'];
         }else{
-            $settextlocation = getpref($row1['prefectures']).' '.$row1['location'];
+            $settextlocation = getpref($row1['kbn_prefectures']).' '.$row1['nm_location'];
         }
-        $businessdetailsarray = json_decode($row1['businessdetails'],true);
-        $bankarray = json_decode($row1['bank'],true);
+        $businessdetailsarray = json_decode($row1['nm_businessdetails'],true);
+        $bankarray = json_decode($row1['nm_bank'],true);
         
 
         $businessdetailtext = '';
@@ -54,17 +54,17 @@
             $count++;
         }
 
-        if($row1['averageage'] ==''){
+        if($row1['su_averageage'] ==''){
             $settextaverageage = '';
         }else{
-            $settextaverageage = $row1['averageage'].'歳';
+            $settextaverageage = $row1['su_averageage'].'歳';
         }
-        if($row1['closingmonth'] ==''){
+        if($row1['kbn_closingmonth'] ==''){
             $settextclosingmonth = '';
         }else{
-            $settextclosingmonth = $row1['closingmonth'].'月';
+            $settextclosingmonth = $row1['kbn_closingmonth'].'月';
         }
-        $settextsales = $row1['sales'];
+        $settextsales = $row1['su_sales'];
         $settextdigit = '';
         if($settextsales != ''){
             $settextsales = $settextsales;
@@ -83,7 +83,7 @@
             }
         }
 
-        $settextcapital = $row1['capital'];
+        $settextcapital = $row1['su_capital'];
         $settextdigit = '';
         if($settextcapital != ''){
             $digit =  1;
@@ -112,57 +112,13 @@
             $companyid = $_SESSION['companyid'];
         }
     
-        if(isset($_POST['decideenddate'])){
-            try{
-                $update_at = date("Y-m-d H:i:s");
-                $query = <<<EDO
-                    UPDATE staffhistory SET 
-                    enddate = '{$_POST['enddate']}' , update_at = '{$update_at}' 
-                    WHERE id = {$_POST['historyid']};
-                EDO;
-                $result = $database -> query($query);
-                /* echo $query; */
-                /* echo '終了日時を設定できました'; */
-            }catch(Exception $e){
-                /* echo "エラー発生:" . $e->getMessage().'<br>';
-                echo "  外勤先を取得できませんでした"; */
-            } 
-        }
-        if(isset($_POST['finishwork'])){
-            try{
-                $update_at = date("Y-m-d H:i:s");
-                $query = <<<EDO
-                    UPDATE staffhistory SET 
-                    working = 0 , update_at = '{$update_at}' 
-                    WHERE id = {$_POST['historyid']};
-                EDO;
-                $result = $database -> query($query);
-            }catch(Exception $e){
-                /* echo "エラー発生:" . $e->getMessage().'<br>';
-                echo "  外勤先を取得できませんでした"; */
-            } 
-        }
-        if(isset($_POST['changeenddate'])){
-            try{
-                $update_at = date("Y-m-d H:i:s");
-                $query = <<<EDO
-                    UPDATE staffhistory SET 
-                    enddate =  '{$_POST["enddate"]}', update_at = '{$update_at}' 
-                    WHERE id = {$_POST['historyid']};
-                EDO;
-                $result = $database -> query($query);
-            }catch(Exception $e){
-                /* echo "エラー発生:" . $e->getMessage().'<br>';
-                echo "  外勤先を取得できませんでした"; */
-            }
-        }
         if(isset($_POST['delete'])){
             try{
                 $update_at = date("Y-m-d H:i:s");
                 $query = <<<EDO
-                    UPDATE staffhistory SET 
-                    del =  1, update_at = '{$update_at}' 
-                    WHERE id = {$_POST['historyid']};
+                    UPDATE tbm_staffhistory SET 
+                    flg_del =  1, upd_date = '{$update_at}' 
+                    WHERE pk_id_staffhistory = {$_POST['historyid']};
                 EDO;
                 $result = $database -> query($query);
             }catch(Exception $e){
@@ -176,10 +132,10 @@
 
         try{
             
-            $query = 'SELECT  staffhistory.id as id, company.company as company, staffhistory.startdate as startdate, staffhistory.enddate as enddate,
-            staffname.name as staffname  
-            FROM staffhistory LEFT JOIN company ON staffhistory.companyid = company.id LEFT JOIN staffname ON staffname.id = staffhistory.staffid 
-            WHERE staffhistory.companyid = '.$companyid.' AND staffhistory.del = 0 
+            $query = 'SELECT  tbm_staffhistory.pk_id_staffhistory as id, tbm_company.nm_company as company, tbm_staffhistory.dt_startdate as startdate, tbm_staffhistory.dt_enddate as enddate,
+            tbm_staffname.nm_name as staffname  
+            FROM tbm_staffhistory LEFT JOIN tbm_company ON tbm_staffhistory.no_companyid = tbm_company.pk_id_company LEFT JOIN tbm_staffname ON tbm_staffname.pk_id_staffname = tbm_staffhistory.no_staffid 
+            WHERE tbm_staffhistory.no_companyid = '.$companyid.' AND tbm_staffhistory.flg_del = 0 
             ORDER BY enddate DESC';
             /* echo $query.'</br>'; */
             $result = $database -> query($query);

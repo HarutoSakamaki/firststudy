@@ -37,13 +37,13 @@
         and preg_match('/[0-9]/',$_POST['password']) and preg_match("/[a-zA-Z]/", $_POST['password'])){
 
             try{
-                $query = 'SELECT * FROM login WHERE username = \''.$_POST['username'].'\' AND del = 0 ORDER BY ID DESC';
+                $query = 'SELECT * FROM tbm_login WHERE nm_username = \''.$_POST['username'].'\' AND flg_del = 0 ORDER BY pk_id_login DESC';
                 $result = $database -> query($query);
             }catch(Exception $e){
                 echo "エラー発生:" . $e->getMessage().'<br>';
                 exit();
             }
-            if(isset(mysqli_fetch_assoc($result)['id'])){
+            if(isset(mysqli_fetch_assoc($result)['pk_id_login'])){
                 $usernamefailtext .= htmlspecialchars($_POST['username']).'はすでに存在しています<br>';
             }else{
                 if($_POST['adminregi'] == 'はい'){
@@ -52,13 +52,13 @@
                     $admin = 0;
                 }
                 try{
-                    $numberingquery = "UPDATE numbering SET numbering = LAST_INSERT_ID(numbering + 1) WHERE tablename = 'login'";
+                    $numberingquery = "UPDATE tbm_numbering SET no_numbering = LAST_INSERT_ID(no_numbering + 1) WHERE nm_tablename = 'login'";
                     $database -> query($numberingquery);
-                    $numberingquery = 'SELECT numbering FROM numbering where tablename = \'login\' ';
+                    $numberingquery = 'SELECT no_numbering FROM tbm_numbering where nm_tablename = \'login\' ';
                     $numberingid = mysqli_fetch_assoc($database -> query($numberingquery));
                     $hashpassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
                     $query = <<<EDO
-                        INSERT INTO login (id,username,password,admin) VALUES ({$numberingid['numbering']},'{$_POST['username']}','{$hashpassword}',{$admin}) 
+                        INSERT INTO login (pk_id_login,nm_username,nm_password,flg_admin) VALUES ({$numberingid['no_numbering']},'{$_POST['username']}','{$hashpassword}',{$admin}) 
                         EDO;
                     $result = $database -> query($query);
                     $addaccountsuccesstext .= <<<EOD
@@ -99,9 +99,9 @@
 
     if(isset($_POST['delete'])){
         $id = $_POST['delid'];
-        $changeup_date = ' update_at = \''.date("Y-m-d H:i:s").'\' ';
+        $changeup_date = ' upd_date = \''.date("Y-m-d H:i:s").'\' ';
         try{
-            $query = "UPDATE login SET del = 1 , ".$changeup_date." WHERE id = {$id} ";
+            $query = "UPDATE tbm_login SET flg_del = 1 , ".$changeup_date." WHERE pk_id_login = {$id} ";
             /* echo $query; */
             $database -> query($query);
             /* echo $query;
@@ -123,12 +123,12 @@
         if(preg_match("/^[a-zA-Z0-9]+$/",$_POST['username']) or $_POST['username'] ==  ''){
 
             if($_POST['username'] != ""){
-                $searchusernameterms = ' username LIKE \'%'.$_POST['username'].'%\' ';
+                $searchusernameterms = ' nm_username LIKE \'%'.$_POST['username'].'%\' ';
             }else{
-                $searchusernameterms = ' username LIKE \'%\' ';
+                $searchusernameterms = ' nm_username LIKE \'%\' ';
             }
-            $query = 'SELECT * FROM login 
-                WHERE '.$searchusernameterms.' AND del = 0 ORDER BY ID DESC';
+            $query = 'SELECT * FROM tbm_login  
+                WHERE '.$searchusernameterms.' AND flg_del = 0 ORDER BY pk_id_login DESC';
 
             $search = true;
         }else{
@@ -153,7 +153,7 @@
         }
         $searcharray = array();
         while($row = mysqli_fetch_assoc($searchresult)){
-            $searcharray[] = array('id' => $row['id'], 'username' => $row['username'] , 'password' => $row['password'] , 'admin' => $row['admin']);
+            $searcharray[] = array('id' => $row['pk_id_login'], 'username' => $row['nm_username'] , 'password' => $row['nm_password'] , 'admin' => $row['flg_admin']);
         }
         if(count($searcharray)>0){
             $searchtable .= <<<EOD

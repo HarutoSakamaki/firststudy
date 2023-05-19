@@ -21,13 +21,13 @@
         $maxjoin = $_POST['joinmaxyear'].'-'.$_POST['joinmaxmonth'].'-'.$_POST['joinmaxday'];
     /*  $searchcompany = $_POST['company']; */
         if($searchname != ""){
-            $searchnameterms = ' name LIKE \'%'.$searchname.'%\' ';
+            $searchnameterms = ' nm_name LIKE \'%'.$searchname.'%\' ';
         }else{
-            $searchnameterms = ' name LIKE \'%\' ';
+            $searchnameterms = ' nm_name LIKE \'%\' ';
         }
         
-        $birthterms = ' AND birthday BETWEEN DATE(\''.$minbirth.'\') and DATE(\''.$maxbirth.'\') ';
-        $jointerms = ' AND joincompanyday BETWEEN DATE(\''.$minjoin.'\') and DATE(\''.$maxjoin.'\') ';
+        $birthterms = ' AND dt_birthday BETWEEN DATE(\''.$minbirth.'\') and DATE(\''.$maxbirth.'\') ';
+        $jointerms = ' AND dt_joincompanyday BETWEEN DATE(\''.$minjoin.'\') and DATE(\''.$maxjoin.'\') ';
         
         /* if($searchcompany != ""){
             $companyterms = ' AND company LIKE \'%'.$searchcompany.'%\' ';
@@ -37,8 +37,8 @@
         }  */
         
         try{
-            $query = 'SELECT * FROM staffname 
-            WHERE '.$searchnameterms.$birthterms.$jointerms.' AND staffname.del = false ORDER BY ID ASC';
+            $query = 'SELECT * FROM tbm_staffname 
+            WHERE '.$searchnameterms.$birthterms.$jointerms.' AND tbm_staffname.flg_del = false ORDER BY pk_id_staffname ASC';
             $searchresult = $database -> query($query);
             $searchquery = $query;
             /* echo $query; */

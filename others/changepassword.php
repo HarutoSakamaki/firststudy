@@ -24,11 +24,11 @@
     $loginid = $_SESSION['loginid'];
     try{
         $query = <<<EOD
-            SELECT * FROM login WHERE id = {$loginid}
+            SELECT * FROM tbm_login WHERE pk_id_login = {$loginid}
             EOD;
         $result = $database -> query($query);
         $row = mysqli_fetch_assoc($result);
-        $settextusername = $row['username'];
+        $settextusername = $row['nm_username'];
     }catch(Exception $e){
 
         echo "エラー発生:" . $e->getMessage().'<br>';
@@ -66,14 +66,14 @@
         }
         if($inputrule == true){
             $loginid = $_SESSION['loginid'];
-            $query = 'SELECT * FROM login WHERE id = '.$loginid.' AND del = 0 ORDER BY ID DESC';
+            $query = 'SELECT * FROM tbm_login WHERE pk_id_login = '.$loginid.' AND flg.del = 0 ORDER BY pk_id_login DESC';
             $result = $database -> query($query);
             $row = mysqli_fetch_assoc($result);
-            if(password_verify($_POST['oldpassword'], $row['password'])){
+            if(password_verify($_POST['oldpassword'], $row['nm_password'])){
                 $sendnewpassword = password_hash($_POST['newpassword'], PASSWORD_DEFAULT);
                 $changedate = date("Y-m-d H:i:s");
                 $query = <<<EOD
-                    UPDATE login SET password = '{$sendnewpassword}' , created_at = '{$changedate}' WHERE id = {$loginid}
+                    UPDATE tbm_login SET nm_password = '{$sendnewpassword}' , upd_date = '{$changedate}' WHERE pk_id_login = {$loginid}
                     EOD;
                 try{
                     $database -> query($query);

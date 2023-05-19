@@ -39,16 +39,16 @@
 			$regibirth = $_POST['birthyear'].'-'.$_POST['birthmonth'].'-'.$_POST['birthday'];
 			$regijoin = $_POST['joinyear'].'-'.$_POST['joinmonth'].'-'.$_POST['joinday'];
 			try{
-				$numberingquery = "UPDATE numbering SET numbering = LAST_INSERT_ID(numbering + 1) WHERE tablename = 'staffname'";
+				$numberingquery = "UPDATE tbs_numbering SET no_numbering = LAST_INSERT_ID(no_numbering + 1) WHERE nm_tablename = 'staffname'";
 				$database -> query($numberingquery);
-				$numberingquery = 'SELECT numbering FROM numbering where tablename = \'staffname\' ';
+				$numberingquery = 'SELECT no_numbering FROM tbs_numbering where nm_tablename = \'staffname\' ';
 				$numberingid = mysqli_fetch_assoc($database -> query($numberingquery));
-				$setemployeeid = $numberingid['numbering']+10000;
-				$info = '\''.$numberingid['numbering'].'\',\''.$_POST['name'].'\',\''.$setemployeeid.'\',\''.$regibirth.'\',\''.$regijoin.'\'';
-				$query = "INSERT INTO staffname (id,name,employeeid,birthday,joincompanyday)VALUES(".$info.")";
+				$setemployeeid = $numberingid['no_numbering']+10000;
+				$info = '\''.$numberingid['no_numbering'].'\',\''.$_POST['name'].'\',\''.$setemployeeid.'\',\''.$regibirth.'\',\''.$regijoin.'\'';
+				$query = "INSERT INTO tbm_staffname (pk_id_staffname,nm_name,no_employeeid,dt_birthday,dt_joincompanyday)VALUES(".$info.")";
 				$database -> query($query);
 				$regiflag = true;
-				$newid =  $numberingid['numbering'];
+				$newid =  $numberingid['no_numbering'];
 				$regisuccesstext .= <<<EDO
 					<div class = 'successbox' >登録しました
 						<form action = 'changeoutsoucer.php' method = 'post'>
