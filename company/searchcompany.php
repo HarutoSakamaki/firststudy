@@ -27,9 +27,9 @@
     $settextmaxemployees = '';
     if(isset($_POST['delete'])){
         $companyid = $_POST['id'];
-        $changeup_date = ' update_at = \''.date("Y-m-d H:i:s").'\' ';
+        $changeup_date = ' upd_date = \''.date("Y-m-d H:i:s").'\' ';
         try{
-            $query = 'UPDATE company SET del = true , '.$changeup_date.' WHERE company.id = \''.$companyid.'\'';
+            $query = 'UPDATE tbm_company_kiso SET flg_del = true , '.$changeup_date.' WHERE tbm_company_kiso.pk_id_company = \''.$companyid.'\'';
             $database -> query($query);
             
         }catch(Exception $e){
@@ -76,7 +76,7 @@
         
         
         try{
-            $query = 'SELECT * FROM tbm_company WHERE '.$companyterms.' AND '.$employeesterms.' AND '.$establishterms.' AND flg_del = false ORDER BY su_numberofemployees DESC';
+            $query = 'SELECT * FROM tbm_company_kiso WHERE '.$companyterms.' AND '.$employeesterms.' AND '.$establishterms.' AND flg_del = false ORDER BY su_numberofemployees DESC';
             
             $searchresult = $database -> query($query);
             $searchquery = $query;

@@ -18,7 +18,7 @@
         $companyid = $id;
         $_SESSION['companyid'] = $id;
         try{
-            $query = "SELECT * FROM tbm_company WHERE flg_del = false AND pk_id_company = ".$id;
+            $query = "SELECT * FROM tbm_company_kiso WHERE flg_del = false AND pk_id_company = ".$id;
             $result = $database -> query($query);
             $row1 = mysqli_fetch_assoc($result);
             /* echo '詳細を取得しました'; */
@@ -132,9 +132,9 @@
 
         try{
             
-            $query = 'SELECT  tbm_staffhistory.pk_id_staffhistory as id, tbm_company.nm_company as company, tbm_staffhistory.dt_startdate as startdate, tbm_staffhistory.dt_enddate as enddate,
-            tbm_staffname.nm_name as staffname  
-            FROM tbm_staffhistory LEFT JOIN tbm_company ON tbm_staffhistory.no_companyid = tbm_company.pk_id_company LEFT JOIN tbm_staffname ON tbm_staffname.pk_id_staffname = tbm_staffhistory.no_staffid 
+            $query = 'SELECT  tbm_staffhistory.pk_id_staffhistory as id, tbm_company_kiso.nm_company as company, tbm_staffhistory.dt_startdate as startdate, tbm_staffhistory.dt_enddate as enddate,
+            tbm_staffname_kiso.nm_name as staffname  
+            FROM tbm_staffhistory LEFT JOIN tbm_company_kiso ON tbm_staffhistory.no_companyid = tbm_company_kiso.pk_id_company LEFT JOIN tbm_staffname_kiso ON tbm_staffname_kiso.pk_id_staffname = tbm_staffhistory.no_staffid 
             WHERE tbm_staffhistory.no_companyid = '.$companyid.' AND tbm_staffhistory.flg_del = 0 
             ORDER BY enddate DESC';
             /* echo $query.'</br>'; */

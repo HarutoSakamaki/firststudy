@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="../css/validationEngine.jquery.css">
 <script src="../js/jquery.validationEngine.js"></script>
 <script src="../js/jquery.validationEngine-ja.js" charset="UTF-8"></script>
+<script src = '../js/common.js'></script>
 
 
 <?php
@@ -91,7 +92,7 @@
             $changebusinessdetails = ' nm_businessdetails = \'' .$businessdetailsjson.'\'';
             $changebank = ' nm_bank = \''.$bankjson.'\' ';
             $changechangedate = ' upd_date = \''.date('Y-m-d H:i:s').'\'';
-            $changequery = "UPDATE tbm_company SET ".$changecompany. ','.$changepresident. ','.$changesales.','.$changeprefectures.','.$changelocation. ','
+            $changequery = "UPDATE tbm_company_kiso SET ".$changecompany. ','.$changepresident. ','.$changesales.','.$changeprefectures.','.$changelocation. ','
                 .$changenumberofemployees. ','.$changeestablishdate. ','.$changecapital.','.$changeaverageage.','.$changeclosingmonth.','.$changehomepage. ','
                 .$changebusinessdetails.','.$changebank.','.$changechangedate.
                 ' WHERE flg_del = false AND pk_id_company = \''.$id.'\'';
@@ -114,7 +115,7 @@
     if(isset($_POST['changeform'])){
         $id = $_POST['id'];
         try{
-            $query = "SELECT * FROM tbm_company WHERE flg_del = false AND pk_id_company = '".$id."'";
+            $query = "SELECT * FROM tbm_company_kiso WHERE flg_del = false AND pk_id_company = '".$id."'";
             $result = $database -> query($query);
             $row = mysqli_fetch_assoc($result);
             /* echo '詳細を取得しました'; */

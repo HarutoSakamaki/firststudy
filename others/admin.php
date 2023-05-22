@@ -52,18 +52,23 @@
                     $admin = 0;
                 }
                 try{
-                    $numberingquery = "UPDATE tbm_numbering SET no_numbering = LAST_INSERT_ID(no_numbering + 1) WHERE nm_tablename = 'login'";
-                    $database -> query($numberingquery);
-                    $numberingquery = 'SELECT no_numbering FROM tbm_numbering where nm_tablename = \'login\' ';
-                    $numberingid = mysqli_fetch_assoc($database -> query($numberingquery));
+                    $numberingquery = "SELECT no_tuban FROM tbs_saiban WHERE pk_id_saiban = 4";
+                    $result = $database -> query($numberingquery);
+                    $tuban = (mysqli_fetch_assoc($searchresult)['no_tuban'])+1;
                     $hashpassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
                     $query = <<<EDO
-                        INSERT INTO login (pk_id_login,nm_username,nm_password,flg_admin) VALUES ({$numberingid['no_numbering']},'{$_POST['username']}','{$hashpassword}',{$admin}) 
-                        EDO;
-                    $result = $database -> query($query);
+                        INSERT INTO tbm_login (pk_id_login,nm_username,nm_password,flg_admin) 
+                        VALUES ({$tuban},'{$_POST['username']}','{$hashpassword}',{$admin}) 
+                    EDO;
+                    $database -> query($query);
+                    $numberingquery = <<<EDO
+                        UPDATE tbs_saiban SET no_tuban = {$tuban} WHERE pk_id_saiban = 4;
+                    EDO;
+                    $database -> query($numberingquery);
+                    $newid = $tuban;
                     $addaccountsuccesstext .= <<<EOD
                         <div class = 'successbox'>登録に成功しました</div>
-                        EOD;
+                    EOD;
                     $addsuccess = true;
                 }catch(Exception $e){
                     echo "エラー発生:" . $e->getMessage().'<br>';

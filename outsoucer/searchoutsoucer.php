@@ -7,7 +7,7 @@
 <?php
     require_once '../link.php';
     $database = database('staff');
-    $rangelimit = 2;
+    $rangelimit = 20;
 
     session_start();
     session_regenerate_id(true);
@@ -30,7 +30,7 @@
         $id = $_POST['staffid'];
         $changeup_date = ' upd_date = \''.date("Y-m-d H:i:s").'\' ';
         try{
-            $query = "UPDATE tbm_staffname SET flg_del = 'true' , ".$changeup_date." WHERE pk_id_staffname = '{$id}' ";
+            $query = "UPDATE tbm_staffname_kiso SET flg_del = 'true' , ".$changeup_date." WHERE pk_id_staffname = '{$id}' ";
             $database -> query($query);
             /* echo $query;
             echo '削除しました'; */
@@ -78,8 +78,8 @@
         $jointerms = ' AND dt_joincompanyday BETWEEN DATE(\''.$minjoin.'\') and DATE(\''.$maxjoin.'\') ';
         
         try{
-            $query = 'SELECT * FROM tbm_staffname 
-            WHERE '.$searchnameterms.$searchemployeeidterms.$birthterms.$jointerms.' AND tbm_staffname.flg_del = false ORDER BY dt_birthday ASC';
+            $query = 'SELECT * FROM tbm_staffname_kiso 
+            WHERE '.$searchnameterms.$searchemployeeidterms.$birthterms.$jointerms.' AND tbm_staffname_kiso.flg_del = false ORDER BY dt_birthday ASC';
 
             $searchresult = $database -> query($query);
             $searchquery = $query;

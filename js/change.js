@@ -7,7 +7,7 @@ function inputfield(buttonid,count){
         var lasttext = document.getElementById(buttonid+(count-1));
         var newtext = document.createElement('input');
         var brelement = document.createElement('br')
-        newtext.setAttribute('name', buttonid+count);
+        newtext.setAttribute('name', buttonid+'[]');
         newtext.setAttribute('type', 'text');
         newtext.setAttribute('id', buttonid+count);
         brelement.setAttribute('id',buttonid+'br'+count);

@@ -44,13 +44,15 @@
                 <tr>
                     <th>現住所</th>
                         <td colspan = '3'>
-                        (都道府県)<select name = 'prefectures'>
+                        (郵便番号)〒<input type = 'number' style = 'width:80px;' placeholder="3桁" id='postcode1'>-<input type = 'number' size = '5' style = 'width:80px;' placeholder="4桁" id = 'postcode2'>
+                        <button type = 'button' class = 'commonbutton' id = 'searchaddress'>検索する</button>
+                        (都道府県)<select name = 'prefectures' id = 'prefecturesselect' >
                             <?php if($settextprefectures != ''){echo '<option value = '.$settextprefectures.'>'.getpref($settextprefectures).'</option>';}?>
                             <?php selectpref();?>
                         </select>
                     
                     <div>(市区町村以下)
-                    <input type = 'text' style = 'width:600px;' name = 'address' value = <?php echo $settextaddress; ?>></div></td>
+                    <input type = 'text' style = 'width:600px;' name = 'address' value = '<?php echo $settextaddress; ?>' id = 'addresstext'></div></td>
                 </tr>
                 
                 <tr>
@@ -147,14 +149,42 @@
 	window.open(url,"_blank", SubWinOpt);
     }
 
-    /* $(function(){
-        //<form>タグのidを指定
-        $("#changeform").validationEngine(
-            'attach', {
-                promptPosition: "topRight"//エラーメッセージ位置の指定
+    $(function () {
+		$("#searchaddress").on('click', function () {
+			var postcode1 = document.getElementById('postcode1');
+			var postcode2 = document.getElementById('postcode2');
+			if(postcode1.value.length == 3 && postcode2.value.length == 4 ){
+				var postcode = String(postcode1.value) + String(postcode2.value);
+				// ajax通信開始
+				$.ajax({
+					url: "http://zipcloud.ibsnet.co.jp/api/search?zipcode=" + postcode,
+					// 現在のドメインと、データ取得先のドメインが異なるため 'jsonp' を指定
+					dataType: 'jsonp',
+				}).then(
+					// 通信成功時の処理
+					function (data) {
+						if (data.results) {
+							// 住所情報を取得
+							var result = data.results[0];
+							console.log(result);
+							// フォーム入力欄の「都道府県」「市区町村」「住所」に値をセット
+							var setprefectures = getpref(result.address1);
+							$("#prefecturesselect option[value='"+setprefectures+"']").prop('selected', true);
+							$('#addresstext').val(result.address2+' '+result.address3);
+						} else {
+							alert('住所が見つかりません');
+						}
+					},
+					// 通信失敗時の処理
+					function () {
+						alert("検索失敗");
+					}
+				);
+			}else{
+                alert('郵便番号が無効です');
             }
-        );
-    }); */
+		});
+	});
 
 
 </script>

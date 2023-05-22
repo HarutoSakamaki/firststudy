@@ -39,7 +39,7 @@
             $employeesterms = ' AND su_numberofemployees BETWEEN '.$minemployees.' and '.$maxemployees;
         }
         try{
-            $query = 'SELECT * FROM nm_company WHERE '.$companyterms.$employeesterms.' AND flg_del = false ORDER BY su_numberofemployees DESC';
+            $query = 'SELECT * FROM tbm_company_kiso WHERE '.$companyterms.$employeesterms.' AND flg_del = false ORDER BY su_numberofemployees DESC';
             /* echo $query; */
             $searchresult = $database -> query($query);
             $searchquery = $query;

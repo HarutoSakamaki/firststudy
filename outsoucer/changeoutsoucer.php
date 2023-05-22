@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="../css/validationEngine.jquery.css">
 <script src="../js/jquery.validationEngine.js"></script>
 <script src="../js/jquery.validationEngine-ja.js" charset="UTF-8"></script>
+<script src = '../js/common.js'></script>
 
 <?php
     require_once '../link.php';
@@ -34,32 +35,19 @@
         $changemailaddress = ' nm_mailaddress = \'' .$_POST['mailaddress'].'\'';
         $changephonenumber = ' su_phonenumber = \'' .$_POST['phonenumber'].'\'';
         
+        $license = array_filter($_POST['license']);
+        $licensejson = json_encode($license, JSON_UNESCAPED_UNICODE);
+        
+        $workhistory = array_filter($_POST['workhistory']);
+        $workhistoryjson = json_encode($workhistory, JSON_UNESCAPED_UNICODE);
 
-        $licensestack = array();
-        $count = 0;
-        while(isset($_POST['license'.$count])){
-            if($_POST['license'.$count]!=''){
-                $licensestack[] = htmlentities($_POST['license'.$count]);
-            }
-            $count++;
-        }
-        $licensejson = json_encode($licensestack, JSON_UNESCAPED_UNICODE);
-        $workhistorystack = array();
-        $count = 0;
-        while(isset($_POST['workhistory'.$count])){
-            if($_POST['workhistory'.$count]!=''){
-                $workhistorystack[] = htmlentities($_POST['workhistory'.$count]);
-            }
-            $count++;
-        }
-        $workhistoryjson = json_encode($workhistorystack, JSON_UNESCAPED_UNICODE);
         $changelicense = ' nm_license = \'' .$licensejson.'\'';
         $changeworkhistory = ' nm_workhistory = \'' .$workhistoryjson.'\'';
-        $changemotivation = ' nm_motivation = \'' .$_POST['motivation'].'\'';
+        $changemotivation = ' etc_motivation = \'' .$_POST['motivation'].'\'';
         $changejoincompanyday = ' dt_joincompanyday = \'' .$_POST['joinyear'].'-'.$_POST['joinmonth'].'-'.$_POST['joinday'].'\'';
         
         $changechangedate = ' upd_date = \''.date("Y-m-d H:i:s").'\'';
-        $changequery = "UPDATE tbm_staffname SET ".$changename.','.$changefurigana. ','.$changebirthday. ','.$changeaddress. ','.$changeprefectures.','
+        $changequery = "UPDATE tbm_staffname_kiso SET ".$changename.','.$changefurigana. ','.$changebirthday. ','.$changeaddress. ','.$changeprefectures.','
             .$changemailaddress. ','.$changephonenumber. ',' .$changeworkhistory. ','.$changelicense. ','.$changemotivation. ','.$changejoincompanyday. ','
             .$changechangedate.' WHERE pk_id_staffname = '.$id;
         $changeemployeeidused = changeemployeeidused($_POST['employeeid']);
@@ -105,7 +93,7 @@
         
         $id = $_POST['id'];
         try{
-            $query = "SELECT * FROM tbm_staffname WHERE flg_del = false AND pk_id_staffname = ".$id;
+            $query = "SELECT * FROM tbm_staffname_kiso WHERE flg_del = false AND pk_id_staffname = ".$id;
             $result = $database -> query($query);
             $row = mysqli_fetch_assoc($result);
             /* echo '詳細を取得しました'; */
@@ -121,8 +109,18 @@
         $joinyear = $joinarray[0];
         $joinmonth = $joinarray[1];
         $joinday = $joinarray[2];
-        $license = json_decode($row['nm_license'],true);
-        $workhistory = json_decode($row['nm_workhistory'],true);
+        if($row['nm_license']==null){
+            $license = [];
+        }else{
+            $license = json_decode($row['nm_license'],true);
+        }
+        if($row['nm_workhistory']==null){
+            $workhistory = [];
+        }else{
+            $workhistory = json_decode($row['nm_workhistory'],true);
+        }
+        
+
     }
     if(isset($_POST['change'])){
         $settextname = htmlentities($_POST['name']);
@@ -135,29 +133,13 @@
         $settextmailaddress = htmlentities($_POST['mailaddress']);
         $settextphonenumber = htmlentities($_POST['phonenumber']);
         $settextemployeeid = htmlentities($_POST['employeeid']);
-        $count = 0;
-        while(true){
-            if(isset($_POST['workhistory'.$count])){
-                $settextworkhistory[] = htmlentities($_POST['workhistory'.$count]);
-                $count++;
-            }else{
-                break;
-            }
-        }
-        $count = 0;
-        while(true){
-            if(isset($_POST['license'.$count])){
-                $settextlicense[] = htmlentities($_POST['license'.$count]);
-                $count++;
-            }else{
-                break;
-            }
-        }
+        $settextworkhistory = $_POST['workhistory'];
+        $settextlicense = $_POST['license'];
         $settextmotivation = htmlentities($_POST['motivation']);
         $settextjoinyear = htmlentities($_POST['joinyear']);
         $settextjoinmonth = htmlentities($_POST['joinmonth']);
         $settextjoinday = htmlentities($_POST['joinday']);
-        /* $settextcompany = $_POST['company']; */
+        
     }else{
         $settextname = htmlentities($row['nm_name']);
         $settextfurigana = htmlentities($row['nm_furigana']);
@@ -171,30 +153,12 @@
         $settextemployeeid = htmlentities($row['no_employeeid']);
         $settextworkhistory = $workhistory;
         $settextlicense = $license;
-        $settextmotivation = htmlentities($row['nm_motivation']);
+        $settextmotivation = htmlentities($row['etc_motivation']);
         $settextjoinyear = htmlentities($joinarray[0]);
         $settextjoinmonth = htmlentities($joinarray[1]);
         $settextjoinday = htmlentities($joinarray[2]);
         
     }
-
-    function changeemployeeidused($employeeid){
-		require_once '../link.php';
-    	$database = database('staff');
-		$employeequery = 'SELECT * FROM tbm_staffname 
-            WHERE no_employeeid = '.$employeeid.' AND tbm_staffname.flg_del = false;';
-        $employeeresult = $database -> query($employeequery);
-		$row = mysqli_fetch_assoc($employeeresult);
-		if(isset($row['pk_id_staffname'])){
-            if($row['no_employeeid'] == $employeeid){
-                return false;
-            }else{
-			    return true;
-            }
-		}else{
-			return false;
-		}
-	}
    
     
     $birthdaytext = '';
@@ -218,33 +182,36 @@
     }
     $birthdaytext.='</select>日' . "\n";
 
+
     $workhistorytext= '';
+    $count = 0;
     $workhistorytext.= '<input type = \'hidden\' id = \'workhistory-1\' >';
-    if(isset($settextworkhistory[0])){
-        $workhistorytext.='<br id=\'workhistorybr0\'><input type = \'text\' name = \'workhistory0\' value = \''.$settextworkhistory[0].'\' id = \'workhistory0\' >';
-        $count = 1;
+    if(count($settextworkhistory) >= 1){
+        /* $workhistorytext.='<br id=\'workhistorybr0\'><input type = \'text\' name = \'workhistory[]\' value = \''.$settextworkhistory[0].'\' id = \'workhistory0\' >';
+        $count = 1; */
     }else{
-        $workhistorytext.='<br id=\'workhistorybr0\'><input type = \'text\' name = \'workhistory0\' value = \'\' id = \'workhistory0\' >';
+        $workhistorytext.='<br id=\'workhistorybr0\'><input type = \'text\' name = \'workhistory[]\' value = \'\' id = \'workhistory0\' >';
         $count = 1;
     }
-    while(isset($settextworkhistory[$count])){
-        $workhistorytext .='<br id=\'workhistorybr'.$count.'\'><input type = \'text\' name = \'workhistory'.$count.'\' value = \''.$settextworkhistory[$count].'\' id = \'workhistory'.$count.'\'>';
+    foreach($settextworkhistory as $settextworkhistory){
+        $workhistorytext .='<br id=\'workhistorybr'.$count.'\'><input type = \'text\' name = \'workhistory[]\' value = \''.$settextworkhistory.'\' id = \'workhistory'.$count.'\'>';
         $count++;
     }
+    
     $workhistorycount_json = json_encode($count);
 
+    $count = 0;
     $licensetext = '';
-
     $licensetext.='<input type = \'hidden\' id = \'license-1\' >';
-    if(isset($settextlicense[0])){
-        $licensetext.='<br id = \'licensebr0\'><input type = \'text\' name = \'license0\' value = \''.$settextlicense[0].'\' id = \'license0\' >';
-        $count = 1;
+    if(count($settextlicense)){
+        /* $licensetext.='<br id = \'licensebr0\'><input type = \'text\' name = \'license[]\' value = \''.$settextlicense[0].'\' id = \'license0\' >';
+        $count = 1; */
     }else{
-        $licensetext.='<br id = \'licensebr0\'><input type = \'text\' name = \'license0\' value = \'\' id = \'license0\' >';
+        $licensetext.='<br id = \'licensebr0\'><input type = \'text\' name = \'license[]\' value = \'\' id = \'license0\' >';
         $count = 1;
     }
-    while(isset($settextlicense[$count])){
-        $licensetext.='<br id = \'licensebr'.$count.'\'><input type = \'text\' name = \'license'.$count.'\' value = \''.$settextlicense[$count].'\' id = \'license'.$count.'\'>';
+    foreach( $settextlicense as $settextlicense ){
+        $licensetext.='<br id = \'licensebr'.$count.'\'><input type = \'text\' name = \'license[]\' value = \''.$settextlicense.'\' id = \'license'.$count.'\'>';
         $count++;
     }
     $licensecount_json = json_encode($count);

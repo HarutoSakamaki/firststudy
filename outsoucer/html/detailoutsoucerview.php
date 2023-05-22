@@ -55,7 +55,7 @@
                     </tr>
                     <tr>
                         <th>志望理由</th>
-                        <td><span class = 'smalltext'><?php echo htmlentities($row1['nm_motivation']); ?></span></td>
+                        <td><span class = 'smalltext'><?php echo htmlentities($row1['etc_motivation']); ?></span></td>
                     </tr>
                     <tr>
                         <th>入社日</th>

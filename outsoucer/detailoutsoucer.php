@@ -22,8 +22,9 @@
         
     $id = $_POST['staffid'];
     $_SESSION['staffid'] = $id;
+    
     try{
-        $query = "SELECT * FROM tbm_staffname WHERE flg_del = false AND pk_id_staffname = ".$id;
+        $query = "SELECT * FROM tbm_staffname_kiso WHERE flg_del = false AND pk_id_staffname = ".$id;
         $result = $database -> query($query);
         $row1 = mysqli_fetch_assoc($result);
         
@@ -42,10 +43,7 @@
     $joinday = $joinarray[2];
     $licensearray = json_decode($row1['nm_license'],true);
     $workhistoryarray = json_decode($row1['nm_workhistory'],true);
-    if(json_last_error() !== JSON_ERROR_NONE){
-        // エラーが発生
-        print json_last_error_msg(); // エラーメッセージを出力
-    }
+    
     $workhistorytext = '';
     if( $row1['kbn_prefectures'] == ''){
         $settextaddress = $row1['nm_address'];
@@ -67,7 +65,7 @@
 
 
     //ここからstaffhistory系
-
+    
     if(isset($_POST['staffid'])){
         $staffid = $_POST['staffid'];
         $_SESSION['staffid'] = $staffid;
@@ -119,13 +117,15 @@
             }
             if($overlapping == false){
                 try{
-                    $numberringquery = "UPDATE tbs_numbering SET no_numbering = LAST_INSERT_ID(no_numbering + 1) WHERE nm_tablename = 'staffhistory'";
-                    $database -> query($numberringquery);
-                    $numberringquery = 'SELECT no_numbering FROM tbs_numbering where nm_tablename = \'staffhistory\' ';
-                    $numberring = mysqli_fetch_assoc($database -> query($numberringquery));
-                    $numberringid = $numberring['no_numbering'];
-                    $query = 'INSERT tbm_staffhistory (pk_id_staffhistory , no_staffid , no_companyid, dt_startdate, dt_enddate) VALUES('.$numberringid.','.$staffid.','.$companyid.',\''.$_POST['startdate'].'\',\''.$_POST['enddate'].'\')';
+                    $numberingquery = "SELECT no_tuban FROM tbs_saiban WHERE pk_id_saiban = 3";
+                    $result = $database -> query($numberingquery);
+                    $tuban = (mysqli_fetch_assoc($result)['no_tuban'])+1;
+                    $query = 'INSERT tbm_staffhistory (pk_id_staffhistory , no_staffid , no_companyid, dt_startdate, dt_enddate) VALUES('.$tuban.','.$staffid.','.$companyid.',\''.$_POST['startdate'].'\',\''.$_POST['enddate'].'\')';
                     $result = $database -> query($query);
+                    $query = <<<EDO
+                        UPDATE tbs_saiban SET no_tuban = {$tuban} WHERE pk_id_saiban = 3
+                    EDO;
+				    $database -> query($query);
                     $addcompanysuccess = true;
                     $addcompanysuccesstext .= '<div class = \'successbox\'>登録しました</div>';
                     /* echo '成功'; */
@@ -165,9 +165,13 @@
     
 
     try{
-        $query = 'SELECT  tbm_staffhistory.pk_id_staffhistory as id, tbm_company.nm_company as company, tbm_staffhistory.dt_startdate as startdate, tbm_staffhistory.dt_enddate as enddate, 
-        tbm_staffname.nm_name as name  
-        FROM tbm_staffhistory LEFT JOIN tbm_company ON tbm_staffhistory.no_companyid = tbm_company.pk_id_company LEFT JOIN tbm_staffname ON tbm_staffname.pk_id_staffname = tbm_staffhistory.no_staffid 
+        $query = 'SELECT  tbm_staffhistory.pk_id_staffhistory as id, 
+                        tbm_company_kiso.nm_company as company, 
+                        tbm_staffhistory.dt_startdate as startdate, 
+                        tbm_staffhistory.dt_enddate as enddate, 
+                        tbm_staffname_kiso.nm_name as name  
+                  FROM tbm_staffhistory 
+                  LEFT JOIN tbm_company_kiso ON tbm_staffhistory.no_companyid = tbm_company_kiso.pk_id_company LEFT JOIN tbm_staffname_kiso ON tbm_staffname_kiso.pk_id_staffname = tbm_staffhistory.no_staffid 
         WHERE tbm_staffhistory.no_staffid = '.$staffid.' AND tbm_staffhistory.flg_del = 0 
         ORDER BY dt_enddate DESC';
         /* echo $query.'</br>'; */

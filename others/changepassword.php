@@ -66,7 +66,7 @@
         }
         if($inputrule == true){
             $loginid = $_SESSION['loginid'];
-            $query = 'SELECT * FROM tbm_login WHERE pk_id_login = '.$loginid.' AND flg.del = 0 ORDER BY pk_id_login DESC';
+            $query = 'SELECT * FROM tbm_login WHERE pk_id_login = '.$loginid.' AND flg_del = 0 ORDER BY pk_id_login DESC';
             $result = $database -> query($query);
             $row = mysqli_fetch_assoc($result);
             if(password_verify($_POST['oldpassword'], $row['nm_password'])){

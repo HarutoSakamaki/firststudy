@@ -1,6 +1,6 @@
 @import url("header.css");
 @import url('common.css');
-
+@import url('change.css');
   .box{
     margin : 0 auto;
   }
