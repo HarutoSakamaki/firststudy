@@ -13,7 +13,7 @@
   $logintext = '';
   if(isset($_POST['login'])){
     try{
-      $query = 'SELECT * FROM tbm_login WHERE nm_username = \''.$_POST['username'].'\' AND flg_del = false ';
+      $query = 'SELECT pk_id_login , nm_password , flg_admin FROM tbs_login WHERE nm_username = \''.$_POST['username'].'\' AND flg_del = false ';
       $result = $database -> query($query);
     }catch(Exception $e){
       echo "エラー発生:" . $e->getMessage().'<br>';

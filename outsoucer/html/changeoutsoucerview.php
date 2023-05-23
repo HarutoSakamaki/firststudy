@@ -25,7 +25,7 @@
             <?php echo $changesuccesstext; ?>
             <table class = 'changetable'>
                 <tr>
-                    <th>名前</th>
+                    <th>名前<a class = 'failfont'>(必須)</a></th>
                     <td><input type = 'text' name = 'name' class = 'validate[required]' value = <?php echo $settextname; ?>><br>
                         <a class = 'failfont'><?php echo $namefailtext; ?></a>
                     </td>
@@ -43,16 +43,19 @@
                 </tr>
                 <tr>
                     <th>現住所</th>
-                        <td colspan = '3'>
-                        (郵便番号)〒<input type = 'number' style = 'width:80px;' placeholder="3桁" id='postcode1'>-<input type = 'number' size = '5' style = 'width:80px;' placeholder="4桁" id = 'postcode2'>
+                    <td colspan = '3'>
+                        (郵便番号)〒<input type = 'number' style = 'width:80px;' placeholder="3桁" id='postcode1' name = 'postcode1' value= '<?php echo $settextpostcode1;?>'>-<input type = 'number' size = '5' style = 'width:80px;' placeholder="4桁" id = 'postcode2' name = 'postcode2' value = '<?php echo $settextpostcode2;?>'>
                         <button type = 'button' class = 'commonbutton' id = 'searchaddress'>検索する</button>
                         (都道府県)<select name = 'prefectures' id = 'prefecturesselect' >
                             <?php if($settextprefectures != ''){echo '<option value = '.$settextprefectures.'>'.getpref($settextprefectures).'</option>';}?>
                             <?php selectpref();?>
                         </select>
                     
-                    <div>(市区町村以下)
-                    <input type = 'text' style = 'width:600px;' name = 'address' value = '<?php echo $settextaddress; ?>' id = 'addresstext'></div></td>
+                        <div>(市区町村以下)
+                            <input type = 'text' style = 'width:600px;' name = 'address' value = '<?php echo $settextaddress; ?>' id = 'addresstext'>
+                        </div>
+                        <a class = 'failfont'><?php echo $postcodefailtext;?></a>
+                    </td>
                 </tr>
                 
                 <tr>

@@ -37,7 +37,7 @@
         and preg_match('/[0-9]/',$_POST['password']) and preg_match("/[a-zA-Z]/", $_POST['password'])){
 
             try{
-                $query = 'SELECT * FROM tbm_login WHERE nm_username = \''.$_POST['username'].'\' AND flg_del = 0 ORDER BY pk_id_login DESC';
+                $query = 'SELECT pk_id_login FROM tbs_login WHERE nm_username = \''.$_POST['username'].'\' AND flg_del = 0 ORDER BY pk_id_login DESC';
                 $result = $database -> query($query);
             }catch(Exception $e){
                 echo "エラー発生:" . $e->getMessage().'<br>';
@@ -57,7 +57,7 @@
                     $tuban = (mysqli_fetch_assoc($searchresult)['no_tuban'])+1;
                     $hashpassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
                     $query = <<<EDO
-                        INSERT INTO tbm_login (pk_id_login,nm_username,nm_password,flg_admin) 
+                        INSERT INTO tbs_login (pk_id_login,nm_username,nm_password,flg_admin) 
                         VALUES ({$tuban},'{$_POST['username']}','{$hashpassword}',{$admin}) 
                     EDO;
                     $database -> query($query);
@@ -106,7 +106,7 @@
         $id = $_POST['delid'];
         $changeup_date = ' upd_date = \''.date("Y-m-d H:i:s").'\' ';
         try{
-            $query = "UPDATE tbm_login SET flg_del = 1 , ".$changeup_date." WHERE pk_id_login = {$id} ";
+            $query = "UPDATE tbs_login SET flg_del = 1 , ".$changeup_date." WHERE pk_id_login = {$id} ";
             /* echo $query; */
             $database -> query($query);
             /* echo $query;
@@ -132,7 +132,7 @@
             }else{
                 $searchusernameterms = ' nm_username LIKE \'%\' ';
             }
-            $query = 'SELECT * FROM tbm_login  
+            $query = 'SELECT pk_id_login , nm_username , nm_password , flg_admin FROM tbm_login  
                 WHERE '.$searchusernameterms.' AND flg_del = 0 ORDER BY pk_id_login DESC';
 
             $search = true;

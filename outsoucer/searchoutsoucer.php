@@ -78,7 +78,7 @@
         $jointerms = ' AND dt_joincompanyday BETWEEN DATE(\''.$minjoin.'\') and DATE(\''.$maxjoin.'\') ';
         
         try{
-            $query = 'SELECT * FROM tbm_staffname_kiso 
+            $query = 'SELECT pk_id_staffname , nm_name , no_employeeid , dt_birthday , dt_joincompanyday FROM tbm_staffname_kiso 
             WHERE '.$searchnameterms.$searchemployeeidterms.$birthterms.$jointerms.' AND tbm_staffname_kiso.flg_del = false ORDER BY dt_birthday ASC';
 
             $searchresult = $database -> query($query);

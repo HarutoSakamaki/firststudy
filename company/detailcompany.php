@@ -18,7 +18,9 @@
         $companyid = $id;
         $_SESSION['companyid'] = $id;
         try{
-            $query = "SELECT * FROM tbm_company_kiso WHERE flg_del = false AND pk_id_company = ".$id;
+            $query = "SELECT pk_id_company , nm_company , su_numberofemployees , dt_establishdate , kbn_postcode , kbn_prefectures , nm_location , nm_president 
+             , nm_businessdetails , nm_homepage , kbn_closingmonth , su_sales , su_capital , su_averageage , nm_bank 
+             FROM tbm_company_kiso WHERE flg_del = false AND pk_id_company = ".$id;
             $result = $database -> query($query);
             $row1 = mysqli_fetch_assoc($result);
             /* echo '詳細を取得しました'; */
@@ -35,6 +37,10 @@
             $settextlocation = $row1['nm_location'];
         }else{
             $settextlocation = getpref($row1['kbn_prefectures']).' '.$row1['nm_location'];
+        }
+        if($row1['kbn_postcode'] != '' and strlen($row1['kbn_postcode']) == 7){
+            $pos = str_split($row1['kbn_postcode']);
+            $settextlocation .= '〒'.$pos['0'].$pos['1'].$pos['2'].'-'.$pos['3'].$pos['4'].$pos['5'].$pos['6'].$settextlocation;
         }
         $businessdetailsarray = json_decode($row1['nm_businessdetails'],true);
         $bankarray = json_decode($row1['nm_bank'],true);
@@ -116,7 +122,7 @@
             try{
                 $update_at = date("Y-m-d H:i:s");
                 $query = <<<EDO
-                    UPDATE tbm_staffhistory SET 
+                    UPDATE tbm_staffhistory_kiso SET 
                     flg_del =  1, upd_date = '{$update_at}' 
                     WHERE pk_id_staffhistory = {$_POST['historyid']};
                 EDO;
@@ -132,10 +138,10 @@
 
         try{
             
-            $query = 'SELECT  tbm_staffhistory.pk_id_staffhistory as id, tbm_company_kiso.nm_company as company, tbm_staffhistory.dt_startdate as startdate, tbm_staffhistory.dt_enddate as enddate,
+            $query = 'SELECT  tbm_staffhistory_kiso.pk_id_staffhistory as id, tbm_company_kiso.nm_company as company, tbm_staffhistory_kiso.dt_startdate as startdate, tbm_staffhistory_kiso.dt_enddate as enddate,
             tbm_staffname_kiso.nm_name as staffname  
-            FROM tbm_staffhistory LEFT JOIN tbm_company_kiso ON tbm_staffhistory.no_companyid = tbm_company_kiso.pk_id_company LEFT JOIN tbm_staffname_kiso ON tbm_staffname_kiso.pk_id_staffname = tbm_staffhistory.no_staffid 
-            WHERE tbm_staffhistory.no_companyid = '.$companyid.' AND tbm_staffhistory.flg_del = 0 
+            FROM tbm_staffhistory_kiso LEFT JOIN tbm_company_kiso ON tbm_staffhistory_kiso.no_companyid = tbm_company_kiso.pk_id_company LEFT JOIN tbm_staffname_kiso ON tbm_staffname_kiso.pk_id_staffname = tbm_staffhistory_kiso.no_staffid 
+            WHERE tbm_staffhistory_kiso.no_companyid = '.$companyid.' AND tbm_staffhistory_kiso.flg_del = 0 
             ORDER BY enddate DESC';
             /* echo $query.'</br>'; */
             $result = $database -> query($query);
@@ -188,11 +194,7 @@
             $historyoutsoucertext .= '履歴がありません';
         }
 
-   /*  <td><form action = 'detailoutsoucer.php' method = 'post' class = 'margin0' id = 'delete{$settext['id']}' onsubmit="return deleteform()">
-        <input type = 'submit' name = 'delete' value = '削除' >
-        <input type = 'hidden' name = 'historyid' value = '{$settext['id']}'>
-        <input type = 'hidden' name = 'companyid' value = '{$companyid}'>
-    </form></td> */
+   
 
         require_once('html/detailcompanyview.php');
 

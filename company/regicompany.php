@@ -37,6 +37,8 @@
 	$settextaverageage = '';
 	$settextclosingmonth = '';
 	$settexthomepage = '';
+	$settextpostcode1 = '';
+	$settextpostcode2 = '';
 	
 	$companynamefailtext = '';
 	$averageagefailtext = '';
@@ -45,6 +47,7 @@
 	$regisuccesstext = '';
 	$salesfailtext = '';
 	$capitalfailtext = '';
+	$postcodefailtext = '';
 	$regisuccess = false;
 
 	if(isset($_POST['addcompany'])){
@@ -68,7 +71,10 @@
         }if($_POST['capital'] != '' and !preg_match("/^[0-9]+$/",$_POST['capital'])){
             $inputrule = false;
             $capitalfailtext .= '数字を入力して下さい<br>' ;
-        }
+        }if(($_POST['postcode1'] != '' or $_POST['postcode2'] != '') and (!preg_match("/^([0-9]{3})$/",$_POST['postcode1']) or !preg_match("/^([0-9]{4})$/",$_POST['postcode2']))){
+			$inputrule =false;
+			$postcodefailtext .= '郵便番号は半角数字3桁、4桁で入力して下さい<br>';
+		}
 			
 		if($inputrule == true){
 			$establishdate = $_POST['establishyear'].'-'.$_POST['establishmonth'].'-'.$_POST['establishday'];
@@ -84,14 +90,19 @@
 			}
 			$businessdetailsjson = json_encode($_POST['businessdetails'], JSON_UNESCAPED_UNICODE);
 			$bankjson = json_encode($_POST['bank'], JSON_UNESCAPED_UNICODE);
+			if($_POST['postcode1']==''){
+				$setpostcode = '';
+			}else{
+				$setpostcode = (string)$_POST['postcode1'] . (string)$_POST['postcode2'];
+			}
 
 			try{
 				$numberingquery = "SELECT no_tuban FROM tbs_saiban WHERE pk_id_saiban = 2";
 				$result = $database -> query($numberingquery);
 				$tuban = (mysqli_fetch_assoc($result)['no_tuban'])+1;
 				$query = <<<EDO
-					INSERT INTO tbm_company_kiso (pk_id_company , nm_company ,su_numberofemployees, dt_establishdate,kbn_prefectures,nm_location,nm_president,nm_businessdetails,nm_homepage,kbn_closingmonth,su_sales,su_capital,su_averageage,nm_bank)
-					VALUES('{$tuban}','{$_POST['company']}','{$_POST['numberofemployees']}','{$establishdate}','{$_POST['prefectures']}','{$_POST['location']}'
+					INSERT INTO tbm_company_kiso (pk_id_company , nm_company ,su_numberofemployees, dt_establishdate,kbn_postcode,kbn_prefectures,nm_location,nm_president,nm_businessdetails,nm_homepage,kbn_closingmonth,su_sales,su_capital,su_averageage,nm_bank)
+					VALUES('{$tuban}','{$_POST['company']}','{$_POST['numberofemployees']}','{$establishdate}','{$setpostcode}','{$_POST['prefectures']}','{$_POST['location']}'
 					,'{$_POST['president']}','{$businessdetailsjson}','{$_POST['homepage']}','{$_POST['closingmonth']}','{$sendsales}','{$sendcapital}','{$_POST['averageage']}','{$bankjson}')
 				EDO;
 				$database -> query($query);
@@ -120,6 +131,8 @@
 			$settextprefectures = $_POST['prefectures'];
 			$settextsales = $_POST['sales'];
 			$settextdigit = $_POST['digit'];
+			$settextpostcode1 = $_POST['postcode1'];
+			$settextpostcode2 = $_POST['postcode2'];
 			$settextlocation = $_POST['location'];
 			$settextnumberofemployees = $_POST['numberofemployees'];
 			$settextestablishyear = $_POST['establishyear'];

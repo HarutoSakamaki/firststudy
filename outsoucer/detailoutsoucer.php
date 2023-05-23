@@ -24,7 +24,9 @@
     $_SESSION['staffid'] = $id;
     
     try{
-        $query = "SELECT * FROM tbm_staffname_kiso WHERE flg_del = false AND pk_id_staffname = ".$id;
+        $query = "SELECT pk_id_staffname , nm_name , no_employeeid , dt_birthday , dt_joincompanyday , nm_furigana , kbn_postcode , kbn_prefectures , nm_address , 
+         nm_mailaddress , su_phonenumber , nm_workhistory , nm_license , etc_motivation 
+         FROM tbm_staffname_kiso WHERE flg_del = false AND pk_id_staffname = ".$id;
         $result = $database -> query($query);
         $row1 = mysqli_fetch_assoc($result);
         
@@ -49,6 +51,10 @@
         $settextaddress = $row1['nm_address'];
     }else{
         $settextaddress = getpref($row1['kbn_prefectures']).' '.$row1['nm_address'];
+    }
+    if($row1['kbn_postcode'] != '' and strlen($row1['kbn_postcode']) == 7){
+        $pos = str_split($row1['kbn_postcode']);
+        $settextaddress = '〒'.$pos['0'].$pos['1'].$pos['2'].'-'.$pos['3'].$pos['4'].$pos['5'].$pos['6'].$settextaddress;
     }
     $count = 0;
     while(isset($workhistoryarray[$count])){
@@ -95,7 +101,7 @@
         if($empty == false){
             //重複チェック
             $query = <<<EDO
-                SELECT * FROM tbm_staffhistory WHERE no_staffid = {$staffid}
+                SELECT dt_startdate , dt_enddate FROM tbm_staffhistory_kiso WHERE no_staffid = {$staffid} AND flg_del = false;
                 EDO;
             try{
                 $result = $database -> query($query);
@@ -120,7 +126,7 @@
                     $numberingquery = "SELECT no_tuban FROM tbs_saiban WHERE pk_id_saiban = 3";
                     $result = $database -> query($numberingquery);
                     $tuban = (mysqli_fetch_assoc($result)['no_tuban'])+1;
-                    $query = 'INSERT tbm_staffhistory (pk_id_staffhistory , no_staffid , no_companyid, dt_startdate, dt_enddate) VALUES('.$tuban.','.$staffid.','.$companyid.',\''.$_POST['startdate'].'\',\''.$_POST['enddate'].'\')';
+                    $query = 'INSERT tbm_staffhistory_kiso (pk_id_staffhistory , no_staffid , no_companyid, dt_startdate, dt_enddate) VALUES('.$tuban.','.$staffid.','.$companyid.',\''.$_POST['startdate'].'\',\''.$_POST['enddate'].'\')';
                     $result = $database -> query($query);
                     $query = <<<EDO
                         UPDATE tbs_saiban SET no_tuban = {$tuban} WHERE pk_id_saiban = 3
@@ -152,7 +158,7 @@
         try{
             $update_at = date("Y-m-d H:i:s");
             $query = <<<EDO
-                UPDATE tbm_staffhistory SET 
+                UPDATE tbm_staffhistory_kiso SET 
                 flg_del =  1, upd_date = '{$update_at}' 
                 WHERE pk_id_staffhistory = {$_POST['historyid']};
             EDO;
@@ -165,19 +171,16 @@
     
 
     try{
-        $query = 'SELECT  tbm_staffhistory.pk_id_staffhistory as id, 
+        $query = 'SELECT  tbm_staffhistory_kiso.pk_id_staffhistory as id, 
                         tbm_company_kiso.nm_company as company, 
-                        tbm_staffhistory.dt_startdate as startdate, 
-                        tbm_staffhistory.dt_enddate as enddate, 
+                        tbm_staffhistory_kiso.dt_startdate as startdate, 
+                        tbm_staffhistory_kiso.dt_enddate as enddate, 
                         tbm_staffname_kiso.nm_name as name  
-                  FROM tbm_staffhistory 
-                  LEFT JOIN tbm_company_kiso ON tbm_staffhistory.no_companyid = tbm_company_kiso.pk_id_company LEFT JOIN tbm_staffname_kiso ON tbm_staffname_kiso.pk_id_staffname = tbm_staffhistory.no_staffid 
-        WHERE tbm_staffhistory.no_staffid = '.$staffid.' AND tbm_staffhistory.flg_del = 0 
+                  FROM tbm_staffhistory_kiso 
+                  LEFT JOIN tbm_company_kiso ON tbm_staffhistory_kiso.no_companyid = tbm_company_kiso.pk_id_company LEFT JOIN tbm_staffname_kiso ON tbm_staffname_kiso.pk_id_staffname = tbm_staffhistory_kiso.no_staffid 
+        WHERE tbm_staffhistory_kiso.no_staffid = '.$staffid.' AND tbm_staffhistory_kiso.flg_del = 0 
         ORDER BY dt_enddate DESC';
-        /* echo $query.'</br>'; */
         $result = $database -> query($query);
-        /* $row = mysqli_fetch_assoc($result); */
-        /* echo '外勤先を取得しました'; */
     }catch(Exception $e){
         /* echo "エラー発生:" . $e->getMessage().'<br>';
         echo "  外勤先を取得できませんでした"; */
@@ -194,7 +197,7 @@
     $historycompanytext='';
     if($settextflag  == true){
         $nowdate = new DateTime(date('Y-m-d'));
-        $historycompanytext .= '<div><table class = \'workplacetable\'><tr><th>会社</th><th>仕事開始日</th><th>仕事終了日</th><th>状態</th><th>履歴の削除</th></tr>';
+        $historycompanytext .= '<div><table class = \'workplacetable\'><tr><th>会社</th><th>仕事開始日</th><th>仕事終了日</th><th>状態</th><th>履歴の削除</th><th>操作</th></tr>';
         foreach($settext as $settext){
             $setcompany = htmlentities($settext['company']);
             $setstartdate = htmlentities($settext['startdate']);
@@ -210,15 +213,18 @@
             }
             $historycompanytext = $historycompanytext.<<<EOD
                 <tr>
-                    <td>{$setcompany}</td>
-                    <td>{$setstartdate}</td>
-                    <td>{$setenddate}</td>
-                    <td>{$status}</td>
+                    <td id>{$setcompany}</td>
+                    <td id>{$setstartdate}</td>
+                    <td id>{$setenddate}</td>
+                    <td id>{$status}</td>
                     <td><form action = 'detailoutsoucer.php' method = 'post' class = 'margin0' id = 'delete{$settext['id']}' onsubmit="return deleteform()">
                         <button type = 'submit' class = 'commonbutton' name = 'delete' value = '削除' ><img src="../img/deleteicon.png" alt=""/>削除</button>
                         <input type = 'hidden' name = 'historyid' value = '{$settext['id']}'>
                         <input type = 'hidden' name = 'staffid' value = '{$staffid}'>
                         </form>
+                    </td>
+                    <td>
+                        <button type = 'button' class = 'commonbutton' onclick = 'operation('{$settext['id']}')'>操作</button>
                     </td>
                 </tr>
             EOD;

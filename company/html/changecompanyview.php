@@ -26,7 +26,7 @@
             <a class = 'failfont'><?php echo $changesuccesstext; ?></a>
             <table class = 'changetable'>
                 <tr>
-                    <th>会社名</th>
+                    <th>会社名<a class = 'failfont'>(必須)</a></th>
                     <td><input type = 'text' name = 'company' class = 'validate[required]' value = <?php echo htmlentities($settextcompany); ?>><br>
                         <a class = 'failfont'><?php echo $companynamefailtext; ?></a>
                     </td>
@@ -37,20 +37,23 @@
                 <tr>
                     <th>本社所在地</th>
                     <td colspan = '3'>
-                        (郵便番号)〒<input type = 'number' style = 'width:80px;' placeholder="3桁" id='postcode1'>-<input type = 'number' size = '5' style = 'width:80px;' placeholder="4桁" id = 'postcode2'>
+                        (郵便番号)〒<input type = 'number' style = 'width:80px;' placeholder="3桁" id='postcode1' name = 'postcode1' value = '<?php echo $settextpostcode1?>'>-<input type = 'number' size = '5' style = 'width:80px;' placeholder="4桁" id = 'postcode2' name = 'postcode2' value = '<?php echo $settextpostcode2?>'>
                         <button type = 'button' class = 'commonbutton' id = 'searchaddress'>住所検索</button>
                         (都道府県)<select name = 'prefectures' id = 'prefecturesselect'>
                         <?php if($settextprefectures != ''){echo '<option value = '.$settextprefectures.'>'.getpref($settextprefectures).'</option>';}?>
                         <?php selectpref();?>
                         </select>
                 
-                    <div>(市区町村以下)
-                    <input type = 'text' name = 'location' style = 'width:600px'value = '<?php echo htmlentities($settextlocation); ?>' id = 'localtext' ></div></td>
+                        <div>(市区町村以下)
+                            <input type = 'text' name = 'location' style = 'width:600px'value = '<?php echo htmlentities($settextlocation); ?>' id = 'localtext' >
+                        </div>
+                        <a class = 'failfont'><?php echo $postcodefailtext;?></a>
+                    </td>
                 </tr>
                 
                 <tr>
                     <th>従業員数</th>
-                    <td><input type = 'text' class = "validate[optional,custom[integer]]" name = 'numberofemployees' value = '<?php echo htmlentities($settextnumberofemployees); ?>' placeholder="半角数字" >人<br>
+                    <td><input type = 'text' class = "validate[optional,custom[integer]]" name = 'numberofemployees' value = '<?php echo htmlentities($settextnumberofemployees); ?>' placeholder="半角数字,未入力は0人" >人<br>
                         <a class = 'failfont'><?php echo $numberofemployeesfailtext; ?></a>
                     </td>
                     <th>平均年齢</th>

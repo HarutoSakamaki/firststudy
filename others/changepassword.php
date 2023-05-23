@@ -24,7 +24,7 @@
     $loginid = $_SESSION['loginid'];
     try{
         $query = <<<EOD
-            SELECT * FROM tbm_login WHERE pk_id_login = {$loginid}
+            SELECT nm_username FROM tbs_login WHERE pk_id_login = {$loginid}
             EOD;
         $result = $database -> query($query);
         $row = mysqli_fetch_assoc($result);
@@ -66,14 +66,14 @@
         }
         if($inputrule == true){
             $loginid = $_SESSION['loginid'];
-            $query = 'SELECT * FROM tbm_login WHERE pk_id_login = '.$loginid.' AND flg_del = 0 ORDER BY pk_id_login DESC';
+            $query = 'SELECT nm_password FROM tbs_login WHERE pk_id_login = '.$loginid.' AND flg_del = 0 ORDER BY pk_id_login DESC';
             $result = $database -> query($query);
             $row = mysqli_fetch_assoc($result);
             if(password_verify($_POST['oldpassword'], $row['nm_password'])){
                 $sendnewpassword = password_hash($_POST['newpassword'], PASSWORD_DEFAULT);
                 $changedate = date("Y-m-d H:i:s");
                 $query = <<<EOD
-                    UPDATE tbm_login SET nm_password = '{$sendnewpassword}' , upd_date = '{$changedate}' WHERE pk_id_login = {$loginid}
+                    UPDATE tbs_login SET nm_password = '{$sendnewpassword}' , upd_date = '{$changedate}' WHERE pk_id_login = {$loginid}
                     EOD;
                 try{
                     $database -> query($query);

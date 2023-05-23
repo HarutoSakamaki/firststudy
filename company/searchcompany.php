@@ -76,7 +76,8 @@
         
         
         try{
-            $query = 'SELECT * FROM tbm_company_kiso WHERE '.$companyterms.' AND '.$employeesterms.' AND '.$establishterms.' AND flg_del = false ORDER BY su_numberofemployees DESC';
+            $query = 'SELECT pk_id_company , nm_company , su_numberofemployees , dt_establishdate 
+             FROM tbm_company_kiso WHERE '.$companyterms.' AND '.$employeesterms.' AND '.$establishterms.' AND flg_del = false ORDER BY su_numberofemployees DESC';
             
             $searchresult = $database -> query($query);
             $searchquery = $query;

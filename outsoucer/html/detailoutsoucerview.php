@@ -19,7 +19,7 @@
             
             <div class = 'floatclear'></div>
             <div class = "middletextsize detailbox">
-
+                
                 <table class = 'detailtable'>
                     <tr>
                         <th>名前</th>
@@ -119,14 +119,7 @@
         document.getElementById('selectcompanyhidden').setAttribute('value',companyname);
         return 'いけてるよ';
     }
-    /* $(function(){
-        //<form>タグのidを指定
-        $("#addcompanyform").validationEngine(
-            'attach', {
-                promptPosition: "topRight"//エラーメッセージ位置の指定
-            }
-        );
-    }); */
+    
     function settextstartenddate(){
         var startdateelement = document.getElementById('inputstartdate');
         var enddateelement = document.getElementById('inputenddate');
@@ -145,7 +138,14 @@
         return window.confirm('本当に削除しますか');
         
     }
-    
+    var setid = '';
+    function operation(id){
+        setid = id;
+        disp("../subwindow/operation.php");
+    }
+    function getstaffhistory(){
+        return setid;
+    }
 
 
 </script>

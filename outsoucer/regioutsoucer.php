@@ -27,6 +27,7 @@
 	$furiganafailtext = '';
 	$phonenumberfailtext = '';
 	$mailaddressfailtext = '';
+	$postcodefailtext = '';
 
 	$settextflag = false;
 	$settextname = '';
@@ -41,6 +42,8 @@
 	$employeeidfailtext = '';
 	$workhistorytext = '';
 	$licensetext = '';
+	$settextpostcode1 = '';
+	$settextpostcode2 = '';
 
 
 	if(isset($_POST['addoutsoucer'])){
@@ -60,6 +63,10 @@
             $inputrule = false;
             $phonenumberfailtext .= '電話番号はハイフン無しの数字で10、11桁で入力してください<br>';
         }
+		if(($_POST['postcode1'] != '' or $_POST['postcode2'] != '') and (!preg_match("/^([0-9]{3})$/",$_POST['postcode1']) or !preg_match("/^([0-9]{4})$/",$_POST['postcode2']))){
+			$inputrule =false;
+			$postcodefailtext .= '郵便番号は半角数字3桁、4桁で入力して下さい<br>';
+		}
 
 		if($inputrule == true){
 			
@@ -69,6 +76,11 @@
 			$workhistoryjson = json_encode($workhistory, JSON_UNESCAPED_UNICODE);
 			$license = array_filter($_POST['license']);
 			$licensejson = json_encode($license, JSON_UNESCAPED_UNICODE);
+			if($_POST['postcode1']==''){
+				$setpostcode = '';
+			}else{
+				$setpostcode = (string)$_POST['postcode1'] . (string)$_POST['postcode2'];
+			}
 			try{
 				$numberingquery = "SELECT no_tuban FROM tbs_saiban WHERE pk_id_saiban = 1";
 				$result = $database -> query($numberingquery);
@@ -76,8 +88,8 @@
 				$setemployeeid = $tuban+10000;
 				
 				$query = <<<EDO
-					INSERT INTO tbm_staffname_kiso (pk_id_staffname,nm_name,no_employeeid,dt_birthday,dt_joincompanyday,nm_furigana,kbn_prefectures,nm_address,nm_mailaddress,su_phonenumber,nm_workhistory,nm_license,etc_motivation)
-					VALUES('{$tuban}','{$_POST['name']}','{$setemployeeid}','{$regibirth}','{$regijoin}','{$_POST['furigana']}','{$_POST['prefectures']}'
+					INSERT INTO tbm_staffname_kiso (pk_id_staffname,nm_name,no_employeeid,dt_birthday,dt_joincompanyday,nm_furigana,kbn_postcode,kbn_prefectures,nm_address,nm_mailaddress,su_phonenumber,nm_workhistory,nm_license,etc_motivation)
+					VALUES('{$tuban}','{$_POST['name']}','{$setemployeeid}','{$regibirth}','{$regijoin}','{$_POST['furigana']}','{$setpostcode}','{$_POST['prefectures']}'
 					,'{$_POST['address']}','{$_POST['mailaddress']}','{$_POST['phonenumber']}','{$workhistoryjson}','{$licensejson}','{$_POST['motivation']}')
 				EDO;
 				$database -> query($query);
@@ -116,6 +128,8 @@
 		$settextworkhistory = $_POST['workhistory'];
 		$settextlicense = $_POST['license'];
 		$settextmotivation = $_POST['motivation'];
+		$settextpostcode1 = $_POST['postcode1'];
+		$settextpostcode2 = $_POST['postcode2'];
 	}
 
 

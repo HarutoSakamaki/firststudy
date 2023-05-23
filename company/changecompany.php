@@ -28,6 +28,7 @@
     $averageagefailtext = '';
     $capitalfailtext = '';
     $salesfailtext = '';
+    $postcodefailtext = '';
     
     if(isset($_POST['change'])){
 
@@ -52,6 +53,10 @@
             $inputrule = false;
             $capitalfailtext .= '数字を入力して下さい<br>' ;
         }
+        if(($_POST['postcode1'] != '' or $_POST['postcode2'] != '') and (!preg_match("/^([0-9]{3})$/",$_POST['postcode1']) or !preg_match("/^([0-9]{4})$/",$_POST['postcode2']))){
+			$inputrule =false;
+			$postcodefailtext .= '郵便番号は半角数字3桁、4桁で入力して下さい<br>';
+		}
 
         if($inputrule == true){
             $setcapital = $_POST['capital']*$_POST['capitaldigit'];
@@ -61,6 +66,11 @@
             $changecompany = ' nm_company = \'' . $_POST['company'].'\' ';
             $changepresident = ' nm_president = \'' .$_POST['president'].'\'';
             $changesales = ' su_sales = \''.$setsales.'\' ';
+            if($_POST['postcode1'] != ''){
+                $changepostcode = ' kbn_postcode = \''.$_POST['postcode1'].$_POST['postcode2'].'\' ';
+            }else{
+                $changepostcode = ' kbn_postcode = \'\' ';
+            }
             $changeprefectures = ' kbn_prefectures = \''.$_POST['prefectures'].'\' ';
             $changelocation = ' nm_location = \'' .$_POST['location'].'\'';
             $changenumberofemployees = ' su_numberofemployees = \'' .$_POST['numberofemployees'].'\'';
@@ -70,29 +80,16 @@
             $changeaverageage = ' su_averageage = \''.$_POST['averageage'].'\' ';
             $changehomepage = ' nm_homepage = \'' .$_POST['homepage'].'\' ';
             $businessdetailsstack = array();
-            $count = 0;
-            while(isset($_POST['businessdetails'.$count])){
-                if($_POST['businessdetails'.$count]!=''){
-                    $businessdetailsstack[] = htmlentities($_POST['businessdetails'.$count]);
-                }
-                $count++;
-            }
+            
+            $businessdetailsstack = $_POST['businessdetails'];
             $businessdetailsjson = json_encode($businessdetailsstack, JSON_UNESCAPED_UNICODE);
 
-            $count = 0;
-            $bankstack = array();
-            while(isset($_POST['bank'.$count])){
-                if($_POST['bank'.$count]!=''){
-                    $bankstack[] = htmlentities($_POST['bank'.$count]);
-                }
-                $count++;
-            }
-            $bankjson = json_encode($bankstack,JSON_UNESCAPED_UNICODE);
+            $bankjson = json_encode($_POST['bank'],JSON_UNESCAPED_UNICODE);
             
             $changebusinessdetails = ' nm_businessdetails = \'' .$businessdetailsjson.'\'';
             $changebank = ' nm_bank = \''.$bankjson.'\' ';
             $changechangedate = ' upd_date = \''.date('Y-m-d H:i:s').'\'';
-            $changequery = "UPDATE tbm_company_kiso SET ".$changecompany. ','.$changepresident. ','.$changesales.','.$changeprefectures.','.$changelocation. ','
+            $changequery = "UPDATE tbm_company_kiso SET ".$changecompany. ','.$changepresident. ','.$changesales.','.$changepostcode.','.$changeprefectures.','.$changelocation. ','
                 .$changenumberofemployees. ','.$changeestablishdate. ','.$changecapital.','.$changeaverageage.','.$changeclosingmonth.','.$changehomepage. ','
                 .$changebusinessdetails.','.$changebank.','.$changechangedate.
                 ' WHERE flg_del = false AND pk_id_company = \''.$id.'\'';
@@ -115,7 +112,9 @@
     if(isset($_POST['changeform'])){
         $id = $_POST['id'];
         try{
-            $query = "SELECT * FROM tbm_company_kiso WHERE flg_del = false AND pk_id_company = '".$id."'";
+            $query = "SELECT pk_id_company , nm_company , su_numberofemployees , dt_establishdate , kbn_postcode , kbn_prefectures , nm_location , nm_president , nm_businessdetails , 
+             nm_homepage , kbn_closingmonth , su_sales , su_capital , su_averageage , nm_bank 
+             FROM tbm_company_kiso WHERE flg_del = false AND pk_id_company = '".$id."'";
             $result = $database -> query($query);
             $row = mysqli_fetch_assoc($result);
             /* echo '詳細を取得しました'; */
@@ -136,28 +135,16 @@
         $postflag = true;
         $settextcompany = $_POST['company'];
         $settextpresident = $_POST['president'];
-        $count = 0;
-        while(true){
-            if(isset($_POST['businessdetails'.$count])){
-                $settextbusinessdetails[] = $_POST['businessdetails'.$count];
-                $count++;
-            }else{
-                break;
-            }
-        }
-        $count = 0;
-        while(true){
-            if(isset($_POST['bank'.$count])){
-                $settextbank[] = $_POST['bank'.$count];
-                $count++;
-            }else{
-                break;
-            }
-        }
+        
+        $settextbusinessdetails = $_POST['businessdetails'];
+        $settextbank = $_POST['bank'];
+              
 
         $settextprefectures = $_POST['prefectures'];
         $settextsales = $_POST['sales'];
         $settextdigit = $_POST['digit'];
+        $settextpostcode1 = $_POST['postcode1'];
+        $settextpostcode2 = $_POST['postcode2'];
         $settextlocation = $_POST['location'];
         $settextnumberofemployees = $_POST['numberofemployees'];
         $settextestablishyear = $_POST['establishyear'];
@@ -184,6 +171,15 @@
         $settextaverageage = $row['su_averageage'];
         $settextclosingmonth = $row['kbn_closingmonth'];
         $settexthomepage = $row['nm_homepage'];
+
+        if($row['kbn_postcode'] != '' and strlen($row['kbn_postcode'])==7){
+            $pos = str_spilit($row['kbn_postcode']);
+            $settextpostcode1 = $pos['0'].$pos['1'].$pos['2'];
+            $settextpostcode2 = $pos['3'].$pos['4'].$pos['5'].$pos['6'];
+        }else{
+            $settextpostcode1 = '';
+            $settextpostcode2 = '';
+        }
 
         $settextdigit = 1;
         $settextsales = $row['su_sales'];
@@ -230,14 +226,14 @@
     $businessdetailtext = '';
     $businessdetailtext.='<input type = \'hidden\' id = \'businessdetails-1\' >';
     if(isset($settextbusinessdetails[0])){
-        $businessdetailtext.='<br id = \'businessdetailsbr0\'><input type = \'text\' name = \'businessdetails0\' value = \''.htmlentities($settextbusinessdetails[0]).'\' id = \'businessdetails0\' >';
+        $businessdetailtext.='<br id = \'businessdetailsbr0\'><input type = \'text\' name = \'businessdetails[]\' value = \''.htmlentities($settextbusinessdetails[0]).'\' id = \'businessdetails0\' >';
         $count = 1;
     }else{
-        $businessdetailtext.='<br id = \'businessdetailsbr0\'><input type = \'text\' name = \'businessdetails0\' value = \'\' id = \'businessdetails0\' >';
+        $businessdetailtext.='<br id = \'businessdetailsbr0\'><input type = \'text\' name = \'businessdetails[]\' value = \'\' id = \'businessdetails0\' >';
         $count = 1;
     }
     while(isset($settextbusinessdetails[$count])){
-        $businessdetailtext.='<br id = \'businessdetailsbr'.$count.'\'><input type = \'text\' name = \'businessdetails'.$count.'\' value = \''.htmlentities($settextbusinessdetails[$count]).'\' id = \'businessdetails'.$count.'\'>';
+        $businessdetailtext.='<br id = \'businessdetailsbr'.$count.'\'><input type = \'text\' name = \'businessdetails[]\' value = \''.htmlentities($settextbusinessdetails[$count]).'\' id = \'businessdetails'.$count.'\'>';
         $count++;
     }
     $businessdetailscount_json = json_encode($count);
@@ -245,14 +241,14 @@
     $banktext = '';
     $banktext.='<input type = \'hidden\' id = \'bank-1\' >';
     if(isset($settextbank[0])){
-        $banktext.='<br id = \'bankbr0\'><input type = \'text\' name = \'bank0\' value = \''.htmlentities($settextbank[0]).'\' id = \'bank0\' >';
+        $banktext.='<br id = \'bankbr0\'><input type = \'text\' name = \'bank[]\' value = \''.htmlentities($settextbank[0]).'\' id = \'bank0\' >';
         $count = 1;
     }else{
-        $banktext.='<br id = \'bankbr0\'><input type = \'text\' name = \'bank0\' value = \'\' id = \'bank0\' >';
+        $banktext.='<br id = \'bankbr0\'><input type = \'text\' name = \'bank[]\' value = \'\' id = \'bank0\' >';
         $count = 1;
     }
     while(isset($settextbank[$count])){
-        $banktext.='<br id = \'bankbr'.$count.'\'><input type = \'text\' name = \'bank'.$count.'\' value = \''.htmlentities($settextbank[$count]).'\' id = \'bank'.$count.'\'>';
+        $banktext.='<br id = \'bankbr'.$count.'\'><input type = \'text\' name = \'bank[]\' value = \''.htmlentities($settextbank[$count]).'\' id = \'bank'.$count.'\'>';
         $count++;
     }
     $bankcount_json = json_encode($count);

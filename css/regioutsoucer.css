@@ -4,6 +4,7 @@
 
   .box{
     margin : 0 auto;
+    margin-bottom:100px;
   }
 
   .formsize{
@@ -11,4 +12,7 @@
     width: 680px; */
     font-size: 20px;
 	  
+  }
+  .btn{
+    font-size:23px;
   }
