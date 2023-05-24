@@ -3,20 +3,20 @@ body{
 }
 
 
-table{
+  .searchtable{
     width: 80%; 
     border-collapse:separate;
     border-spacing: 0;
     margin: 40px auto;
   }
-  table th:first-child{
+  .searchtable th:first-child{
     border-radius: 5px 0 0 0;
   }
-  table th:last-child{
+  .searchtable th:last-child{
     border-radius: 0 5px 0 0;
     border-right: 1px solid #3c6690;
   }
-  table th{
+  .searchtable th{
     text-align: center;
     color:white;
     background: linear-gradient(#829ebc,#225588);
@@ -28,7 +28,7 @@ table{
     padding: 10px 0;
   }
   
-  table td{
+  .searchtable td{
     text-align: center;
     border-left: 1px solid #a8b7c5;
     border-bottom: 1px solid #a8b7c5;
@@ -37,10 +37,10 @@ table{
     
     padding: 10px 0;
   }
-  table tr:nth-child(odd){
+  .searchtable tr:nth-child(odd){
     background-color: rgba(151, 199, 247, 0.945);
   }
-  table tr:nth-child(even){
+  .searchtable tr:nth-child(even){
     background-color: rgba(248, 246, 246, 0.945);
   }
   .left{

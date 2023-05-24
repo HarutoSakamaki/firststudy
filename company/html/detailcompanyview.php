@@ -40,7 +40,7 @@
                         </tr>
                         <tr>
                             <th>本社住所</th>
-                            <td><?php echo htmlentities($settextlocation); ?></td>
+                            <td><?php echo $settextlocation; ?></td>
                         </tr>
                         <tr>
                             <th>従業員数</th>

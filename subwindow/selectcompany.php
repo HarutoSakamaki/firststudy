@@ -66,7 +66,7 @@
     $tabletext ='';
         if (isset($_POST['search'])){
         $tabletext.=<<<EDO
-            <table border="1">
+            <table border="1" class = 'searchtable'>
             <tr>
             <th>会社名</th>
             <th>従業員数</th>

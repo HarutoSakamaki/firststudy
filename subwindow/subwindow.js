@@ -10,7 +10,7 @@ function disp(url){
 	console.log(screen.availWidth);
 	
 	var subx = ( screen.width  - subw ) / 2;   // X座標
-	var suby = ( screen.width - subh ) / 2;   // Y座標
+	var suby = ( screen.height - subh ) / 2;   // Y座標
 	console.log(subx);
 
 	// サブウインドウのオプション文字列を作る

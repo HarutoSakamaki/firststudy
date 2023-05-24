@@ -40,7 +40,7 @@
         }
         if($row1['kbn_postcode'] != '' and strlen($row1['kbn_postcode']) == 7){
             $pos = str_split($row1['kbn_postcode']);
-            $settextlocation .= '〒'.$pos['0'].$pos['1'].$pos['2'].'-'.$pos['3'].$pos['4'].$pos['5'].$pos['6'].$settextlocation;
+            $settextlocation = '〒'.$pos['0'].$pos['1'].$pos['2'].'-'.$pos['3'].$pos['4'].$pos['5'].$pos['6'].'<br>'.htmlentities($settextlocation);
         }
         $businessdetailsarray = json_decode($row1['nm_businessdetails'],true);
         $bankarray = json_decode($row1['nm_bank'],true);

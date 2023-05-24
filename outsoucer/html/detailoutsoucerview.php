@@ -35,7 +35,7 @@
                     </tr>
                     <tr>
                         <th>現住所</th>
-                        <td><?php echo htmlentities($settextaddress); ?></td>
+                        <td><?php echo $settextaddress; ?></td>
                     </tr>
                     <tr>
                         <th>メールアドレス</th>
@@ -138,13 +138,9 @@
         return window.confirm('本当に削除しますか');
         
     }
-    var setid = '';
-    function operation(id){
-        setid = id;
-        disp("../subwindow/operation.php");
-    }
-    function getstaffhistory(){
-        return setid;
+    function operation(staffhistoryid){
+        disp("../subwindow/operation.php?id="+staffhistoryid);
+        return true;
     }
 
 

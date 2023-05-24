@@ -54,7 +54,7 @@
     }
     if($row1['kbn_postcode'] != '' and strlen($row1['kbn_postcode']) == 7){
         $pos = str_split($row1['kbn_postcode']);
-        $settextaddress = '〒'.$pos['0'].$pos['1'].$pos['2'].'-'.$pos['3'].$pos['4'].$pos['5'].$pos['6'].$settextaddress;
+        $settextaddress = '〒'.$pos['0'].$pos['1'].$pos['2'].'-'.$pos['3'].$pos['4'].$pos['5'].$pos['6'].'<br>'.htmlentities($settextaddress);
     }
     $count = 0;
     while(isset($workhistoryarray[$count])){
@@ -197,11 +197,12 @@
     $historycompanytext='';
     if($settextflag  == true){
         $nowdate = new DateTime(date('Y-m-d'));
-        $historycompanytext .= '<div><table class = \'workplacetable\'><tr><th>会社</th><th>仕事開始日</th><th>仕事終了日</th><th>状態</th><th>履歴の削除</th><th>操作</th></tr>';
+        $historycompanytext .= '<div><table class = \'workplacetable\'><tr><th>会社</th><th>仕事開始日</th><th>仕事終了日</th><th>状態</th><th>変更や削除</th></tr>';
         foreach($settext as $settext){
             $setcompany = htmlentities($settext['company']);
             $setstartdate = htmlentities($settext['startdate']);
             $setenddate = htmlentities($settext['enddate']);
+            $settextid = htmlentities($settext['id']);
             $comparestart = new DateTime($setstartdate);
             $compareend = new DateTime($setenddate);
             if($comparestart > $nowdate){
@@ -217,14 +218,9 @@
                     <td id>{$setstartdate}</td>
                     <td id>{$setenddate}</td>
                     <td id>{$status}</td>
-                    <td><form action = 'detailoutsoucer.php' method = 'post' class = 'margin0' id = 'delete{$settext['id']}' onsubmit="return deleteform()">
-                        <button type = 'submit' class = 'commonbutton' name = 'delete' value = '削除' ><img src="../img/deleteicon.png" alt=""/>削除</button>
-                        <input type = 'hidden' name = 'historyid' value = '{$settext['id']}'>
-                        <input type = 'hidden' name = 'staffid' value = '{$staffid}'>
-                        </form>
-                    </td>
+                    
                     <td>
-                        <button type = 'button' class = 'commonbutton' onclick = 'operation('{$settext['id']}')'>操作</button>
+                        <button type = 'button' class = 'commonbutton' onclick = 'operation({$settextid})'>変更や削除</button>
                     </td>
                 </tr>
             EOD;
