@@ -173,7 +173,7 @@
         $settexthomepage = $row['nm_homepage'];
 
         if($row['kbn_postcode'] != '' and strlen($row['kbn_postcode'])==7){
-            $pos = str_spilit($row['kbn_postcode']);
+            $pos = str_split($row['kbn_postcode']);
             $settextpostcode1 = $pos['0'].$pos['1'].$pos['2'];
             $settextpostcode2 = $pos['3'].$pos['4'].$pos['5'].$pos['6'];
         }else{

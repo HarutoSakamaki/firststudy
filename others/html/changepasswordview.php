@@ -30,7 +30,7 @@
                         </tr>
                         <tr>
                             <th>新しいpassword(again)</th>
-                            <td><input type = 'passwordagain' name = 'newpasswordagain' value = ""><br>
+                            <td><input type = 'password' name = 'newpasswordagain' value = ""><br>
                             <a class = 'failfont'><?php echo $failnewpasswordagaintext; ?></a></td>
                         </tr>
                     </table>

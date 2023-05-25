@@ -54,7 +54,7 @@
                 try{
                     $numberingquery = "SELECT no_tuban FROM tbs_saiban WHERE pk_id_saiban = 4";
                     $result = $database -> query($numberingquery);
-                    $tuban = (mysqli_fetch_assoc($searchresult)['no_tuban'])+1;
+                    $tuban = (mysqli_fetch_assoc($result)['no_tuban'])+1;
                     $hashpassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
                     $query = <<<EDO
                         INSERT INTO tbs_login (pk_id_login,nm_username,nm_password,flg_admin) 
@@ -132,7 +132,7 @@
             }else{
                 $searchusernameterms = ' nm_username LIKE \'%\' ';
             }
-            $query = 'SELECT pk_id_login , nm_username , nm_password , flg_admin FROM tbm_login  
+            $query = 'SELECT pk_id_login , nm_username , nm_password , flg_admin FROM tbs_login  
                 WHERE '.$searchusernameterms.' AND flg_del = 0 ORDER BY pk_id_login DESC';
 
             $search = true;
@@ -165,7 +165,6 @@
                 <table class = 'table1'>
                     <tr>
                         <th>username</th>
-                        <th>password</th>
                         <th>authority</th>
                         <th>削除</th>
                     </tr>
@@ -182,7 +181,6 @@
                 $searchtable .= <<<EOD
                     <tr>
                         <td>{$tableusername}</td>
-                        <td>{$tablepassword}</td>
                         <td>{$setauthority}</td>
                         <td>
                             <form action = 'admin.php' method=post onSubmit='return deletecheck()'>

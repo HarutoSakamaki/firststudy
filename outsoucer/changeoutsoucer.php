@@ -81,7 +81,7 @@
                 .$changemailaddress. ','.$changephonenumber. ',' .$changeworkhistory. ','.$changelicense. ','.$changemotivation. ','.$changejoincompanyday. ','
                 .$changechangedate.' WHERE pk_id_staffname = '.$id;
 
-            echo $changequery;
+            
             try{
                 $database -> query($changequery);
                 $changesuccesstext .= '<div class = \'successbox\'>変更しました</div>';

@@ -1,0 +1,90 @@
+<mxfile host="Electron" modified="2023-05-24T07:54:42.248Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.8 Chrome/112.0.5615.165 Electron/24.2.0 Safari/537.36" etag="7aiDVENCSfw6ZvJKZQ80" version="21.2.8" type="device">
+  <diagram name="ページ1" id="tVr-RxveY0WpipnJPD6z">
+    <mxGraphModel dx="1687" dy="993" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="SVOkSf6OeGCzOYOTrair-7" value="①ログイン画面" style="swimlane;" vertex="1" parent="1">
+          <mxGeometry x="250" y="30" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-8" value="ユーザーネームとパスワード&lt;br&gt;を入力しログインする" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="SVOkSf6OeGCzOYOTrair-7">
+          <mxGeometry x="10" y="30" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-9" value="②アウトソーサーの登録画面" style="swimlane;" vertex="1" parent="1">
+          <mxGeometry x="40" y="133" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-10" value="社員の登録を行う。&lt;br&gt;必要事項は名前だけで&lt;br&gt;他は任意" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="SVOkSf6OeGCzOYOTrair-9">
+          <mxGeometry x="30" y="20" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-11" value="③アウトソーサーの検索画面" style="swimlane;" vertex="1" parent="1">
+          <mxGeometry x="265" y="133" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-15" value="アウトソーサーの検索が行える" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="SVOkSf6OeGCzOYOTrair-11">
+          <mxGeometry x="10" y="25" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-13" value="④会社の登録画面" style="swimlane;" vertex="1" parent="1">
+          <mxGeometry x="700" y="138" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-14" value="会社の登録を行う&lt;br&gt;必要事項は会社名だけで&lt;br&gt;他は任意" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="SVOkSf6OeGCzOYOTrair-13">
+          <mxGeometry x="20" y="20" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-16" value="⑤会社の検索画面" style="swimlane;" vertex="1" parent="1">
+          <mxGeometry x="480" y="138" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-17" value="登録会社の検索が行える" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="SVOkSf6OeGCzOYOTrair-16">
+          <mxGeometry x="20" y="20" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-18" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.418;entryY=-0.06;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="SVOkSf6OeGCzOYOTrair-7" target="SVOkSf6OeGCzOYOTrair-9">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="100" y="60" as="sourcePoint" />
+            <mxPoint x="150" y="10" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="124" y="90" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-19" value="" style="line;strokeWidth=2;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="110" width="940" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-20" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0.6;dx=40;direction=south;notch=0;" vertex="1" parent="1">
+          <mxGeometry x="910" y="123" width="40" height="157" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-21" value="⑥header" style="swimlane;" vertex="1" parent="1">
+          <mxGeometry x="820" y="290" width="190" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-22" value="headerを表示&lt;br&gt;②③④⑤&lt;br&gt;にいつでも遷移できる" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="SVOkSf6OeGCzOYOTrair-21">
+          <mxGeometry x="37" y="20" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-23" value="&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;以下で⑥headerを表示&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=right;fillColor=#dae8fc;strokeColor=#6c8ebf;horizontal=0;" vertex="1" parent="1">
+          <mxGeometry x="950" y="123" width="30" height="137" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-24" value="⑦アウトソーサーの詳細画面" style="swimlane;" vertex="1" parent="1">
+          <mxGeometry x="260" y="250" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-25" value="社員の詳細を表示&lt;br&gt;外勤先の選択もここで行う" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="SVOkSf6OeGCzOYOTrair-24">
+          <mxGeometry x="15" y="30" width="170" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-26" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="SVOkSf6OeGCzOYOTrair-24">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="190" as="sourcePoint" />
+            <mxPoint x="40" y="383" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-27" value="" style="edgeStyle=elbowEdgeStyle;elbow=horizontal;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="SVOkSf6OeGCzOYOTrair-24" target="SVOkSf6OeGCzOYOTrair-28">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="370" y="200" as="sourcePoint" />
+            <mxPoint x="355" y="410" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-28" value="⑧アウトソーサーの詳細変更画面" style="swimlane;" vertex="1" parent="1">
+          <mxGeometry x="260" y="390" width="210" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="SVOkSf6OeGCzOYOTrair-29" value="アウトソーサーの詳細が変更できる&lt;br&gt;レイアウトは③と似てる" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="SVOkSf6OeGCzOYOTrair-28">
+          <mxGeometry x="-10" y="30" width="220" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
