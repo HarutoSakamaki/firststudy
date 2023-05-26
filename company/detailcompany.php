@@ -44,6 +44,13 @@
         }
         $businessdetailsarray = json_decode($row1['nm_businessdetails'],true);
         $bankarray = json_decode($row1['nm_bank'],true);
+
+        $settexthomepage = '';
+        if($row1['nm_homepage'] == ''){
+            $settexthomepage .= '未登録';
+        }else{
+            $settexthomepage .= '<a href = '.htmlentities($row1['nm_homepage']).'>'.htmlentities($row1['nm_company']).'</a>';
+        }
         
 
         $businessdetailtext = '';

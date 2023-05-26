@@ -68,7 +68,7 @@
                         </tr>
                         <tr>
                             <th>ホームページ</th>
-                            <td><?php echo '<a href = '.htmlentities($row1['nm_homepage']).'>'.htmlentities($row1['nm_company']).'</a>';?></td>
+                            <td><?php echo $settexthomepage; ?></td>
                         </tr>
 
                     </table>
